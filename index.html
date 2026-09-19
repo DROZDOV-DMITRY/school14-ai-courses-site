@@ -1,0 +1,83 @@
+<!doctype html>
+<html lang="ru">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Курсы по искусственному интеллекту</title>
+<meta name="description" content="Два практических курса по работе с искусственным интеллектом.">
+<style>
+:root{
+  --bg:#f5f7fb;--card:#fff;--text:#17202a;--muted:#5d6977;
+  --accent:#3155d9;--accent2:#6d46d9;--line:#dce3ee;--soft:#eef2ff;
+  --max:1040px;--r:20px
+}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--text);font-family:system-ui,-apple-system,"Segoe UI",Arial,sans-serif;line-height:1.55}
+.wrap{width:min(calc(100% - 28px),var(--max));margin:auto}
+.top{padding:36px 0 18px}.tag{font-size:.82rem;font-weight:800;color:var(--accent);letter-spacing:.05em}
+.hero,.card{background:var(--card);border:1px solid var(--line);border-radius:var(--r);padding:clamp(22px,4vw,42px);margin:0 0 18px}
+.hero{background:linear-gradient(135deg,#fff,#eef2ff)}
+h1{font-size:clamp(2.2rem,6vw,4.8rem);line-height:1.02;margin:.08em 0 .28em}
+h2{font-size:clamp(1.35rem,3vw,2rem);margin:0 0 10px}
+.lead{font-size:clamp(1.05rem,2.2vw,1.28rem);color:var(--muted);max-width:790px}
+.grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:18px;margin-bottom:18px}
+.course{display:flex;flex-direction:column;min-height:310px;text-decoration:none;color:inherit;transition:transform .16s ease,border-color .16s ease,box-shadow .16s ease}
+.course:hover{transform:translateY(-3px);border-color:#b8c4e4;box-shadow:0 14px 34px rgba(37,54,96,.08)}
+.course:focus-visible,.contact:focus-visible{outline:3px solid #9db1ff;outline-offset:4px}
+.badge{display:inline-block;align-self:flex-start;padding:5px 10px;border-radius:999px;background:var(--soft);font-size:.86rem;font-weight:800;margin-bottom:18px}
+.course p{color:var(--muted);font-size:1.02rem}.go{margin-top:auto;font-weight:800;color:var(--accent);padding-top:18px}
+.course.agent .badge{background:#f1eaff;color:#5b33bf}.course.agent .go{color:var(--accent2)}
+.contacts{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px;margin-top:18px}
+.contact{display:block;text-decoration:none;color:inherit;border:1px solid var(--line);border-radius:15px;padding:16px 18px;background:#fff}
+.contact strong{display:block;margin-bottom:4px}.contact span{color:var(--muted);overflow-wrap:anywhere}
+.contact:hover{border-color:#b8c4e4}
+.note{font-size:.92rem;color:var(--muted);margin-top:14px}
+.footer{color:var(--muted);font-size:.9rem;padding:18px 0 48px}
+@media(max-width:760px){.grid,.contacts{grid-template-columns:1fr}.course{min-height:0}.wrap{width:min(calc(100% - 20px),var(--max))}.hero,.card{border-radius:15px}}
+</style>
+</head>
+<body>
+<main class="wrap">
+<section class="top"><div class="tag">КУРСЫ ПО ИСКУССТВЕННОМУ ИНТЕЛЛЕКТУ</div></section>
+
+<section class="hero">
+<h1>Выберите курс</h1>
+<p class="lead">Практические программы: от осмысленной работы с ИИ до проектирования агентных процессов и систем.</p>
+</section>
+
+<section class="grid" aria-label="Курсы">
+<a class="card course" href="course-c1/">
+<span class="badge">Курс 1</span>
+<h2>ИИ: говори на его языке</h2>
+<p>Как превращать реальную задачу в понятную работу с ИИ, задавать контекст и критерии, улучшать результат через диалог и проверять качество.</p>
+<div class="go">Открыть курс →</div>
+</a>
+
+<a class="card course agent" href="course-c2/">
+<span class="badge">Курс 2</span>
+<h2>ИИ: агентный режим</h2>
+<p>Как переходить от отдельных запросов к управляемым процессам: декомпозиции, состояниям, инструментам, контролю выполнения и командной работе.</p>
+<div class="go">Открыть курс →</div>
+</a>
+</section>
+
+<section class="card" id="feedback">
+<h2>Обратная связь</h2>
+<p class="lead">Вопросы по занятиям, материалам курса и работе сайта можно отправить напрямую.</p>
+<div class="contacts">
+<a class="contact" href="mailto:drozdov.human.development@yandex.ru?subject=%D0%9E%D0%B1%D1%80%D0%B0%D1%82%D0%BD%D0%B0%D1%8F%20%D1%81%D0%B2%D1%8F%D0%B7%D1%8C%20%D0%BF%D0%BE%20%D0%BA%D1%83%D1%80%D1%81%D0%B0%D0%BC%20%D0%98%D0%98">
+<strong>Электронная почта</strong>
+<span>drozdov.human.development@yandex.ru</span>
+</a>
+<a class="contact" href="https://max.ru/u/f9LHodD0cOK2wZG08Urp7yhgGhMKYpK5oRXTIFN_XcnmBoCTECkifoOWRTM" target="_blank" rel="noopener noreferrer">
+<strong>MAX</strong>
+<span>+7 910 472-10-24</span>
+</a>
+</div>
+<p class="note">Кнопка MAX открывает твой профиль напрямую.</p>
+</section>
+
+<footer class="footer">Development preview · публикация сайта отдельно не выполнялась</footer>
+</main>
+</body>
+</html>
