@@ -1,0 +1,613 @@
+<!doctype html>
+<html lang="ru">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta name="color-scheme" content="dark">
+<title>ИИ: говори на его языке — 5 минут</title>
+<style>
+:root{
+  --bg:#050711;
+  --bg2:#080b18;
+  --panel:rgba(14,19,38,.72);
+  --panel-strong:rgba(10,14,29,.91);
+  --line:rgba(182,208,255,.18);
+  --line-strong:rgba(139,201,255,.40);
+  --text:#f7fbff;
+  --muted:#aab9cf;
+  --blue:#59c8ff;
+  --cyan:#71f3e8;
+  --indigo:#7d70ff;
+  --violet:#a16dff;
+  --magenta:#ff65cf;
+  --good:#7ff3ba;
+  --warn:#ffd37a;
+  --mx:50vw;
+  --my:45vh;
+  --ease:cubic-bezier(.2,.8,.2,1);
+  --scene-pad-x:clamp(34px,5.2vw,98px);
+  --scene-pad-y:clamp(34px,5vh,64px);
+}
+*{box-sizing:border-box}
+html,body{width:100%;height:100%;margin:0;overflow:hidden;background:var(--bg);color:var(--text);font-family:"Segoe UI Variable","Segoe UI",Arial,sans-serif}
+body{user-select:none;-webkit-user-select:none;touch-action:manipulation;overscroll-behavior:none}
+button{font:inherit;color:inherit}
+button:focus-visible,[tabindex]:focus-visible{outline:3px solid rgba(89,200,255,.85);outline-offset:4px}
+#app{position:relative;width:100%;height:100%;isolation:isolate;background:
+  radial-gradient(75vw 65vh at 10% 90%,rgba(58,95,214,.12),transparent 66%),
+  radial-gradient(70vw 62vh at 92% 5%,rgba(64,211,255,.08),transparent 70%),
+  linear-gradient(160deg,#050711,#070b16 55%,#050711)}
+#app::before{content:"";position:absolute;inset:0;z-index:-4;pointer-events:none;opacity:.8;background-image:
+  linear-gradient(rgba(255,255,255,.018) 1px,transparent 1px),
+  linear-gradient(90deg,rgba(255,255,255,.018) 1px,transparent 1px);background-size:68px 68px;mask-image:linear-gradient(to bottom,transparent 0,#000 18%,#000 82%,transparent 100%)}
+.ambient{position:absolute;inset:0;z-index:-3;overflow:hidden;pointer-events:none}
+.cursor-glow{position:absolute;inset:0;background:radial-gradient(420px circle at var(--mx) var(--my),rgba(76,183,255,.15),transparent 66%);transition:opacity .3s ease}
+.blob{position:absolute;border-radius:50%;filter:blur(64px);opacity:.22;will-change:transform}
+.blob.a{width:34vw;height:34vw;left:-8vw;top:4vh;background:radial-gradient(circle,var(--blue),transparent 68%);animation:driftA 15s ease-in-out infinite alternate}
+.blob.b{width:31vw;height:31vw;right:-6vw;bottom:-8vh;background:radial-gradient(circle,var(--indigo),transparent 68%);animation:driftB 18s ease-in-out infinite alternate}
+.blob.c{width:24vw;height:24vw;right:25vw;top:34vh;background:radial-gradient(circle,var(--cyan),transparent 70%);opacity:.08;animation:driftC 20s ease-in-out infinite alternate}
+@keyframes driftA{to{transform:translate(9vw,4vh) scale(1.1)}}
+@keyframes driftB{to{transform:translate(-8vw,-6vh) scale(.9)}}
+@keyframes driftC{to{transform:translate(4vw,-7vh) scale(1.2)}}
+.noise{position:absolute;inset:0;opacity:.025;background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='140' height='140' viewBox='0 0 140 140'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.8' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='.55'/%3E%3C/svg%3E")}
+
+.chrome{position:absolute;inset:0;z-index:50;pointer-events:none}
+.brand{position:absolute;left:var(--scene-pad-x);top:clamp(18px,2.8vh,32px);display:flex;align-items:center;gap:11px;color:rgba(223,236,255,.72);font-size:clamp(14px,1.1vw,18px);font-weight:650;letter-spacing:.06em;text-transform:uppercase}
+.brand-dot{width:9px;height:9px;border-radius:50%;background:var(--cyan);box-shadow:0 0 22px rgba(113,243,232,.75)}
+.scene-count{position:absolute;right:var(--scene-pad-x);top:clamp(18px,2.8vh,32px);font-variant-numeric:tabular-nums;color:rgba(214,229,249,.68);font-size:clamp(15px,1.1vw,18px);letter-spacing:.08em}
+.progress-track{position:absolute;left:var(--scene-pad-x);right:var(--scene-pad-x);bottom:clamp(17px,2.6vh,30px);height:2px;background:rgba(255,255,255,.08);overflow:hidden;border-radius:99px}
+.progress-fill{height:100%;width:16.666%;background:linear-gradient(90deg,var(--blue),var(--cyan));box-shadow:0 0 18px rgba(89,200,255,.45);transition:width .7s var(--ease),background .5s ease}
+.nav-hint{position:absolute;right:var(--scene-pad-x);bottom:clamp(30px,4.6vh,48px);display:flex;gap:8px;color:rgba(191,208,230,.5);font-size:13px;letter-spacing:.03em;transition:opacity .5s ease;opacity:.92}
+.nav-hint.fade{opacity:0}
+.nav-hint kbd{border:1px solid rgba(255,255,255,.12);border-bottom-color:rgba(255,255,255,.25);background:rgba(255,255,255,.035);padding:4px 7px;border-radius:7px;font-family:inherit;font-size:12px}
+
+.nav-controls{position:absolute;left:var(--scene-pad-x);right:var(--scene-pad-x);bottom:clamp(48px,6.5vh,72px);z-index:75;display:flex;justify-content:space-between;align-items:center;pointer-events:none}
+.nav-btn{pointer-events:auto;min-width:clamp(122px,9vw,158px);min-height:50px;border:1px solid rgba(160,211,255,.24);border-radius:999px;padding:12px 18px;background:rgba(8,18,34,.72);color:#eaf5ff;font:700 clamp(13px,1vw,16px)/1 "Segoe UI Variable","Segoe UI",Arial,sans-serif;letter-spacing:.045em;cursor:pointer;backdrop-filter:blur(14px);box-shadow:0 10px 30px rgba(0,0,0,.25),inset 0 1px 0 rgba(255,255,255,.05);transition:transform .18s ease,border-color .18s ease,background .18s ease,box-shadow .18s ease}
+.nav-btn:hover,.nav-btn:focus-visible{transform:translateY(-2px);border-color:rgba(128,224,255,.55);background:rgba(15,32,56,.9);box-shadow:0 12px 34px rgba(0,0,0,.32),0 0 24px rgba(89,200,255,.12);outline:none}
+.nav-btn.next{margin-left:auto;background:linear-gradient(135deg,rgba(70,183,255,.92),rgba(116,238,231,.9));border-color:rgba(174,245,255,.55);color:#06131d;text-shadow:0 1px 0 rgba(255,255,255,.25)}
+.nav-btn[hidden]{display:none!important}
+@media(max-height:820px){.nav-controls{bottom:44px}.nav-btn{min-height:46px;padding:10px 16px}}
+
+.scene{position:absolute;inset:0;padding:clamp(74px,10vh,108px) var(--scene-pad-x) clamp(64px,8vh,84px);display:grid;place-items:center;opacity:0;visibility:hidden;transform:translate3d(0,18px,0) scale(.995);transition:opacity .42s ease,transform .55s var(--ease),visibility 0s linear .55s;pointer-events:none;contain:layout paint}
+.scene.active{opacity:1;visibility:visible;transform:none;transition-delay:0s;pointer-events:auto}
+.scene.exit-left{opacity:0;transform:translate3d(-3vw,0,0) scale(.995)}
+.scene.exit-right{opacity:0;transform:translate3d(3vw,0,0) scale(.995)}
+.scene-inner{width:min(1580px,100%);height:100%;display:flex;flex-direction:column;justify-content:center;position:relative}
+.eyebrow{display:inline-flex;align-items:center;gap:10px;color:#c8dbf4;font-weight:700;letter-spacing:.16em;text-transform:uppercase;font-size:clamp(14px,1.15vw,18px);margin-bottom:clamp(14px,2.2vh,24px)}
+.eyebrow::before{content:"";width:28px;height:2px;background:linear-gradient(90deg,var(--blue),var(--cyan));box-shadow:0 0 12px rgba(89,200,255,.65)}
+h1,h2,p{margin:0}
+.hero-title{font-size:clamp(48px,4.35vw,86px);line-height:.94;letter-spacing:-.05em;max-width:none;font-weight:760;text-wrap:balance}
+.hero-title .accent{background:linear-gradient(105deg,#fff 15%,#aee9ff 48%,#8b86ff 92%);-webkit-background-clip:text;background-clip:text;color:transparent}
+.lead{color:var(--muted);font-size:clamp(22px,1.75vw,31px);line-height:1.3;max-width:52ch}
+.subline{color:rgba(211,226,246,.73);font-size:clamp(18px,1.35vw,24px);line-height:1.35}
+
+/* Scene 1 */
+.s1 .scene-inner{justify-content:center;padding-top:0}
+.s1-head{position:relative;z-index:2;max-width:68%}
+.s1-orbit{position:absolute;right:-4vw;top:-4vh;width:min(38vw,590px);aspect-ratio:1;opacity:.7;pointer-events:none;transform:translate(calc((var(--px,0))*16px),calc((var(--py,0))*16px));transition:transform .15s linear}
+.orbit-svg{width:100%;height:100%;overflow:visible}
+.orbit-ring{fill:none;stroke:rgba(110,210,255,.15);stroke-width:1}
+.orbit-ring.r2{stroke:rgba(152,118,255,.18);stroke-dasharray:6 10;transform-origin:50% 50%;animation:spin 28s linear infinite}
+.orbit-node{fill:#80e8ff;filter:drop-shadow(0 0 8px rgba(89,200,255,.8))}
+@keyframes spin{to{transform:rotate(360deg)}}
+.choice-grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:clamp(14px,1.6vw,24px);margin-top:clamp(20px,3.2vh,34px);position:relative;z-index:3}
+.choice{position:relative;min-height:clamp(122px,15vh,168px);border:1px solid rgba(190,220,255,.16);border-radius:26px;background:linear-gradient(160deg,rgba(22,30,57,.76),rgba(9,13,28,.48));display:flex;flex-direction:column;justify-content:flex-end;align-items:flex-start;text-align:left;padding:clamp(22px,2.4vw,34px);cursor:pointer;overflow:hidden;box-shadow:0 20px 60px rgba(0,0,0,.14);transition:transform .35s var(--ease),border-color .3s ease,box-shadow .35s ease,background .35s ease}
+.choice::before{content:"";position:absolute;inset:-1px;background:radial-gradient(380px circle at var(--cx,50%) var(--cy,50%),rgba(82,208,255,.18),transparent 45%);opacity:0;transition:opacity .25s ease}
+.choice::after{content:"";position:absolute;width:90px;height:90px;right:20px;top:20px;border-radius:50%;border:1px solid rgba(152,210,255,.15);box-shadow:inset 0 0 0 18px rgba(96,159,255,.02),0 0 40px rgba(75,171,255,.04);transform:scale(.92);transition:.4s var(--ease)}
+.choice:hover,.choice:active{transform:translateY(-8px) scale(1.012);border-color:rgba(110,218,255,.48);box-shadow:0 24px 70px rgba(0,0,0,.28),0 0 40px rgba(65,176,255,.08)}
+.choice:hover::before{opacity:1}.choice:hover::after{transform:scale(1.06);border-color:rgba(127,223,255,.35)}
+.choice strong{position:relative;z-index:2;font-size:clamp(26px,2.1vw,38px);letter-spacing:.02em}
+.choice span{position:relative;z-index:2;margin-top:8px;color:var(--muted);font-size:clamp(16px,1.12vw,20px)}
+.s1-footer{display:flex;align-items:center;gap:18px;margin-top:clamp(12px,2vh,22px);color:rgba(200,217,239,.6);font-size:clamp(15px,1.05vw,18px)}
+.fullscreen-btn{pointer-events:auto;border:1px solid rgba(165,215,255,.20);background:rgba(12,19,37,.64);border-radius:999px;padding:12px 18px;cursor:pointer;color:#dff4ff;box-shadow:inset 0 0 0 1px rgba(255,255,255,.025);transition:.25s ease}
+.fullscreen-btn:hover{border-color:rgba(97,215,255,.52);background:rgba(24,37,64,.72)}
+
+/* Scene 2 */
+.s2 .scene-inner{justify-content:center}
+.compare-title{font-size:clamp(42px,3.2vw,62px);letter-spacing:-.04em;line-height:1.02;max-width:25ch;margin-bottom:clamp(16px,2.2vh,28px)}
+.dialog-layout{display:grid;grid-template-columns:minmax(0,1.02fr) minmax(0,.98fr);gap:clamp(18px,2.5vw,38px);height:clamp(430px,48vh,520px);min-height:0}
+.dialog-card,.task-card{border:1px solid rgba(190,218,255,.15);border-radius:28px;background:linear-gradient(165deg,rgba(17,24,47,.88),rgba(8,12,26,.74));box-shadow:0 24px 80px rgba(0,0,0,.22);position:relative;overflow:hidden}
+.dialog-card{padding:clamp(22px,2vw,30px);display:flex;flex-direction:column;gap:16px}
+.dialog-head{display:flex;align-items:center;justify-content:space-between;color:rgba(210,225,245,.68);font-size:clamp(15px,1.05vw,18px)}
+.dots{display:flex;gap:7px}.dots i{width:8px;height:8px;border-radius:50%;background:rgba(255,255,255,.16)}
+.bubble{max-width:91%;padding:clamp(15px,1.4vw,20px) clamp(17px,1.6vw,23px);border-radius:20px;font-size:clamp(18px,1.18vw,22px);line-height:1.3;transition:opacity .35s ease,transform .45s var(--ease),filter .35s ease}
+.bubble.user{align-self:flex-end;background:linear-gradient(135deg,rgba(59,124,229,.46),rgba(83,78,184,.35));border:1px solid rgba(132,192,255,.22)}
+.bubble.ai{align-self:flex-start;background:rgba(255,255,255,.055);border:1px solid rgba(255,255,255,.08);color:#dbe6f6}
+.generic-answer{color:#c6d2e3}
+.generic-answer strong{color:#f0f7ff}
+.missing-list{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-top:auto;opacity:0;transform:translateY(12px);transition:.45s var(--ease)}
+.missing-list.show{opacity:1;transform:none}
+.missing{border:1px solid rgba(255,211,122,.18);background:rgba(255,211,122,.055);color:#e9d8ad;padding:11px 13px;border-radius:13px;font-size:clamp(14px,1vw,17px)}
+.task-card{padding:clamp(22px,2vw,30px);display:flex;flex-direction:column;justify-content:space-between}
+.task-card::before{content:"";position:absolute;inset:0;background:radial-gradient(520px circle at 50% 0%,rgba(89,200,255,.095),transparent 70%);pointer-events:none}
+.task-label{color:#9ee8ff;font-weight:700;font-size:clamp(14px,1vw,17px);letter-spacing:.13em;text-transform:uppercase}
+.task-copy{font-size:clamp(19px,1.2vw,22px);line-height:1.32;color:#edf6ff;margin:12px 0 16px;opacity:.18;filter:blur(2px);transform:translateY(12px);transition:.55s var(--ease)}
+.task-card.ready .task-copy{opacity:1;filter:none;transform:none}
+.component-row{display:flex;flex-wrap:wrap;gap:8px;opacity:0;transform:translateY(10px);transition:.45s var(--ease) .12s}
+.task-card.ready .component-row{opacity:1;transform:none}
+.component{padding:8px 10px;border-radius:999px;border:1px solid rgba(113,243,232,.18);background:rgba(113,243,232,.055);color:#c5fff7;font-weight:700;font-size:clamp(12px,.78vw,14px);letter-spacing:.06em}
+.better-answer{margin-top:14px;padding:14px 16px;border-radius:18px;border:1px solid rgba(127,243,186,.16);background:rgba(127,243,186,.055);color:#dffbeb;font-size:clamp(16px,.95vw,18px);line-height:1.32;opacity:0;transform:translateY(14px);transition:.5s var(--ease)}
+.task-card.answer .better-answer{opacity:1;transform:none}
+.transform-btn{align-self:flex-start;margin-top:16px;border:1px solid rgba(100,209,255,.28);background:linear-gradient(135deg,rgba(37,106,176,.36),rgba(70,64,166,.28));border-radius:14px;padding:13px 16px;cursor:pointer;color:#e8f8ff;font-weight:700;transition:.25s ease}
+.transform-btn:hover{transform:translateY(-2px);border-color:rgba(111,225,255,.58)}
+.stage-tip{position:absolute;right:0;bottom:-34px;color:rgba(191,207,229,.5);font-size:13px}
+
+/* Scene 3 */
+.s3 .scene-inner{align-items:center;text-align:center}
+.s3 h2{font-size:clamp(46px,5.2vw,88px);letter-spacing:-.045em;line-height:.98;max-width:16ch}
+.flow-wrap{width:min(1220px,100%);margin:clamp(30px,5vh,54px) auto 0;position:relative}
+.flow-line{position:absolute;left:6%;right:6%;top:50%;height:2px;background:linear-gradient(90deg,rgba(89,200,255,.1),rgba(89,200,255,.78),rgba(113,243,232,.62),rgba(125,112,255,.62));transform:scaleX(0);transform-origin:left;transition:transform 1.6s var(--ease);box-shadow:0 0 18px rgba(89,200,255,.16)}
+.s3.active .flow-line{transform:scaleX(1)}
+.flow{display:grid;grid-template-columns:repeat(6,1fr);gap:clamp(8px,1vw,16px);position:relative;z-index:2}
+.flow-step{min-height:clamp(112px,15vh,154px);display:flex;align-items:center;justify-content:center;padding:15px;border-radius:22px;border:1px solid rgba(176,215,255,.12);background:linear-gradient(180deg,rgba(19,28,52,.92),rgba(8,13,28,.94));font-size:clamp(17px,1.22vw,22px);font-weight:760;line-height:1.1;opacity:0;transform:translateY(20px) scale(.96);transition:.55s var(--ease);box-shadow:0 20px 50px rgba(0,0,0,.22)}
+.s3.active .flow-step.revealed{opacity:1;transform:none}
+.flow-step::before{content:attr(data-n);position:absolute;transform:translateY(-68px);font-size:12px;color:rgba(188,218,246,.5);letter-spacing:.1em}
+.context-cloud{display:flex;justify-content:center;gap:10px;flex-wrap:wrap;margin-top:clamp(24px,3.6vh,38px)}
+.context-cloud span{padding:9px 14px;border-radius:999px;border:1px solid rgba(255,255,255,.08);background:rgba(255,255,255,.035);color:#b9c8dc;font-size:clamp(14px,1vw,17px);opacity:0;transform:translateY(9px);transition:.45s var(--ease)}
+.s3.active .context-cloud span.revealed{opacity:1;transform:none}
+.big-claim{margin-top:clamp(24px,4vh,42px);font-size:clamp(25px,2.25vw,40px);font-weight:680;line-height:1.18;max-width:29ch}
+.big-claim em{font-style:normal;color:#a5eaff}
+
+/* Scene 4 */
+.s4 .scene-inner{display:grid;grid-template-columns:.9fr 1.1fr;gap:clamp(30px,5vw,88px);align-items:center}
+.practice-claim{font-size:clamp(43px,4.7vw,80px);line-height:.98;letter-spacing:-.045em;max-width:12ch}
+.practice-claim span{display:block;color:#dce9fb}.practice-claim strong{display:block;margin-top:12px;background:linear-gradient(100deg,#fff,#9de8ff 50%,#a59aff);-webkit-background-clip:text;background-clip:text;color:transparent}
+.practice-note{margin-top:24px;font-size:clamp(22px,1.65vw,29px);line-height:1.25;color:#b6c6dc;max-width:34ch}
+.practice-note b{color:#fff;font-weight:650}
+.practice-panel{position:relative;border:1px solid rgba(188,218,255,.14);background:linear-gradient(155deg,rgba(18,26,50,.76),rgba(8,12,26,.58));border-radius:32px;padding:clamp(26px,3vw,42px);min-height:clamp(440px,60vh,620px);display:flex;flex-direction:column;justify-content:center;overflow:hidden}
+.practice-panel::before{content:"";position:absolute;inset:-20%;background:conic-gradient(from 45deg,transparent,rgba(89,200,255,.05),transparent 22%,transparent 55%,rgba(125,112,255,.05),transparent 75%);animation:softRotate 24s linear infinite}
+@keyframes softRotate{to{transform:rotate(360deg)}}
+.cycle{display:grid;grid-template-columns:1fr;gap:10px;position:relative;z-index:1}
+.cycle-step{display:grid;grid-template-columns:54px 1fr auto;align-items:center;gap:16px;padding:13px 15px;border-radius:17px;background:rgba(255,255,255,.035);border:1px solid rgba(255,255,255,.065);opacity:0;transform:translateX(18px);transition:.48s var(--ease)}
+.s4.active .cycle-step.revealed{opacity:1;transform:none}
+.cycle-n{width:42px;height:42px;border-radius:13px;display:grid;place-items:center;background:rgba(89,200,255,.10);border:1px solid rgba(89,200,255,.18);color:#aee9ff;font-weight:800}
+.cycle-main{font-size:clamp(17px,1.2vw,22px);font-weight:740}.cycle-sub{color:#8ea1bc;font-size:clamp(13px,.94vw,16px)}
+.work-examples{position:relative;z-index:1;display:flex;flex-wrap:wrap;gap:8px;margin-top:20px}
+.work-examples span{padding:9px 12px;border-radius:999px;background:rgba(125,112,255,.07);border:1px solid rgba(151,130,255,.12);color:#cfc8ff;font-size:clamp(13px,.9vw,16px)}
+
+/* Scene 5 */
+.s5::before{content:"";position:absolute;inset:0;z-index:-2;background:
+ radial-gradient(70vw 70vh at 85% 18%,rgba(255,101,207,.10),transparent 64%),
+ radial-gradient(60vw 60vh at 15% 82%,rgba(99,231,255,.08),transparent 65%)}
+.s5 .scene-inner{align-items:center;text-align:center}
+.s5 .eyebrow::before{background:linear-gradient(90deg,var(--magenta),var(--cyan))}
+.s5-title{font-size:clamp(44px,5.1vw,86px);line-height:.98;letter-spacing:-.045em;max-width:15ch}
+.s5-title .agent{display:block;margin-top:10px;background:linear-gradient(92deg,#fff 5%,#c6a8ff 42%,#ff8ed9 68%,#8cecff);-webkit-background-clip:text;background-clip:text;color:transparent}
+.agent-field{width:min(1400px,100%);margin-top:clamp(26px,4.5vh,46px);position:relative;padding:18px 0}
+.agent-flow{display:grid;grid-template-columns:repeat(7,1fr);gap:clamp(8px,1vw,14px);position:relative;z-index:3}
+.agent-flow::before{content:"";position:absolute;left:4%;right:4%;top:50%;height:1px;background:linear-gradient(90deg,rgba(116,226,255,.12),rgba(153,117,255,.55),rgba(255,101,207,.52),rgba(113,243,232,.5));z-index:-1}
+.agent-node{position:relative;min-height:clamp(104px,14vh,145px);display:flex;align-items:center;justify-content:center;border-radius:22px;border:1px solid rgba(194,174,255,.14);background:linear-gradient(180deg,rgba(24,22,52,.9),rgba(9,12,28,.92));font-weight:740;font-size:clamp(15px,1.08vw,20px);line-height:1.12;padding:14px;opacity:0;transform:scale(.9);transition:.5s var(--ease);box-shadow:0 20px 45px rgba(0,0,0,.2)}
+.s5.active .agent-node.revealed{opacity:1;transform:none}
+.agent-node::after{content:"";position:absolute;inset:8px;border-radius:16px;border:1px solid rgba(255,255,255,.035)}
+.agent-node:nth-child(5){border-color:rgba(255,101,207,.28);box-shadow:0 0 38px rgba(255,101,207,.07)}
+.agent-node:nth-child(7){border-color:rgba(113,243,232,.22)}
+.data-dots{position:absolute;inset:0;overflow:hidden;pointer-events:none}
+.data-dots i{position:absolute;width:5px;height:5px;border-radius:50%;background:#d9c0ff;box-shadow:0 0 12px currentColor;opacity:.35;animation:dataMove 5s linear infinite}
+.data-dots i:nth-child(1){top:25%;left:8%;animation-delay:0s}.data-dots i:nth-child(2){top:63%;left:20%;animation-delay:-1.2s}.data-dots i:nth-child(3){top:38%;left:50%;animation-delay:-2.3s}.data-dots i:nth-child(4){top:74%;left:65%;animation-delay:-3.6s}.data-dots i:nth-child(5){top:18%;left:80%;animation-delay:-4.3s}
+@keyframes dataMove{0%{transform:translateX(-40px);opacity:0}15%{opacity:.5}85%{opacity:.5}100%{transform:translateX(120px);opacity:0}}
+.s5-copy{margin-top:clamp(24px,3.2vh,34px);font-size:clamp(21px,1.55vw,28px);line-height:1.28;color:#c6d2e7;max-width:58ch}
+.s5-copy b{color:#fff;font-weight:650}
+
+/* Scene 6 */
+.s6{background:radial-gradient(80vw 70vh at 50% 50%,rgba(62,107,179,.08),transparent 70%)}
+.s6 .scene-inner{align-items:center;text-align:center;justify-content:center}
+.final-mark{width:72px;height:72px;border-radius:50%;border:1px solid rgba(136,221,255,.28);display:grid;place-items:center;margin-bottom:clamp(24px,4vh,42px);box-shadow:0 0 50px rgba(89,200,255,.06);position:relative}
+.final-mark::before,.final-mark::after{content:"";position:absolute;border-radius:50%;border:1px solid rgba(118,204,255,.12)}
+.final-mark::before{inset:-16px}.final-mark::after{inset:-34px;opacity:.45}
+.final-mark i{width:12px;height:12px;border-radius:50%;background:#9eeaff;box-shadow:0 0 24px rgba(89,200,255,.8)}
+.final-title{font-size:clamp(52px,6.3vw,108px);line-height:.95;letter-spacing:-.055em;max-width:15ch;font-weight:750}
+.final-title .quiet{display:block;color:#a9b8ce;font-weight:570;margin-bottom:10px}
+.final-title .strong{display:block;background:linear-gradient(100deg,#fff 10%,#a6ebff 55%,#a7a1ff);-webkit-background-clip:text;background-clip:text;color:transparent}
+.final-course{margin-top:clamp(32px,4.6vh,50px);font-size:clamp(24px,2vw,34px);font-weight:720;letter-spacing:-.015em}
+.final-sub{margin-top:10px;color:#9fb0c7;font-size:clamp(17px,1.25vw,22px);letter-spacing:.03em}
+.final-school{margin-top:clamp(26px,3.8vh,40px);color:rgba(185,205,229,.55);font-size:clamp(14px,1vw,17px);letter-spacing:.08em;text-transform:uppercase}
+
+/* Presenter / overlays */
+.presenter{position:absolute;inset:0;z-index:100;display:grid;place-items:center;background:rgba(2,4,10,.62);backdrop-filter:blur(10px);opacity:0;visibility:hidden;transition:.25s ease;padding:28px}
+.presenter.show{opacity:1;visibility:visible}
+.presenter-card{width:min(900px,92vw);border:1px solid rgba(187,220,255,.16);border-radius:26px;background:rgba(9,14,28,.96);box-shadow:0 36px 120px rgba(0,0,0,.55);padding:clamp(24px,3vw,42px)}
+.presenter-top{display:flex;justify-content:space-between;gap:20px;align-items:flex-start}
+.presenter h3{margin:0;font-size:clamp(28px,2.4vw,40px)}
+.presenter-time{color:#9fe9ff;font-weight:720;font-size:clamp(17px,1.2vw,20px)}
+.presenter-line{margin-top:18px;color:#d7e4f6;font-size:clamp(19px,1.45vw,24px);line-height:1.4}
+.presenter-keys{display:flex;flex-wrap:wrap;gap:9px;margin-top:22px;color:#9faec3;font-size:15px}
+.presenter-keys span{border:1px solid rgba(255,255,255,.08);border-radius:10px;padding:8px 10px;background:rgba(255,255,255,.03)}
+.close-help{border:0;background:rgba(255,255,255,.06);border-radius:12px;padding:10px 12px;cursor:pointer;color:#d9e7f8}
+.toast{position:absolute;left:50%;bottom:72px;z-index:120;transform:translate(-50%,20px);padding:13px 17px;border-radius:13px;background:rgba(8,14,29,.94);border:1px solid rgba(175,218,255,.18);color:#d9ebfb;box-shadow:0 22px 55px rgba(0,0,0,.3);opacity:0;visibility:hidden;transition:.28s var(--ease);font-size:15px;max-width:min(88vw,680px);text-align:center}
+.toast.show{opacity:1;visibility:visible;transform:translate(-50%,0)}
+
+.low-power .blob,.low-power .orbit-ring.r2,.low-power .practice-panel::before,.low-power .data-dots{animation:none!important;display:none!important}
+.low-power .cursor-glow{display:none}
+.low-power *{scroll-behavior:auto!important}
+
+@media(max-width:1200px){
+  :root{--scene-pad-x:clamp(28px,4vw,54px)}
+  .hero-title{font-size:clamp(50px,6.2vw,82px)}
+  .dialog-layout{gap:18px}.bubble{font-size:18px}.task-copy{font-size:18px}.missing{font-size:13px}
+  .flow-step{font-size:16px;min-height:105px}.flow-step::before{display:none}
+  .s4 .scene-inner{gap:26px}.practice-panel{min-height:470px}
+  .agent-node{font-size:14px;min-height:100px;padding:10px}
+}
+@media(max-width:900px){
+  .brand{font-size:12px}.scene-count{font-size:13px}.nav-hint{display:none}
+  .s1 .scene-inner{justify-content:center}.s1-orbit{opacity:.35;width:50vw}
+  .choice-grid{grid-template-columns:1fr;gap:10px}.choice{min-height:105px;padding:18px;border-radius:20px}.choice::after{width:62px;height:62px}
+  .dialog-layout{grid-template-columns:1fr}.dialog-card{display:none}.task-card{min-height:55vh}.compare-title{font-size:38px}
+  .flow{grid-template-columns:repeat(3,1fr)}.flow-line{display:none}.context-cloud{display:none}
+  .s4 .scene-inner{display:flex}.practice-panel{min-height:auto;width:100%}.practice-claim{max-width:16ch}
+  .agent-flow{grid-template-columns:repeat(4,1fr)}.agent-flow::before{display:none}
+}
+@media(max-height:820px) and (min-width:901px){
+  .scene{padding-top:60px;padding-bottom:52px}
+  .s1-head{max-width:64%}
+  .s1 .eyebrow{margin-bottom:10px}
+  .s1 .lead{font-size:20px;margin-top:14px!important}
+  .choice-grid{margin-top:16px}.choice{min-height:118px;padding:18px 22px;border-radius:20px}.choice strong{font-size:25px}.choice span{font-size:15px}.choice::after{width:66px;height:66px}
+  .s1-footer{margin-top:10px}.fullscreen-btn{padding:10px 15px}.s1-footer{font-size:14px}
+  .s2 .eyebrow{margin-bottom:10px}.compare-title{font-size:clamp(36px,3.45vw,46px);margin-bottom:14px;max-width:21ch}
+  .dialog-layout{height:410px;min-height:0;gap:16px}.dialog-card,.task-card{padding:16px 18px;border-radius:22px}.dialog-card{gap:10px}
+  .dialog-head{font-size:14px}.bubble{font-size:17px;line-height:1.25;padding:12px 14px;border-radius:16px}
+  .missing-list{gap:7px}.missing{font-size:13.5px;padding:8px 9px;border-radius:10px}
+  .task-label{font-size:13px}.task-copy{font-size:17px;line-height:1.24;margin:9px 0 12px}.component-row{gap:6px}.component{font-size:11.5px;padding:6px 8px}
+  .better-answer{font-size:15px;line-height:1.28;margin-top:10px;padding:11px 12px;border-radius:13px}.transform-btn{margin-top:9px;padding:9px 12px;font-size:13px}
+  .s3 .eyebrow{margin-bottom:8px}
+  .s3 h2{font-size:clamp(44px,4.7vw,64px);line-height:.94}
+  .flow-wrap{margin-top:18px}
+  .flow-step{min-height:94px;padding:12px;border-radius:18px}
+  .context-cloud{margin-top:14px;gap:7px}.context-cloud span{padding:7px 11px;font-size:13px}
+  .big-claim{margin-top:12px;font-size:clamp(23px,2vw,31px);line-height:1.12}
+  .final-mark{width:56px;height:56px;margin-bottom:22px}.final-mark::before{inset:-12px}.final-mark::after{inset:-24px}
+  .final-title{font-size:clamp(46px,5.05vw,72px);max-width:16ch}.final-course{margin-top:24px;font-size:25px}.final-sub{font-size:16px}.final-school{margin-top:18px;font-size:13px}
+}
+@media(max-height:720px){
+  .scene{padding-top:56px;padding-bottom:46px}
+  .choice-grid{margin-top:22px}.choice{min-height:125px}.s1-footer{margin-top:14px}
+  .dialog-layout{min-height:430px}.dialog-card,.task-card{padding:20px}.bubble{padding:14px 16px}.missing-list{gap:7px}.missing{padding:8px 10px}
+  .flow-wrap{margin-top:24px}.flow-step{min-height:96px}.big-claim{margin-top:20px}
+  .practice-panel{min-height:430px;padding:22px}.cycle-step{padding:10px 12px}.cycle-n{width:36px;height:36px}.work-examples{margin-top:12px}
+  .agent-field{margin-top:20px}.agent-node{min-height:94px}.s5-copy{margin-top:18px}
+}
+@media(prefers-reduced-motion:reduce){
+  *,*::before,*::after{animation-duration:.001ms!important;animation-iteration-count:1!important;transition-duration:.12s!important}
+  .blob,.data-dots{display:none!important}.cursor-glow{opacity:.45}
+}
+</style>
+</head>
+<body>
+<div id="app" aria-live="polite">
+  <div class="ambient" aria-hidden="true">
+    <div class="cursor-glow"></div><div class="blob a"></div><div class="blob b"></div><div class="blob c"></div><div class="noise"></div>
+  </div>
+
+  <div class="chrome" aria-hidden="true">
+    <div class="brand"><span class="brand-dot"></span><span>Точка роста · Школа №14</span></div>
+    <div class="scene-count" id="sceneCount">01 / 06</div>
+    <div class="progress-track"><div class="progress-fill" id="progressFill"></div></div>
+    <div class="nav-hint" id="navHint"><span><kbd>→</kbd> далее</span><span><kbd>H</kbd> помощь</span></div>
+  </div>
+
+  <main id="stage">
+    <section class="scene s1 active" data-scene="0" aria-label="Сцена 1. Вступление">
+      <div class="scene-inner">
+        <div class="s1-orbit" id="s1Orbit" aria-hidden="true">
+          <svg class="orbit-svg" viewBox="0 0 500 500">
+            <circle class="orbit-ring" cx="250" cy="250" r="180"/><circle class="orbit-ring r2" cx="250" cy="250" r="130"/>
+            <path class="orbit-ring" d="M65 250c78-92 291-111 370 0-79 111-292 92-370 0Z" opacity=".6"/>
+            <circle class="orbit-node" cx="405" cy="165" r="5"/><circle class="orbit-node" cx="135" cy="354" r="4"/><circle class="orbit-node" cx="307" cy="382" r="3"/>
+          </svg>
+        </div>
+        <div class="s1-head">
+          <div class="eyebrow">Курс 1 · ИИ: говори на его языке</div>
+          <h1 class="hero-title">ИИ уже умеет <span class="accent">многое.</span><br>А ты умеешь заставить его работать на себя?</h1>
+          <p class="lead" style="margin-top:22px">Выберите, где проверить это прямо сейчас.</p>
+        </div>
+        <div class="choice-grid" id="choiceGrid">
+          <button class="choice" data-branch="study"><strong>УЧЁБА</strong><span>Понять · потренироваться · проверить себя</span></button>
+          <button class="choice" data-branch="life"><strong>ЖИЗНЬ</strong><span>Разобраться · сравнить · организовать</span></button>
+          <button class="choice" data-branch="create"><strong>СОЗДАНИЕ</strong><span>Придумать · сделать · улучшить</span></button>
+        </div>
+        <div class="s1-footer"><button class="fullscreen-btn" id="fullscreenBtn">НА ВЕСЬ ЭКРАН</button><span>или F · показ полностью работает и без fullscreen</span></div>
+      </div>
+    </section>
+
+    <section class="scene s2" data-scene="1" aria-label="Сцена 2. Вопрос и реальная задача">
+      <div class="scene-inner">
+        <div class="eyebrow"><span id="scene2Branch">УЧЁБА</span> · От вопроса — к реальной задаче</div>
+        <h2 class="compare-title">Ответ может звучать правильно — и всё равно <span style="color:#9ee8ff">не решать твою задачу.</span></h2>
+        <div class="dialog-layout">
+          <div class="dialog-card">
+            <div class="dialog-head"><span>Обычный чат с ИИ</span><span class="dots"><i></i><i></i><i></i></span></div>
+            <div class="bubble user" id="weakPrompt">Объясни мне квадратные уравнения.</div>
+            <div class="bubble ai generic-answer" id="genericAnswer"><strong>Квадратное уравнение</strong> имеет вид ax² + bx + c = 0. Для решения можно использовать дискриминант D = b² − 4ac…</div>
+            <div class="missing-list" id="missingList">
+              <div class="missing">Где именно ошибка?</div><div class="missing">Какой уровень?</div>
+              <div class="missing">Сколько времени?</div><div class="missing">Какой результат нужен?</div>
+            </div>
+          </div>
+          <div class="task-card" id="taskCard">
+            <div>
+              <div class="task-label">Реальная задача</div>
+              <div class="task-copy" id="taskCopy">Я в 8 классе. Завтра самостоятельная по квадратным уравнениям. Формулу знаю, но путаюсь при переносе и проверке. У меня 25 минут. Сначала задай 2 коротких вопроса, затем разберём 1 пример вместе и дай 2 для тренировки. Не решай за меня.</div>
+              <div class="component-row"><span class="component">ЦЕЛЬ</span><span class="component">КОНТЕКСТ</span><span class="component">ОГРАНИЧЕНИЯ</span><span class="component">ФОРМАТ</span><span class="component">КРИТЕРИЙ</span></div>
+              <div class="better-answer" id="betterAnswer"><b>Начнём с диагностики.</b> 1) Где чаще ошибка: перенос или подстановка? 2) Покажи один пример, где ответ не сошёлся — найдём точку ошибки.</div>
+            </div>
+            <button class="transform-btn" id="transformBtn">СДЕЛАТЬ ЭТО ЗАДАЧЕЙ →</button>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="scene s3" data-scene="2" aria-label="Сцена 3. Как работаем с ИИ">
+      <div class="scene-inner">
+        <div class="eyebrow">Как мы работаем с ИИ</div>
+        <h2>Не «волшебный запрос». <span style="color:#a4eaff">Управляемая работа.</span></h2>
+        <div class="flow-wrap">
+          <div class="flow-line"></div>
+          <div class="flow" id="flowSteps">
+            <div class="flow-step" data-n="01">РЕАЛЬНАЯ<br>ЗАДАЧА</div><div class="flow-step" data-n="02">КОНТЕКСТ</div><div class="flow-step" data-n="03">ДИАЛОГ</div><div class="flow-step" data-n="04">ПРОВЕРКА</div><div class="flow-step" data-n="05">ДОРАБОТКА</div><div class="flow-step" data-n="06">РЕЗУЛЬТАТ</div>
+          </div>
+          <div class="context-cloud" id="contextCloud"><span>учёба</span><span>информация</span><span>файлы</span><span>изображения</span><span>творчество</span><span>быт</span><span>проекты</span></div>
+        </div>
+        <div class="big-claim">Мы учимся не «писать промпты».<br><em>Мы учимся решать реальные задачи с ИИ.</em></div>
+      </div>
+    </section>
+
+    <section class="scene s4" data-scene="3" aria-label="Сцена 4. Занятие это практика">
+      <div class="scene-inner">
+        <div>
+          <div class="eyebrow">Занятие = практика</div>
+          <h2 class="practice-claim"><span>Сначала делаешь сам.</span><strong>Потом делаешь лучше.</strong></h2>
+          <p class="practice-note">На занятии <b>вы работаете больше, чем преподаватель говорит.</b> Первая попытка — важна: она показывает, что уже умеешь именно ты.</p>
+        </div>
+        <div class="practice-panel">
+          <div class="cycle" id="practiceCycle">
+            <div class="cycle-step"><span class="cycle-n">1</span><div><div class="cycle-main">ПОПРОБОВАЛ</div><div class="cycle-sub">самостоятельная первая попытка</div></div><span>→</span></div>
+            <div class="cycle-step"><span class="cycle-n">2</span><div><div class="cycle-main">ПОЛУЧИЛ</div><div class="cycle-sub">смотрю, что реально вышло</div></div><span>→</span></div>
+            <div class="cycle-step"><span class="cycle-n">3</span><div><div class="cycle-main">РАЗОБРАЛ</div><div class="cycle-sub">нахожу сильное и слабое</div></div><span>→</span></div>
+            <div class="cycle-step"><span class="cycle-n">4</span><div><div class="cycle-main">УЛУЧШИЛ</div><div class="cycle-sub">меняю задачу, контекст или стратегию</div></div><span>→</span></div>
+            <div class="cycle-step"><span class="cycle-n">5</span><div><div class="cycle-main">ПРОВЕРИЛ</div><div class="cycle-sub">факты, требования, применимость</div></div><span>→</span></div>
+            <div class="cycle-step"><span class="cycle-n">6</span><div><div class="cycle-main">ПРИМЕНИЛ</div><div class="cycle-sub">в новой или собственной задаче</div></div><span>✓</span></div>
+          </div>
+          <div class="work-examples"><span>сложная тема</span><span>сомнительный факт</span><span>инструкция</span><span>презентация</span><span>документ</span><span>изображение</span></div>
+        </div>
+      </div>
+    </section>
+
+    <section class="scene s5" data-scene="4" aria-label="Сцена 5. ИИ агентный режим">
+      <div class="scene-inner">
+        <div class="eyebrow">А что потом?</div>
+        <h2 class="s5-title">Когда одного хорошего диалога уже мало…<span class="agent">ИИ: агентный режим</span></h2>
+        <div class="agent-field">
+          <div class="data-dots" aria-hidden="true"><i></i><i></i><i></i><i></i><i></i></div>
+          <div class="agent-flow" id="agentFlow">
+            <div class="agent-node">ЗАДАЧА</div><div class="agent-node">ПРОЦЕСС</div><div class="agent-node">ПОМОЩНИК</div><div class="agent-node">ИНСТРУМЕНТЫ</div><div class="agent-node">АГЕНТ</div><div class="agent-node">ТЕСТ</div><div class="agent-node">НОВАЯ<br>ВЕРСИЯ</div>
+          </div>
+        </div>
+        <p class="s5-copy">Здесь мы уже не просто решаем одну задачу с ИИ — <b>мы проектируем повторяемый способ решать целый класс задач.</b></p>
+      </div>
+    </section>
+
+    <section class="scene s6" data-scene="5" aria-label="Сцена 6. Финал">
+      <div class="scene-inner">
+        <div class="final-mark" aria-hidden="true"><i></i></div>
+        <h2 class="final-title"><span class="quiet">К концу курса ИИ будет уметь больше.</span><span class="strong">Главное — больше должны уметь вы.</span></h2>
+        <div class="final-course">ИИ: говори на его языке</div>
+        <div class="final-sub">Реальные задачи. Практика. Проверка. Результат.</div>
+        <div class="final-school">Точка роста · Школа №14 · Калья</div>
+      </div>
+    </section>
+  </main>
+
+  <div class="nav-controls" id="navControls" aria-label="Навигация презентации">
+    <button class="nav-btn prev" id="prevBtn" type="button">← НАЗАД</button>
+    <button class="nav-btn next" id="nextBtn" type="button">ДАЛЬШЕ →</button>
+  </div>
+
+  <div class="presenter" id="presenter" role="dialog" aria-modal="true" aria-label="Помощь ведущему">
+    <div class="presenter-card">
+      <div class="presenter-top"><div><div class="presenter-time" id="presenterTime"></div><h3 id="presenterTitle"></h3></div><button class="close-help" id="closeHelp">Закрыть ×</button></div>
+      <p class="presenter-line" id="presenterLine"></p>
+      <div class="presenter-keys"><span>→ / PageDown — следующая сцена</span><span>← / PageUp — назад</span><span>Space — шаг / далее</span><span>F — fullscreen</span><span>R — сначала</span><span>L — low power</span><span>H / ? — помощь</span></div>
+    </div>
+  </div>
+  <div class="toast" id="toast"></div>
+</div>
+<script>
+(function(){
+'use strict';
+const app=document.getElementById('app');
+const scenes=[...document.querySelectorAll('.scene')];
+const count=document.getElementById('sceneCount');
+const progress=document.getElementById('progressFill');
+const navHint=document.getElementById('navHint');
+const prevBtn=document.getElementById('prevBtn');
+const nextBtn=document.getElementById('nextBtn');
+const presenter=document.getElementById('presenter');
+const presenterTime=document.getElementById('presenterTime');
+const presenterTitle=document.getElementById('presenterTitle');
+const presenterLine=document.getElementById('presenterLine');
+const toast=document.getElementById('toast');
+const taskCard=document.getElementById('taskCard');
+const missingList=document.getElementById('missingList');
+const transformBtn=document.getElementById('transformBtn');
+const scene2Branch=document.getElementById('scene2Branch');
+const weakPrompt=document.getElementById('weakPrompt');
+const genericAnswer=document.getElementById('genericAnswer');
+const taskCopy=document.getElementById('taskCopy');
+const betterAnswer=document.getElementById('betterAnswer');
+let scene=0;
+let selectedBranch='study';
+let s2Step=0;
+let lowPower=false;
+let animTimers=[];
+let toastTimer=null;
+
+const branchData={
+  study:{
+    label:'УЧЁБА',
+    weak:'Объясни мне квадратные уравнения.',
+    generic:'<strong>Квадратное уравнение</strong> имеет вид ax² + bx + c = 0. Для решения можно использовать дискриминант D = b² − 4ac…',
+    missing:['Где именно ошибка?','Какой уровень?','Сколько времени?','Какой результат нужен?'],
+    task:'Я в 8 классе. Завтра самостоятельная по квадратным уравнениям. Формулу знаю, но путаюсь при переносе и проверке. У меня 25 минут. Сначала задай 2 коротких вопроса, затем разберём 1 пример вместе и дай 2 для тренировки. Не решай за меня.',
+    better:'<b>Начнём с диагностики.</b> 1) Где чаще ошибка: перенос или подстановка? 2) Покажи один пример, где ответ не сошёлся — найдём точку ошибки.'
+  },
+  life:{
+    label:'ЖИЗНЬ',
+    weak:'Составь мне план на завтра.',
+    generic:'Можно начать день с учёбы, затем выделить время на домашние дела, отдых и подготовку к следующему дню. Старайся чередовать нагрузку и паузы…',
+    missing:['Что уже занято?','Сколько времени на дорогу?','Что обязательно успеть?','Когда нужен отдых?'],
+    task:'Завтра уроки до 14:00, тренировка с 17:30 до 19:00. Дорога от школы домой — 25 минут, до тренировки и обратно — по 20. К среде нужно подготовить доклад, на него нужен час. После школы хочу 45 минут отдыха. Собери реалистичный план с 20-минутным запасом и не ставь сложную работу после 21:00.',
+    better:'<b>Сначала фиксируем жёсткие точки.</b> Школа до 14:00 и тренировка 17:30–19:00. Между ними оставляем дорогу, 45 минут отдыха, час на доклад и отдельный 20-минутный буфер — без плотной стыковки.'
+  },
+  create:{
+    label:'СОЗДАНИЕ',
+    weak:'Сделай мне постер про космос.',
+    generic:'Можно использовать тёмный фон, крупное изображение планеты, яркий заголовок и несколько интересных фактов о космосе…',
+    missing:['Для кого?','Что главное?','Где показываем?','Как понять, что получилось?'],
+    task:'Нужен горизонтальный постер 16:9 для школьного экрана на тему «Почему Марс красный?». Аудитория — школьники. Один главный вопрос, схема из 3 шагов, не больше 30 слов на экране, крупный текст. Сначала предложи 3 разные концепции; после моего выбора собери черновик — я проверю и доработаю. Факты, которые требуют проверки, отметь отдельно.',
+    better:'<b>Начну с выбора концепции.</b> 1) «Ржавчина в масштабе планеты»; 2) «Путь железа: порода → окисление → красная пыль»; 3) «Марс крупным планом». После выбора соберу черновик 16:9 и отдельно отмечу факты для проверки.'
+  }
+};
+function applyBranchContent(branch){
+  selectedBranch=branchData[branch]?branch:'study';
+  const d=branchData[selectedBranch];
+  scene2Branch.textContent=d.label;
+  weakPrompt.textContent=d.weak;
+  genericAnswer.innerHTML=d.generic;
+  [...missingList.querySelectorAll('.missing')].forEach((el,i)=>el.textContent=d.missing[i]||'');
+  taskCopy.textContent=d.task;
+  betterAnswer.innerHTML=d.better;
+}
+
+const presenterData=[
+  ['Сцена 1 · 20–30 сек','Хук','«ИИ уже умеет очень многое. Но умеем ли мы заставить его работать на нашу задачу? Учёба, жизнь или создание — где попробуем?»'],
+  ['Сцена 2 · 50–65 сек','Вопрос ≠ задача','«Вы выбрали область — и пример меняется вместе с ней. Но механизм один: ИИ нужен контекст, ограничения и критерий результата, иначе он отвечает вообще, а не на вашу реальную ситуацию.»'],
+  ['Сцена 3 · 45–55 сек','Как работаем','«Не коллекция нейросетей и не волшебные промпты. Реальная задача → контекст → диалог → проверка → доработка → результат.»'],
+  ['Сцена 4 · 45–55 сек','Занятие = практика','«Сначала вы пробуете сами. Потом разбираем, что получилось. Затем улучшаете, проверяете и переносите способ на новую задачу.»'],
+  ['Сцена 5 · 40–50 сек','Teaser C2','«Когда отдельного диалога мало, строим повторяемый процесс: помощники, инструменты, агентный цикл, тесты, новые версии.»'],
+  ['Сцена 6 · 20–30 сек','Финал','«К концу курса ИИ точно будет уметь больше. Но главное — больше должны уметь вы.»']
+];
+
+function clearTimers(){animTimers.forEach(clearTimeout);animTimers=[]}
+function later(fn,ms){const id=setTimeout(fn,ms);animTimers.push(id);return id}
+function showToast(msg,ms=1900){clearTimeout(toastTimer);toast.textContent=msg;toast.classList.add('show');toastTimer=setTimeout(()=>toast.classList.remove('show'),ms)}
+function updateNavControls(){
+  prevBtn.hidden=scene===0;
+  nextBtn.hidden=scene===0;
+  if(scene===5){nextBtn.hidden=false;nextBtn.textContent='СНАЧАЛА ↺';return}
+  nextBtn.textContent=(scene===1&&s2Step<3)?'ШАГ →':'ДАЛЬШЕ →';
+}
+function updateChrome(){count.textContent=String(scene+1).padStart(2,'0')+' / 06';progress.style.width=((scene+1)/6*100)+'%';progress.style.background=scene===4?'linear-gradient(90deg,var(--violet),var(--magenta),var(--cyan))':'linear-gradient(90deg,var(--blue),var(--cyan))';updateNavControls()}
+function resetSceneState(){clearTimers();
+  if(scene!==1){s2Step=0;missingList.classList.remove('show');taskCard.classList.remove('ready','answer');transformBtn.textContent='СДЕЛАТЬ ЭТО ЗАДАЧЕЙ →'}
+  document.querySelectorAll('.flow-step,.context-cloud span,.cycle-step,.agent-node').forEach(el=>el.classList.remove('revealed'));
+}
+function animateCurrent(){clearTimers();
+  if(scene===2){
+    [...document.querySelectorAll('.flow-step')].forEach((el,i)=>later(()=>el.classList.add('revealed'),150+i*180));
+    [...document.querySelectorAll('.context-cloud span')].forEach((el,i)=>later(()=>el.classList.add('revealed'),700+i*85));
+  }
+  if(scene===3){[...document.querySelectorAll('.cycle-step')].forEach((el,i)=>later(()=>el.classList.add('revealed'),130+i*145));}
+  if(scene===4){[...document.querySelectorAll('.agent-node')].forEach((el,i)=>later(()=>el.classList.add('revealed'),120+i*135));}
+}
+function go(target,dir){
+  target=Math.max(0,Math.min(scenes.length-1,target)); if(target===scene)return;
+  resetSceneState();
+  const old=scene;scene=target;
+  if(scene===1){s2Step=0;missingList.classList.remove('show');taskCard.classList.remove('ready','answer');transformBtn.textContent='СДЕЛАТЬ ЭТО ЗАДАЧЕЙ →';}
+  scenes[old].classList.remove('active');scenes[old].classList.add(dir==='back'?'exit-right':'exit-left');
+  setTimeout(()=>scenes[old].classList.remove('exit-left','exit-right'),560);
+  scenes[scene].classList.add('active');
+  updateChrome();animateCurrent();
+}
+function next(){if(scene<5)go(scene+1,'forward')}
+function prev(){if(scene>0)go(scene-1,'back')}
+function resetAll(){
+  clearTimers();s2Step=0;missingList.classList.remove('show');taskCard.classList.remove('ready','answer');transformBtn.textContent='СДЕЛАТЬ ЭТО ЗАДАЧЕЙ →';presenter.classList.remove('show');selectedBranch='study';applyBranchContent(selectedBranch);
+  scenes.forEach((s,i)=>{s.classList.toggle('active',i===0);s.classList.remove('exit-left','exit-right')});scene=0;updateChrome();showToast('Презентация возвращена к началу');
+}
+function stepScene2(){
+  if(s2Step===0){missingList.classList.add('show');transformBtn.textContent='ДОБАВИТЬ КОНТЕКСТ →';s2Step=1;updateNavControls();return}
+  if(s2Step===1){taskCard.classList.add('ready');transformBtn.textContent='ПОКАЗАТЬ, ЧТО ИЗМЕНИЛОСЬ →';s2Step=2;updateNavControls();return}
+  if(s2Step===2){taskCard.classList.add('answer');transformBtn.textContent='К СХЕМЕ КУРСА →';s2Step=3;updateNavControls();return}
+  next();
+}
+function revealOrNext(selector){
+  const els=[...document.querySelectorAll(selector)];
+  const complete=els.length&&els.every(el=>el.classList.contains('revealed'));
+  if(complete){next();return}
+  els.forEach(el=>el.classList.add('revealed'));
+}
+function spaceAction(){
+  if(presenter.classList.contains('show')){presenter.classList.remove('show');return}
+  if(scene===1){stepScene2();return}
+  if(scene===2){revealOrNext('.flow-step,.context-cloud span');return}
+  if(scene===3){revealOrNext('.cycle-step');return}
+  if(scene===4){revealOrNext('.agent-node');return}
+  next();
+}
+async function fullscreen(){
+  try{
+    if(document.fullscreenElement){await document.exitFullscreen();return}
+    if(document.documentElement.requestFullscreen){await document.documentElement.requestFullscreen();}
+    else showToast('Fullscreen API недоступен — используйте F11 браузера');
+  }catch(e){showToast('Браузер отклонил fullscreen — нажмите F11');}
+}
+function toggleHelp(){
+  if(presenter.classList.contains('show')){presenter.classList.remove('show');return}
+  const d=presenterData[scene];presenterTime.textContent=d[0];presenterTitle.textContent=d[1];presenterLine.textContent=d[2];presenter.classList.add('show');
+}
+function toggleLowPower(){lowPower=!lowPower;app.classList.toggle('low-power',lowPower);showToast(lowPower?'Low power: декоративные эффекты снижены':'Полные декоративные эффекты включены')}
+
+window.addEventListener('keydown',e=>{
+  if(e.key==='Escape'){presenter.classList.remove('show');return}
+  const k=e.key.toLowerCase();
+  if(k==='h'||e.key==='?'){e.preventDefault();toggleHelp();return}
+  if(k==='f'){e.preventDefault();fullscreen();return}
+  if(k==='r'){e.preventDefault();resetAll();return}
+  if(k==='l'){e.preventDefault();toggleLowPower();return}
+  if(e.key==='ArrowRight'||e.key==='PageDown'){e.preventDefault();next();return}
+  if(e.key==='ArrowLeft'||e.key==='PageUp'){e.preventDefault();prev();return}
+  if(e.key==='Home'){e.preventDefault();go(0,'back');return}
+  if(e.key==='End'){e.preventDefault();go(5,'forward');return}
+  if(e.code==='Space'){e.preventDefault();spaceAction();return}
+});
+
+prevBtn.addEventListener('click',prev);
+nextBtn.addEventListener('click',()=>{
+  if(scene===5){resetAll();return}
+  if(scene===1){stepScene2();return}
+  next();
+});
+document.getElementById('fullscreenBtn').addEventListener('click',fullscreen);
+document.getElementById('closeHelp').addEventListener('click',()=>presenter.classList.remove('show'));
+presenter.addEventListener('pointerdown',e=>{if(e.target===presenter)presenter.classList.remove('show')});
+transformBtn.addEventListener('click',stepScene2);
+
+document.querySelectorAll('.choice').forEach(btn=>{
+  btn.addEventListener('pointermove',e=>{const r=btn.getBoundingClientRect();btn.style.setProperty('--cx',(e.clientX-r.left)+'px');btn.style.setProperty('--cy',(e.clientY-r.top)+'px')});
+  btn.addEventListener('click',()=>{
+    applyBranchContent(btn.dataset.branch);
+    go(1,'forward');
+  });
+});
+
+window.addEventListener('pointermove',e=>{
+  document.documentElement.style.setProperty('--mx',e.clientX+'px');document.documentElement.style.setProperty('--my',e.clientY+'px');
+  const px=(e.clientX/window.innerWidth-.5),py=(e.clientY/window.innerHeight-.5);const orbit=document.getElementById('s1Orbit');orbit.style.setProperty('--px',px.toFixed(3));orbit.style.setProperty('--py',py.toFixed(3));
+},{passive:true});
+
+let touchStartX=null;
+window.addEventListener('pointerdown',e=>{if(e.pointerType==='touch')touchStartX=e.clientX},{passive:true});
+window.addEventListener('pointerup',e=>{if(e.pointerType==='touch'&&touchStartX!==null){const dx=e.clientX-touchStartX;touchStartX=null;if(Math.abs(dx)>85){dx<0?next():prev()}}},{passive:true});
+
+document.addEventListener('visibilitychange',()=>{app.classList.toggle('low-power',document.hidden||lowPower)});
+window.addEventListener('resize',()=>{if(window.innerWidth<1100||window.innerHeight<680){app.classList.add('low-power')}else if(!lowPower){app.classList.remove('low-power')}});
+if(window.innerWidth<1100||window.innerHeight<680)app.classList.add('low-power');
+setTimeout(()=>navHint.classList.add('fade'),5000);
+applyBranchContent(selectedBranch);
+updateChrome();
+})();
+</script>
+</body>
+</html>
