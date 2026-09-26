@@ -1,0 +1,1264 @@
+<!doctype html>
+<html lang="ru">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta name="color-scheme" content="dark">
+<meta name="theme-color" content="#050711">
+<meta name="description" content="ИИ: говори на его языке — интерактивный сайт курса школы №14, п. Калья.">
+<meta property="og:title" content="ИИ: говори на его языке">
+<meta property="og:description" content="Реальные задачи. Практика. Проверка. Результат.">
+<meta property="og:type" content="website">
+<meta property="og:url" content="https://drozdov-dmitry.github.io/school14-ai-courses-site/START/START.html">
+<title>ИИ: говори на его языке · Школа №14</title>
+<style>
+:root{
+  --bg:#050711;
+  --bg2:#080b18;
+  --panel:rgba(14,19,38,.72);
+  --panel-strong:rgba(10,14,29,.93);
+  --line:rgba(182,208,255,.18);
+  --line-strong:rgba(139,201,255,.40);
+  --text:#f7fbff;
+  --muted:#aab9cf;
+  --blue:#59c8ff;
+  --cyan:#71f3e8;
+  --indigo:#7d70ff;
+  --violet:#a16dff;
+  --magenta:#ff65cf;
+  --good:#7ff3ba;
+  --warn:#ffd37a;
+  --mx:50vw;
+  --my:45vh;
+  --ease:cubic-bezier(.2,.8,.2,1);
+  --scene-pad-x:clamp(34px,5.2vw,98px);
+}
+*{box-sizing:border-box}
+html,body{
+  width:100%;height:100%;margin:0;overflow:hidden;
+  background:var(--bg);color:var(--text);
+  font-family:"Segoe UI Variable","Segoe UI",Arial,sans-serif;
+}
+body{user-select:none;-webkit-user-select:none;overscroll-behavior:none}
+button,input,select,textarea{font:inherit;color:inherit}
+input,select,textarea{user-select:text;-webkit-user-select:text}
+button:focus-visible,input:focus-visible,select:focus-visible,textarea:focus-visible{
+  outline:3px solid rgba(89,200,255,.78);outline-offset:3px
+}
+#app{
+  position:relative;width:100%;height:var(--app-height,100dvh);min-height:0;isolation:isolate;
+  background:
+    radial-gradient(75vw 65vh at 10% 90%,rgba(58,95,214,.12),transparent 66%),
+    radial-gradient(70vw 62vh at 92% 5%,rgba(64,211,255,.08),transparent 70%),
+    linear-gradient(160deg,#050711,#070b16 55%,#050711)
+}
+#app::before{
+  content:"";position:absolute;inset:0;z-index:-4;pointer-events:none;opacity:.8;
+  background-image:
+    linear-gradient(rgba(255,255,255,.018) 1px,transparent 1px),
+    linear-gradient(90deg,rgba(255,255,255,.018) 1px,transparent 1px);
+  background-size:68px 68px;
+  mask-image:linear-gradient(to bottom,transparent 0,#000 18%,#000 82%,transparent 100%)
+}
+.ambient{position:absolute;inset:0;z-index:-3;overflow:hidden;pointer-events:none}
+.cursor-glow{position:absolute;inset:0;background:radial-gradient(420px circle at var(--mx) var(--my),rgba(76,183,255,.15),transparent 66%);transition:opacity .3s ease}
+.blob{position:absolute;border-radius:50%;filter:blur(64px);opacity:.22;will-change:transform}
+.blob.a{width:34vw;height:34vw;left:-8vw;top:4vh;background:radial-gradient(circle,var(--blue),transparent 68%);animation:driftA 15s ease-in-out infinite alternate}
+.blob.b{width:31vw;height:31vw;right:-6vw;bottom:-8vh;background:radial-gradient(circle,var(--indigo),transparent 68%);animation:driftB 18s ease-in-out infinite alternate}
+.blob.c{width:24vw;height:24vw;right:25vw;top:34vh;background:radial-gradient(circle,var(--cyan),transparent 70%);opacity:.08;animation:driftC 20s ease-in-out infinite alternate}
+@keyframes driftA{to{transform:translate(9vw,4vh) scale(1.1)}}
+@keyframes driftB{to{transform:translate(-8vw,-6vh) scale(.9)}}
+@keyframes driftC{to{transform:translate(4vw,-7vh) scale(1.2)}}
+.noise{
+  position:absolute;inset:0;opacity:.025;
+  background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='140' height='140' viewBox='0 0 140 140'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.8' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='.55'/%3E%3C/svg%3E")
+}
+
+/* chrome */
+.chrome{position:absolute;inset:0;z-index:50;pointer-events:none}
+.brand{
+  position:absolute;left:var(--scene-pad-x);top:max(18px,env(safe-area-inset-top));
+  display:flex;align-items:center;gap:11px;color:rgba(223,236,255,.72);
+  font-size:clamp(14px,1.1vw,18px);font-weight:650;letter-spacing:.06em;text-transform:uppercase
+}
+.brand-dot{width:9px;height:9px;border-radius:50%;background:var(--cyan);box-shadow:0 0 22px rgba(113,243,232,.75)}
+.scene-count{
+  position:absolute;right:var(--scene-pad-x);top:max(18px,env(safe-area-inset-top));
+  font-variant-numeric:tabular-nums;color:rgba(214,229,249,.68);font-size:clamp(15px,1.1vw,18px);letter-spacing:.08em
+}
+.progress-track{
+  position:absolute;left:var(--scene-pad-x);right:var(--scene-pad-x);
+  bottom:max(17px,env(safe-area-inset-bottom));height:2px;
+  background:rgba(255,255,255,.08);overflow:hidden;border-radius:99px
+}
+.progress-fill{
+  height:100%;width:12.5%;
+  background:linear-gradient(90deg,var(--blue),var(--cyan));
+  box-shadow:0 0 18px rgba(89,200,255,.45);
+  transition:width .7s var(--ease),background .5s ease
+}
+.nav-hint{
+  position:absolute;right:var(--scene-pad-x);bottom:max(30px,calc(env(safe-area-inset-bottom) + 17px));
+  display:flex;gap:8px;color:rgba(191,208,230,.5);font-size:13px;letter-spacing:.03em;transition:opacity .5s ease;opacity:.92
+}
+.nav-hint.fade{opacity:0}
+.nav-hint kbd{
+  border:1px solid rgba(255,255,255,.12);border-bottom-color:rgba(255,255,255,.25);
+  background:rgba(255,255,255,.035);padding:4px 7px;border-radius:7px;font-family:inherit;font-size:12px
+}
+.nav-controls{
+  position:absolute;left:var(--scene-pad-x);right:var(--scene-pad-x);
+  bottom:max(48px,calc(env(safe-area-inset-bottom) + 34px));
+  z-index:75;display:flex;justify-content:space-between;align-items:center;gap:10px;pointer-events:none
+}
+.nav-left,.nav-right{display:flex;gap:10px;pointer-events:none}
+.nav-btn{
+  pointer-events:auto;min-width:clamp(118px,9vw,158px);min-height:48px;
+  border:1px solid rgba(160,211,255,.24);border-radius:999px;padding:11px 17px;
+  background:rgba(8,18,34,.72);color:#eaf5ff;font-weight:700;letter-spacing:.045em;cursor:pointer;
+  backdrop-filter:blur(14px);box-shadow:0 10px 30px rgba(0,0,0,.25),inset 0 1px 0 rgba(255,255,255,.05);
+  transition:transform .18s ease,border-color .18s ease,background .18s ease,box-shadow .18s ease
+}
+.nav-btn:hover,.nav-btn:focus-visible{
+  transform:translateY(-2px);border-color:rgba(128,224,255,.55);background:rgba(15,32,56,.9);
+  box-shadow:0 12px 34px rgba(0,0,0,.32),0 0 24px rgba(89,200,255,.12);outline:none
+}
+.nav-btn.next{
+  background:linear-gradient(135deg,rgba(70,183,255,.92),rgba(116,238,231,.9));
+  border-color:rgba(174,245,255,.55);color:#06131d;text-shadow:0 1px 0 rgba(255,255,255,.25)
+}
+.nav-btn[hidden]{display:none!important}
+
+/* scene base */
+.scene{
+  position:absolute;inset:0;
+  padding:clamp(74px,10vh,108px) var(--scene-pad-x) clamp(88px,10vh,108px);
+  display:grid;place-items:center;opacity:0;visibility:hidden;
+  transform:translate3d(0,18px,0) scale(.995);
+  transition:opacity .42s ease,transform .55s var(--ease),visibility 0s linear .55s;
+  pointer-events:none;contain:layout paint
+}
+.scene.active{opacity:1;visibility:visible;transform:none;transition-delay:0s;pointer-events:auto}
+.scene.exit-left{opacity:0;transform:translate3d(-3vw,0,0) scale(.995)}
+.scene.exit-right{opacity:0;transform:translate3d(3vw,0,0) scale(.995)}
+.scene-inner{
+  width:min(1580px,100%);height:100%;display:flex;flex-direction:column;justify-content:center;position:relative
+}
+.eyebrow{
+  display:inline-flex;align-items:center;gap:10px;color:#c8dbf4;font-weight:700;
+  letter-spacing:.16em;text-transform:uppercase;font-size:clamp(14px,1.15vw,18px);
+  margin-bottom:clamp(14px,2.2vh,24px)
+}
+.eyebrow::before{
+  content:"";width:28px;height:2px;background:linear-gradient(90deg,var(--blue),var(--cyan));
+  box-shadow:0 0 12px rgba(89,200,255,.65)
+}
+h1,h2,h3,p{margin:0}
+.accent{
+  background:linear-gradient(105deg,#fff 15%,#aee9ff 48%,#8b86ff 92%);
+  -webkit-background-clip:text;background-clip:text;color:transparent
+}
+
+/* Scene 1 */
+.s1 .scene-inner{justify-content:center}
+.s1-head{position:relative;z-index:2;max-width:76%}
+.hero-title{
+  font-size:clamp(48px,4.35vw,86px);line-height:.94;letter-spacing:-.05em;
+  max-width:none;font-weight:760;text-wrap:balance
+}
+.lead{color:var(--muted);font-size:clamp(21px,1.68vw,30px);line-height:1.3;max-width:55ch}
+.s1-orbit{
+  position:absolute;right:-4vw;top:-5vh;width:min(38vw,590px);aspect-ratio:1;opacity:.7;pointer-events:none;
+  transform:translate(calc((var(--px,0))*16px),calc((var(--py,0))*16px));transition:transform .15s linear
+}
+.orbit-svg{width:100%;height:100%;overflow:visible}
+.orbit-ring{fill:none;stroke:rgba(110,210,255,.15);stroke-width:1}
+.orbit-ring.r2{stroke:rgba(152,118,255,.18);stroke-dasharray:6 10;transform-origin:50% 50%;animation:spin 28s linear infinite}
+.orbit-node{fill:#80e8ff;filter:drop-shadow(0 0 8px rgba(89,200,255,.8))}
+@keyframes spin{to{transform:rotate(360deg)}}
+.choice-grid{
+  display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:clamp(12px,1.3vw,20px);
+  margin-top:clamp(20px,3.2vh,34px);position:relative;z-index:3
+}
+.choice{
+  position:relative;min-height:clamp(120px,15vh,164px);
+  border:1px solid rgba(190,220,255,.16);border-radius:26px;
+  background:linear-gradient(160deg,rgba(22,30,57,.76),rgba(9,13,28,.48));
+  display:flex;flex-direction:column;justify-content:flex-end;align-items:flex-start;text-align:left;
+  padding:clamp(20px,2vw,30px);cursor:pointer;overflow:hidden;
+  box-shadow:0 20px 60px rgba(0,0,0,.14);
+  transition:transform .35s var(--ease),border-color .3s ease,box-shadow .35s ease,background .35s ease
+}
+.choice::before{
+  content:"";position:absolute;inset:-1px;
+  background:radial-gradient(380px circle at var(--cx,50%) var(--cy,50%),rgba(82,208,255,.18),transparent 45%);
+  opacity:0;transition:opacity .25s ease
+}
+.choice::after{
+  content:"";position:absolute;width:82px;height:82px;right:18px;top:18px;border-radius:50%;
+  border:1px solid rgba(152,210,255,.15);
+  box-shadow:inset 0 0 0 17px rgba(96,159,255,.02),0 0 40px rgba(75,171,255,.04);
+  transition:.4s var(--ease)
+}
+.choice:hover{transform:translateY(-8px) scale(1.012);border-color:rgba(110,218,255,.48);box-shadow:0 24px 70px rgba(0,0,0,.28),0 0 40px rgba(65,176,255,.08)}
+.choice:hover::before{opacity:1}
+.choice strong{position:relative;z-index:2;font-size:clamp(24px,1.75vw,34px);letter-spacing:.02em}
+.choice span{position:relative;z-index:2;margin-top:8px;color:var(--muted);font-size:clamp(14px,.98vw,18px)}
+.choice.wow{border-color:rgba(255,101,207,.24);background:linear-gradient(155deg,rgba(49,24,70,.72),rgba(9,13,28,.5))}
+.choice.wow strong{
+  background:linear-gradient(92deg,#fff,#ff94dc 55%,#8cecff);
+  -webkit-background-clip:text;background-clip:text;color:transparent
+}
+.choice.wow::after{border-color:rgba(255,101,207,.22)}
+.s1-footer{display:flex;align-items:center;gap:18px;margin-top:clamp(12px,2vh,22px);color:rgba(200,217,239,.6);font-size:clamp(14px,1vw,17px)}
+.fullscreen-btn{
+  pointer-events:auto;border:1px solid rgba(165,215,255,.20);background:rgba(12,19,37,.64);
+  border-radius:999px;padding:11px 17px;cursor:pointer;color:#dff4ff;transition:.25s ease
+}
+.fullscreen-btn:hover{border-color:rgba(97,215,255,.52);background:rgba(24,37,64,.72)}
+
+/* Scene 2 */
+.s2 .scene-inner{justify-content:center}
+.compare-title{
+  font-size:clamp(40px,3.15vw,60px);letter-spacing:-.04em;line-height:1.02;
+  max-width:25ch;margin-bottom:clamp(16px,2.2vh,28px)
+}
+.dialog-layout{
+  display:grid;grid-template-columns:minmax(0,1.02fr) minmax(0,.98fr);
+  gap:clamp(18px,2.5vw,38px);height:clamp(425px,48vh,510px);min-height:0
+}
+.dialog-card,.task-card{
+  border:1px solid rgba(190,218,255,.15);border-radius:28px;
+  background:linear-gradient(165deg,rgba(17,24,47,.88),rgba(8,12,26,.74));
+  box-shadow:0 24px 80px rgba(0,0,0,.22);position:relative;overflow:hidden
+}
+.dialog-card{padding:clamp(22px,2vw,30px);display:flex;flex-direction:column;gap:16px}
+.dialog-head{display:flex;align-items:center;justify-content:space-between;color:rgba(210,225,245,.68);font-size:clamp(15px,1.05vw,18px)}
+.dots{display:flex;gap:7px}.dots i{width:8px;height:8px;border-radius:50%;background:rgba(255,255,255,.16)}
+.bubble{max-width:91%;padding:clamp(15px,1.4vw,20px) clamp(17px,1.6vw,23px);border-radius:20px;font-size:clamp(18px,1.18vw,22px);line-height:1.3;transition:.35s var(--ease)}
+.bubble.user{align-self:flex-end;background:linear-gradient(135deg,rgba(59,124,229,.46),rgba(83,78,184,.35));border:1px solid rgba(132,192,255,.22)}
+.bubble.ai{align-self:flex-start;background:rgba(255,255,255,.055);border:1px solid rgba(255,255,255,.08);color:#dbe6f6}
+.missing-list{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-top:auto;opacity:0;transform:translateY(12px);transition:.45s var(--ease)}
+.missing-list.show{opacity:1;transform:none}
+.missing{border:1px solid rgba(255,211,122,.18);background:rgba(255,211,122,.055);color:#e9d8ad;padding:11px 13px;border-radius:13px;font-size:clamp(14px,1vw,17px)}
+.task-card{padding:clamp(22px,2vw,30px);display:flex;flex-direction:column;justify-content:space-between}
+.task-card::before{content:"";position:absolute;inset:0;background:radial-gradient(520px circle at 50% 0%,rgba(89,200,255,.095),transparent 70%);pointer-events:none}
+.task-label{color:#9ee8ff;font-weight:700;font-size:clamp(14px,1vw,17px);letter-spacing:.13em;text-transform:uppercase}
+.task-copy{font-size:clamp(18px,1.16vw,21px);line-height:1.32;color:#edf6ff;margin:12px 0 16px;opacity:.18;filter:blur(2px);transform:translateY(12px);transition:.55s var(--ease)}
+.task-card.ready .task-copy{opacity:1;filter:none;transform:none}
+.component-row{display:flex;flex-wrap:wrap;gap:8px;opacity:0;transform:translateY(10px);transition:.45s var(--ease) .12s}
+.task-card.ready .component-row{opacity:1;transform:none}
+.component{padding:8px 10px;border-radius:999px;border:1px solid rgba(113,243,232,.18);background:rgba(113,243,232,.055);color:#c5fff7;font-weight:700;font-size:clamp(12px,.78vw,14px);letter-spacing:.06em}
+.better-answer{margin-top:14px;padding:14px 16px;border-radius:18px;border:1px solid rgba(127,243,186,.16);background:rgba(127,243,186,.055);color:#dffbeb;font-size:clamp(15px,.93vw,17px);line-height:1.32;opacity:0;transform:translateY(14px);transition:.5s var(--ease)}
+.task-card.answer .better-answer{opacity:1;transform:none}
+.transform-btn{align-self:flex-start;margin-top:16px;border:1px solid rgba(100,209,255,.28);background:linear-gradient(135deg,rgba(37,106,176,.36),rgba(70,64,166,.28));border-radius:14px;padding:13px 16px;cursor:pointer;color:#e8f8ff;font-weight:700;transition:.25s ease}
+.transform-btn:hover{transform:translateY(-2px);border-color:rgba(111,225,255,.58)}
+
+/* Scene 3 */
+.s3 .scene-inner{align-items:center;text-align:center}
+.s3 h2{font-size:clamp(46px,5vw,84px);letter-spacing:-.045em;line-height:.98;max-width:16ch}
+.flow-wrap{width:min(1220px,100%);margin:clamp(28px,4.5vh,50px) auto 0;position:relative}
+.flow-line{position:absolute;left:6%;right:6%;top:50%;height:2px;background:linear-gradient(90deg,rgba(89,200,255,.1),rgba(89,200,255,.78),rgba(113,243,232,.62),rgba(125,112,255,.62));transform:scaleX(0);transform-origin:left;transition:transform 1.6s var(--ease);box-shadow:0 0 18px rgba(89,200,255,.16)}
+.s3.active .flow-line{transform:scaleX(1)}
+.flow{display:grid;grid-template-columns:repeat(6,1fr);gap:clamp(8px,1vw,16px);position:relative;z-index:2}
+.flow-step{position:relative;min-height:clamp(108px,14vh,148px);display:flex;align-items:center;justify-content:center;padding:15px;border-radius:22px;border:1px solid rgba(176,215,255,.12);background:linear-gradient(180deg,rgba(19,28,52,.92),rgba(8,13,28,.94));font-size:clamp(16px,1.16vw,21px);font-weight:760;line-height:1.1;opacity:0;transform:translateY(20px) scale(.96);transition:.55s var(--ease);box-shadow:0 20px 50px rgba(0,0,0,.22)}
+.s3.active .flow-step.revealed{opacity:1;transform:none}
+.flow-step::before{content:attr(data-n);position:absolute;top:12px;right:14px;font-size:11px;color:rgba(188,218,246,.42);letter-spacing:.1em}
+.big-claim{margin-top:clamp(24px,4vh,42px);font-size:clamp(24px,2.12vw,38px);font-weight:680;line-height:1.18;max-width:31ch}
+.big-claim em{font-style:normal;color:#a5eaff}
+
+/* Scene 4 */
+.s4::before{content:"";position:absolute;inset:0;z-index:-2;background:radial-gradient(70vw 70vh at 82% 14%,rgba(255,101,207,.09),transparent 64%),radial-gradient(55vw 55vh at 12% 85%,rgba(99,231,255,.07),transparent 65%)}
+.s4 .eyebrow::before{background:linear-gradient(90deg,var(--magenta),var(--cyan))}
+.wow-layout{display:grid;grid-template-columns:.70fr 1.30fr;gap:clamp(22px,3vw,44px);align-items:center}
+.wow-copy h2{font-size:clamp(48px,4.8vw,82px);line-height:.96;letter-spacing:-.05em;max-width:10ch}
+.wow-copy p{margin-top:20px;color:#b6c6dc;font-size:clamp(19px,1.38vw,25px);line-height:1.35;max-width:34ch}
+.world-tabs{display:flex;gap:8px;flex-wrap:wrap;margin-top:22px}
+.world-tab{border:1px solid rgba(194,174,255,.16);background:rgba(255,255,255,.035);border-radius:999px;padding:10px 14px;cursor:pointer;color:#bfcde0;font-weight:750}
+.world-tab.active{border-color:rgba(113,243,232,.34);background:rgba(113,243,232,.08);color:#e9fffc;box-shadow:0 0 28px rgba(113,243,232,.05)}
+.wow-panel{border:1px solid rgba(188,218,255,.14);background:linear-gradient(155deg,rgba(18,26,50,.78),rgba(8,12,26,.62));border-radius:30px;padding:18px;box-shadow:0 28px 90px rgba(0,0,0,.25)}
+.wow-head{display:flex;align-items:center;justify-content:space-between;gap:12px;padding:4px 5px 14px}
+.wow-head h3{font-size:26px}.wow-head span{color:#9faec3;font-size:14px}
+.source-row{display:grid;grid-template-columns:90px 1fr;gap:12px;align-items:center;margin-bottom:12px;padding:10px;border-radius:16px;border:1px solid rgba(255,255,255,.055);background:rgba(255,255,255,.025)}
+.source-thumb{position:relative;width:90px;aspect-ratio:16/10;border-radius:12px;overflow:hidden;background:#0a1324}
+.source-thumb img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;display:none}
+.source-ph{position:absolute;inset:0;display:grid;place-items:center;color:#8092a8;font-size:10px;text-align:center;padding:6px}
+.source-copy b{display:block;color:#dff2ff;font-size:13px;margin-bottom:2px}.source-copy span{color:#8799ae;font-size:12px}
+.compare-images{display:grid;grid-template-columns:1fr 1fr;gap:14px}
+.img-card{position:relative;border-radius:22px;overflow:hidden;border:1px solid rgba(190,218,255,.12);background:linear-gradient(160deg,rgba(17,27,48,.96),rgba(7,12,25,.95));aspect-ratio:16/10}
+.img-card.strong{border-color:rgba(113,243,232,.22);box-shadow:0 0 42px rgba(113,243,232,.04)}
+.img-card img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;display:none}
+.img-placeholder{position:absolute;inset:0;display:grid;place-items:center;text-align:center;padding:20px;color:#8fa2b9}
+.img-placeholder strong{display:block;color:#e9f7ff;font-size:21px;margin-bottom:5px}
+.img-tag{position:absolute;left:12px;top:12px;z-index:3;padding:6px 9px;border-radius:999px;background:rgba(5,10,20,.78);border:1px solid rgba(255,255,255,.10);font-size:11px;font-weight:800;letter-spacing:.09em}
+.prompt-strip{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-top:12px}
+.prompt-mini{padding:11px 12px;border-radius:14px;border:1px solid rgba(255,255,255,.07);background:rgba(255,255,255,.025);font-size:13px;color:#aebed1;line-height:1.35}
+.prompt-mini b{display:block;color:#dfeeff;margin-bottom:4px}
+.wow-note{margin-top:10px;color:#7f91a8;font-size:12px}
+
+/* Scene 5 */
+.s5 .scene-inner{display:grid;grid-template-columns:.9fr 1.1fr;gap:clamp(30px,5vw,88px);align-items:center}
+.practice-claim{font-size:clamp(43px,4.6vw,78px);line-height:.98;letter-spacing:-.045em;max-width:12ch}
+.practice-claim span{display:block;color:#dce9fb}
+.practice-claim strong{display:block;margin-top:12px;background:linear-gradient(100deg,#fff,#9de8ff 50%,#a59aff);-webkit-background-clip:text;background-clip:text;color:transparent}
+.practice-note{margin-top:24px;font-size:clamp(21px,1.55vw,28px);line-height:1.25;color:#b6c6dc;max-width:34ch}
+.practice-note b{color:#fff;font-weight:650}
+.practice-panel{position:relative;border:1px solid rgba(188,218,255,.14);background:linear-gradient(155deg,rgba(18,26,50,.76),rgba(8,12,26,.58));border-radius:32px;padding:clamp(26px,3vw,42px);min-height:clamp(430px,58vh,600px);display:flex;flex-direction:column;justify-content:center;overflow:hidden}
+.practice-panel::before{content:"";position:absolute;inset:-20%;background:conic-gradient(from 45deg,transparent,rgba(89,200,255,.05),transparent 22%,transparent 55%,rgba(125,112,255,.05),transparent 75%);animation:softRotate 24s linear infinite}
+@keyframes softRotate{to{transform:rotate(360deg)}}
+.cycle{display:grid;grid-template-columns:1fr;gap:9px;position:relative;z-index:1}
+.cycle-step{display:grid;grid-template-columns:54px 1fr auto;align-items:center;gap:16px;padding:12px 15px;border-radius:17px;background:rgba(255,255,255,.035);border:1px solid rgba(255,255,255,.065);opacity:0;transform:translateX(18px);transition:.48s var(--ease)}
+.s5.active .cycle-step.revealed{opacity:1;transform:none}
+.cycle-n{width:42px;height:42px;border-radius:13px;display:grid;place-items:center;background:rgba(89,200,255,.10);border:1px solid rgba(89,200,255,.18);color:#aee9ff;font-weight:800}
+.cycle-main{font-size:clamp(16px,1.15vw,21px);font-weight:740}.cycle-sub{color:#8ea1bc;font-size:clamp(12px,.88vw,15px)}
+
+/* Scene 6 */
+.s6::before{content:"";position:absolute;inset:0;z-index:-2;background:radial-gradient(70vw 70vh at 85% 18%,rgba(255,101,207,.10),transparent 64%),radial-gradient(60vw 60vh at 15% 82%,rgba(99,231,255,.08),transparent 65%)}
+.s6 .scene-inner{align-items:center;text-align:center}.s6 .eyebrow::before{background:linear-gradient(90deg,var(--magenta),var(--cyan))}
+.agent-title{font-size:clamp(44px,5vw,84px);line-height:.98;letter-spacing:-.045em;max-width:15ch}
+.agent-title .agent{display:block;margin-top:10px;background:linear-gradient(92deg,#fff 5%,#c6a8ff 42%,#ff8ed9 68%,#8cecff);-webkit-background-clip:text;background-clip:text;color:transparent}
+.agent-field{width:min(1400px,100%);margin-top:clamp(26px,4.2vh,44px);position:relative;padding:18px 0}
+.agent-flow{display:grid;grid-template-columns:repeat(7,1fr);gap:clamp(8px,1vw,14px);position:relative;z-index:3}
+.agent-flow::before{content:"";position:absolute;left:4%;right:4%;top:50%;height:1px;background:linear-gradient(90deg,rgba(116,226,255,.12),rgba(153,117,255,.55),rgba(255,101,207,.52),rgba(113,243,232,.5));z-index:-1}
+.agent-node{position:relative;min-height:clamp(100px,13vh,138px);display:flex;align-items:center;justify-content:center;border-radius:22px;border:1px solid rgba(194,174,255,.14);background:linear-gradient(180deg,rgba(24,22,52,.9),rgba(9,12,28,.92));font-weight:740;font-size:clamp(14px,1.02vw,19px);line-height:1.12;padding:14px;opacity:0;transform:scale(.9);transition:.5s var(--ease);box-shadow:0 20px 45px rgba(0,0,0,.2)}
+.s6.active .agent-node.revealed{opacity:1;transform:none}
+.agent-node:nth-child(5){border-color:rgba(255,101,207,.28);box-shadow:0 0 38px rgba(255,101,207,.07)}
+.agent-node:nth-child(7){border-color:rgba(113,243,232,.22)}
+.agent-copy{margin-top:clamp(22px,3vh,32px);font-size:clamp(20px,1.45vw,27px);line-height:1.28;color:#c6d2e7;max-width:58ch}
+.agent-copy b{color:#fff;font-weight:650}
+
+/* Scene 7 */
+.s7 .scene-inner{justify-content:center}
+.schedule-head{display:grid;grid-template-columns:1fr .7fr;gap:28px;align-items:end;margin-bottom:18px}
+.schedule-head h2{font-size:clamp(40px,4vw,66px);line-height:.98;letter-spacing:-.04em}
+.schedule-head p{color:#9fb0c7;font-size:clamp(16px,1.05vw,19px);line-height:1.4}
+.schedule-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:12px}
+.day{overflow:hidden;border-radius:21px;border:1px solid rgba(190,218,255,.13);background:linear-gradient(170deg,rgba(16,24,46,.86),rgba(7,12,25,.78))}
+.day h3{margin:0;padding:13px 15px;font-size:16px;letter-spacing:.06em;background:linear-gradient(90deg,rgba(89,200,255,.12),rgba(125,112,255,.08))}
+.slot{display:grid;grid-template-columns:100px 1fr auto;gap:8px;align-items:center;padding:10px 13px;border-top:1px solid rgba(255,255,255,.055)}
+.slot time{font-weight:800;color:#dff6ff;font-variant-numeric:tabular-nums;font-size:13px}
+.slot b{font-size:13px}.slot span{font-size:12px;color:#9fb0c7}
+.schedule-note{margin-top:12px;color:#7f91a7;font-size:12px}.schedule-note strong{color:#d8c99e}
+
+/* Scene 8 */
+.s8::before{content:"";position:absolute;inset:0;z-index:-2;background:radial-gradient(74vw 74vh at 22% 48%,rgba(89,200,255,.08),transparent 66%),radial-gradient(72vw 72vh at 83% 45%,rgba(125,112,255,.10),transparent 68%)}
+.final-layout{display:grid;grid-template-columns:.9fr 1.1fr;gap:clamp(28px,4vw,68px);align-items:center}
+.qr-side{text-align:center}
+.final-mark{width:56px;height:56px;border-radius:50%;border:1px solid rgba(136,221,255,.28);display:grid;place-items:center;margin:0 auto 18px;box-shadow:0 0 50px rgba(89,200,255,.06);position:relative}
+.final-mark::before,.final-mark::after{content:"";position:absolute;border-radius:50%;border:1px solid rgba(118,204,255,.12)}
+.final-mark::before{inset:-12px}.final-mark::after{inset:-26px;opacity:.45}
+.final-mark i{width:10px;height:10px;border-radius:50%;background:#9eeaff;box-shadow:0 0 24px rgba(89,200,255,.8)}
+.qr-side h2{font-size:clamp(38px,3.6vw,60px);line-height:.98;letter-spacing:-.045em;margin:0 auto 16px;max-width:12ch}
+.qr-wrap{width:min(31vh,300px);aspect-ratio:1;margin:0 auto 14px;background:#fff;border-radius:22px;padding:14px;box-shadow:0 25px 75px rgba(0,0,0,.35),0 0 44px rgba(89,200,255,.08)}
+.qr-wrap img{width:100%;height:100%;display:block;object-fit:contain}
+.qr-url{font-size:12px;color:#7f91a8;word-break:break-all;max-width:46ch;margin:auto}
+.form-card{border:1px solid rgba(190,218,255,.15);border-radius:28px;background:linear-gradient(165deg,rgba(17,24,47,.90),rgba(8,12,26,.80));box-shadow:0 24px 80px rgba(0,0,0,.24);padding:clamp(22px,2.4vw,34px)}
+.form-card h3{font-size:clamp(28px,2.2vw,38px);letter-spacing:-.03em;margin-bottom:6px}
+.form-card .form-sub{color:#9fb0c7;font-size:14px;margin-bottom:16px}
+.fields{display:grid;grid-template-columns:1fr 1fr;gap:11px}
+.field{display:grid;gap:6px}.field.full{grid-column:1/-1}
+.field label{font-size:12px;color:#c8d9eb;font-weight:800;letter-spacing:.055em}
+.field input,.field select,.field textarea{width:100%;border:1px solid rgba(174,210,239,.16);background:rgba(6,15,28,.86);color:#f4f8fd;border-radius:13px;padding:11px 12px;outline:none}
+.field input:focus,.field select:focus,.field textarea:focus{border-color:rgba(103,217,255,.55);box-shadow:0 0 0 3px rgba(95,200,255,.08)}
+.field textarea{min-height:76px;resize:none}
+.privacy{font-size:11px;color:#74869c;margin:10px 0 12px}
+.submit{width:100%;border:1px solid rgba(174,245,255,.55);border-radius:14px;padding:12px 16px;background:linear-gradient(135deg,rgba(70,183,255,.96),rgba(116,238,231,.94));color:#06131d;font-weight:900;cursor:pointer}
+.submit:disabled{opacity:.55;cursor:not-allowed}
+.form-status{min-height:19px;margin-top:8px;color:#9fb0c7;font-size:13px}
+.copy-link{margin-top:10px;width:100%;border:1px solid rgba(160,211,255,.17);border-radius:13px;padding:10px;background:rgba(255,255,255,.025);color:#b9c9dc;font-weight:750;cursor:pointer}
+.toast{position:absolute;left:50%;bottom:72px;z-index:120;transform:translate(-50%,20px);padding:13px 17px;border-radius:13px;background:rgba(8,14,29,.94);border:1px solid rgba(175,218,255,.18);color:#d9ebfb;box-shadow:0 22px 55px rgba(0,0,0,.3);opacity:0;visibility:hidden;transition:.28s var(--ease);font-size:15px;max-width:min(88vw,680px);text-align:center}
+.toast.show{opacity:1;visibility:visible;transform:translate(-50%,0)}
+.low-power .blob,.low-power .orbit-ring.r2,.low-power .practice-panel::before{animation:none!important;display:none!important}
+.low-power .cursor-glow{display:none}
+
+/* Tablet */
+@media(max-width:1200px){
+  :root{--scene-pad-x:clamp(28px,4vw,54px)}
+  .choice-grid{grid-template-columns:repeat(2,1fr)}
+  .choice{min-height:110px}
+  .hero-title{font-size:clamp(48px,5.8vw,78px)}
+  .agent-node{font-size:13px}
+  .slot{grid-template-columns:92px 1fr auto}
+  .qr-wrap{width:min(28vh,250px)}
+}
+
+/* Smartphone / narrow viewport — one scene at a time with internal vertical scroll */
+@media(max-width:900px){
+  :root{--scene-pad-x:20px}
+  html,body,#app{height:100%;height:100dvh;overflow:hidden}
+  .cursor-glow{display:none}
+  .blob{opacity:.13}
+  .brand{left:20px;top:max(14px,env(safe-area-inset-top));font-size:11px;letter-spacing:.045em}
+  .scene-count{right:20px;top:max(14px,env(safe-area-inset-top));font-size:12px}
+  .progress-track{left:20px;right:20px;bottom:max(8px,env(safe-area-inset-bottom))}
+  .nav-hint{display:none}
+  .nav-controls{
+    position:absolute;left:12px;right:12px;
+    bottom:max(18px,calc(env(safe-area-inset-bottom) + 10px));
+    gap:7px
+  }
+  .nav-left,.nav-right{gap:7px}
+  .nav-btn{min-width:0;min-height:42px;padding:9px 13px;font-size:12px;letter-spacing:.02em}
+  .nav-btn.menu{display:inline-flex}
+  .scene{
+    padding:max(58px,calc(env(safe-area-inset-top) + 48px)) 20px max(74px,calc(env(safe-area-inset-bottom) + 64px));
+    align-items:stretch;overflow:hidden;touch-action:pan-y
+  }
+  .scene-inner{
+    width:100%;height:100%;min-height:0;
+    justify-content:flex-start;
+    overflow-y:auto;overflow-x:hidden;
+    overscroll-behavior-y:contain;
+    -webkit-overflow-scrolling:touch;
+    touch-action:pan-y;
+    scrollbar-width:none;
+    padding:10px 0 86px
+  }
+  .scene-inner::-webkit-scrollbar{display:none}
+  .eyebrow{font-size:11px;margin-bottom:10px;letter-spacing:.12em}
+  .eyebrow::before{width:22px}
+  .s1-head{max-width:100%}
+  .hero-title{font-size:clamp(42px,12.4vw,64px);line-height:.94}
+  .lead{font-size:18px}
+  .s1-orbit{opacity:.22;width:76vw;right:-30vw;top:0}
+  .choice-grid{grid-template-columns:1fr;gap:9px;margin-top:16px}
+  .choice{min-height:94px;padding:16px 18px;border-radius:20px}
+  .choice::after{width:58px;height:58px;right:14px;top:14px}
+  .choice strong{font-size:24px}.choice span{font-size:13px}
+  .s1-footer{margin-top:12px;font-size:12px;gap:10px;flex-wrap:wrap}
+  .fullscreen-btn{padding:9px 13px}
+  .compare-title{font-size:34px;margin-bottom:12px}
+  .dialog-layout{grid-template-columns:1fr;height:auto;gap:12px}
+  .dialog-card{display:none}
+  .task-card{min-height:auto;padding:18px;border-radius:22px}
+  .task-copy{font-size:16px;line-height:1.35}
+  .better-answer{font-size:14px}
+  .transform-btn{width:100%;text-align:center;justify-content:center;margin-top:12px}
+  .s3 .scene-inner{align-items:stretch;text-align:left}
+  .s3 h2{font-size:39px;max-width:100%}
+  .flow-wrap{margin-top:20px}
+  .flow{grid-template-columns:1fr 1fr;gap:8px}
+  .flow-line{display:none}
+  .flow-step{min-height:82px;border-radius:17px;font-size:14px;padding:13px}
+  .big-claim{font-size:22px;margin-top:18px}
+  .wow-layout{grid-template-columns:1fr;gap:18px}
+  .wow-copy h2{font-size:44px;max-width:100%}
+  .wow-copy p{font-size:17px;margin-top:12px}
+  .world-tabs{margin-top:14px;gap:6px}
+  .world-tab{padding:8px 10px;font-size:12px}
+  .wow-panel{padding:12px;border-radius:22px}
+  .wow-head{padding:3px 2px 10px}
+  .wow-head h3{font-size:21px}.wow-head span{font-size:11px}
+  .source-row{grid-template-columns:70px 1fr;padding:8px}
+  .source-thumb{width:70px}
+  .compare-images{grid-template-columns:1fr;gap:10px}
+  .img-card{aspect-ratio:16/9}
+  .prompt-strip{grid-template-columns:1fr;gap:8px;margin-top:9px}
+  .prompt-mini{font-size:12px;padding:9px}
+  .s5 .scene-inner{display:flex;gap:18px}
+  .practice-claim{font-size:42px;max-width:100%}
+  .practice-note{font-size:17px;margin-top:14px}
+  .practice-panel{min-height:0;padding:16px;border-radius:22px}
+  .cycle{gap:7px}
+  .cycle-step{grid-template-columns:40px 1fr auto;gap:10px;padding:9px 10px}
+  .cycle-n{width:34px;height:34px;border-radius:10px;font-size:13px}
+  .cycle-main{font-size:14px}.cycle-sub{font-size:11px}
+  .s6 .scene-inner{align-items:stretch;text-align:left}
+  .agent-title{font-size:42px;max-width:100%}
+  .agent-field{margin-top:20px;padding:0}
+  .agent-flow{grid-template-columns:1fr 1fr;gap:8px}
+  .agent-flow::before{display:none}
+  .agent-node{min-height:72px;border-radius:17px;font-size:13px}
+  .agent-copy{font-size:17px;margin-top:16px}
+  .schedule-head{grid-template-columns:1fr;gap:8px;margin-bottom:12px}
+  .schedule-head h2{font-size:40px}.schedule-head p{font-size:14px}
+  .schedule-grid{grid-template-columns:1fr;gap:8px}
+  .day{border-radius:17px}
+  .day h3{padding:10px 12px;font-size:14px}
+  .slot{grid-template-columns:92px 1fr auto;padding:8px 11px}
+  .slot time,.slot b{font-size:12px}.slot span{font-size:11px}
+  .schedule-note{font-size:11px}
+  .final-layout{grid-template-columns:1fr;gap:18px}
+  .qr-side{padding-top:2px}
+  .final-mark{display:none}
+  .qr-side .eyebrow{justify-content:center}
+  .qr-side h2{font-size:38px;margin-bottom:12px;max-width:100%}
+  .qr-wrap{width:min(56vw,220px);padding:10px;border-radius:18px;margin-bottom:10px}
+  .qr-url{font-size:10px}
+  .form-card{padding:16px;border-radius:22px}
+  .form-card h3{font-size:28px}.form-card .form-sub{font-size:12px;margin-bottom:12px}
+  .fields{grid-template-columns:1fr;gap:9px}
+  .field.full{grid-column:auto}
+  .field input,.field select,.field textarea{padding:10px 11px;border-radius:12px}
+  .field textarea{min-height:68px}
+  .privacy{font-size:10px}
+  .submit{padding:11px}
+  .copy-link{padding:9px}
+}
+
+/* Very small phones */
+@media(max-width:390px){
+  .scene{padding-left:14px;padding-right:14px}
+  .brand{left:14px}.scene-count{right:14px}
+  .hero-title{font-size:40px}
+  .choice{min-height:88px;padding:14px 16px}
+  .choice strong{font-size:22px}
+  .nav-controls{left:8px;right:8px}
+  .nav-btn{padding:8px 10px;font-size:11px}
+  .nav-btn.menu{max-width:74px}
+  .flow-step{min-height:76px;font-size:13px}
+  .practice-claim,.agent-title,.schedule-head h2{font-size:37px}
+  .qr-side h2{font-size:34px}
+}
+
+/* Short landscape phones */
+@media(max-height:560px) and (orientation:landscape){
+  .brand,.scene-count{top:8px}
+  .scene{padding-top:52px;padding-bottom:58px}
+  .scene-inner{padding-top:4px;padding-bottom:70px}
+  .hero-title{font-size:42px}
+  .choice-grid{grid-template-columns:repeat(4,1fr)}
+  .choice{min-height:80px}
+  .choice strong{font-size:19px}.choice span{font-size:11px}
+  .s1-footer{display:none}
+  .nav-controls{bottom:14px}
+  .wow-layout,.s5 .scene-inner,.final-layout{grid-template-columns:1fr 1fr}
+  .compare-images{grid-template-columns:1fr 1fr}
+  .schedule-grid{grid-template-columns:repeat(3,1fr)}
+  .qr-wrap{width:min(42vh,180px)}
+  .form-card{padding:12px}
+  .field textarea{min-height:48px}
+}
+
+@media(prefers-reduced-motion:reduce){
+  *,*::before,*::after{animation-duration:.001ms!important;animation-iteration-count:1!important;transition-duration:.12s!important}
+  .blob{display:none!important}
+}
+
+/* ===== V3 ROUTE / WOW PROMPTS ===== */
+.branch-weak .scene-inner,.branch-strong .scene-inner{justify-content:center}
+.branch-weak-grid{display:grid;grid-template-columns:1fr .82fr;gap:clamp(18px,2.6vw,40px);min-height:0}
+.branch-weak .dialog-card{height:clamp(390px,48vh,510px)}
+.missing-panel{
+  border:1px solid rgba(190,218,255,.15);border-radius:28px;
+  background:linear-gradient(165deg,rgba(17,24,47,.88),rgba(8,12,26,.74));
+  box-shadow:0 24px 80px rgba(0,0,0,.22);padding:clamp(22px,2vw,30px);
+  display:flex;flex-direction:column;justify-content:center;gap:12px
+}
+.missing-panel h3{font-size:clamp(27px,2.1vw,38px);letter-spacing:-.035em;line-height:1.05;margin-bottom:4px}
+.missing-panel p{color:#95a7bd;font-size:clamp(15px,1vw,18px);line-height:1.4;margin-bottom:4px}
+.missing-panel .missing-list{opacity:1;transform:none;display:grid;grid-template-columns:1fr;gap:10px;margin:0}
+.branch-strong-grid{display:grid;grid-template-columns:.78fr 1.22fr;gap:clamp(18px,2.6vw,40px);align-items:stretch}
+.branch-strong-copy{display:flex;flex-direction:column;justify-content:center}
+.branch-strong-copy h2{font-size:clamp(40px,4vw,68px);line-height:.98;letter-spacing:-.045em;max-width:13ch}
+.branch-strong-copy p{margin-top:18px;color:#aebed2;font-size:clamp(17px,1.2vw,22px);line-height:1.4}
+.branch-strong .task-card{min-height:clamp(390px,50vh,520px)}
+.branch-strong .task-copy{opacity:1;filter:none;transform:none}
+.branch-strong .component-row{opacity:1;transform:none}
+.branch-strong .better-answer{opacity:1;transform:none}
+.task-card .mini-heading{font-size:12px;letter-spacing:.11em;color:#8fa2b9;font-weight:800;margin-top:14px;margin-bottom:6px}
+
+/* WOW PROMPTS */
+.wow-prompts::before,.wow-results::before{
+  content:"";position:absolute;inset:0;z-index:-2;
+  background:radial-gradient(70vw 70vh at 82% 14%,rgba(255,101,207,.09),transparent 64%),
+             radial-gradient(55vw 55vh at 12% 85%,rgba(99,231,255,.07),transparent 65%)
+}
+.wow-prompts .eyebrow::before,.wow-results .eyebrow::before{background:linear-gradient(90deg,var(--magenta),var(--cyan))}
+.wow-prompts .scene-inner,.wow-results .scene-inner{justify-content:center}
+.wow-prompt-head{display:grid;grid-template-columns:.72fr 1.28fr;gap:28px;align-items:end;margin-bottom:18px}
+.wow-prompt-head h2{font-size:clamp(38px,3.6vw,62px);line-height:.98;letter-spacing:-.045em;max-width:14ch}
+.wow-prompt-head p{color:#aebed2;font-size:clamp(16px,1.08vw,19px);line-height:1.42}
+.wow-topline{display:flex;align-items:center;justify-content:space-between;gap:14px;margin-bottom:14px;flex-wrap:wrap}
+.wow-topline .world-tabs{margin:0}
+.live-help{font-size:12px;color:#8396ad;line-height:1.35;text-align:right;max-width:66ch}
+.live-help b{color:#cde9f8}
+.prompt-grid{display:grid;grid-template-columns:.7fr 1.3fr;gap:14px}
+.prompt-card{
+  border:1px solid rgba(190,218,255,.14);border-radius:24px;
+  background:linear-gradient(165deg,rgba(17,24,47,.86),rgba(8,12,26,.74));
+  box-shadow:0 22px 65px rgba(0,0,0,.18);padding:20px;
+  display:flex;flex-direction:column;min-height:clamp(300px,38vh,390px)
+}
+.prompt-card.strong{border-color:rgba(113,243,232,.22);box-shadow:0 0 46px rgba(113,243,232,.045),0 22px 65px rgba(0,0,0,.18)}
+.prompt-kicker{font-size:11px;letter-spacing:.12em;font-weight:850;color:#9db0c6;margin-bottom:10px}
+.prompt-card.strong .prompt-kicker{color:#bff7ef}
+.prompt-card h3{font-size:clamp(22px,1.8vw,30px);letter-spacing:-.02em;margin-bottom:10px}
+.prompt-text{font-size:clamp(15px,1.02vw,18px);line-height:1.45;color:#d7e2f0;white-space:pre-wrap}
+.prompt-preview{
+  position:relative;overflow:hidden;max-height:190px;
+  mask-image:linear-gradient(to bottom,#000 0,#000 72%,transparent 100%)
+}
+.prompt-actions{display:flex;gap:8px;flex-wrap:wrap;margin-top:auto;padding-top:16px}
+.prompt-btn{
+  border:1px solid rgba(152,211,255,.22);border-radius:999px;padding:10px 13px;
+  background:rgba(255,255,255,.035);color:#dceeff;font-weight:750;font-size:12px;cursor:pointer
+}
+.prompt-btn.primary{background:linear-gradient(135deg,rgba(70,183,255,.92),rgba(116,238,231,.9));color:#06131d;border-color:rgba(174,245,255,.55)}
+.prompt-btn:hover{border-color:rgba(113,229,255,.55)}
+.prompt-structure{display:flex;gap:7px;flex-wrap:wrap;margin-top:12px}
+.prompt-structure span{padding:6px 8px;border-radius:999px;background:rgba(113,243,232,.05);border:1px solid rgba(113,243,232,.13);color:#aee8e0;font-size:10px;font-weight:800;letter-spacing:.055em}
+.run-strip{
+  margin-top:12px;padding:10px 13px;border-radius:14px;border:1px solid rgba(255,255,255,.07);
+  background:rgba(255,255,255,.025);font-size:12px;color:#98aabd;line-height:1.4
+}
+.run-strip b{color:#e6f5ff}
+.run-strip kbd{padding:2px 6px;border-radius:6px;border:1px solid rgba(255,255,255,.12);background:rgba(255,255,255,.04);font-family:inherit;color:#dff5ff}
+
+/* Prompt modal */
+.prompt-modal{
+  position:absolute;inset:0;z-index:130;background:rgba(2,5,12,.78);backdrop-filter:blur(12px);
+  display:none;align-items:center;justify-content:center;padding:clamp(14px,3vw,42px)
+}
+.prompt-modal.open{display:flex}
+.prompt-modal-card{
+  width:min(1120px,100%);max-height:min(86dvh,900px);overflow:hidden;
+  border:1px solid rgba(183,222,255,.20);border-radius:26px;
+  background:linear-gradient(165deg,rgba(17,24,47,.98),rgba(7,11,24,.98));
+  box-shadow:0 38px 110px rgba(0,0,0,.55);display:flex;flex-direction:column
+}
+.modal-head{display:flex;align-items:center;justify-content:space-between;gap:14px;padding:18px 20px;border-bottom:1px solid rgba(255,255,255,.07)}
+.modal-head h3{font-size:22px;letter-spacing:-.02em}
+.modal-close{width:38px;height:38px;border-radius:50%;border:1px solid rgba(255,255,255,.12);background:rgba(255,255,255,.04);cursor:pointer;font-size:19px}
+.modal-scroll{overflow-y:auto;overscroll-behavior:contain;-webkit-overflow-scrolling:touch;padding:20px;user-select:text;-webkit-user-select:text}
+.modal-section{margin-bottom:18px}
+.modal-section h4{font-size:11px;letter-spacing:.13em;color:#8fdff4;margin:0 0 8px}
+.modal-section pre,.modal-section .prose{
+  margin:0;white-space:pre-wrap;word-break:break-word;
+  border:1px solid rgba(255,255,255,.07);background:rgba(2,8,18,.55);border-radius:14px;
+  padding:14px;color:#d8e5f2;font:14px/1.48 "Segoe UI",Arial,sans-serif
+}
+.modal-section pre{font-family:"Cascadia Code","Consolas",monospace;font-size:12px;color:#c7d8e8}
+.modal-actions{display:flex;justify-content:flex-end;gap:8px;padding:14px 20px;border-top:1px solid rgba(255,255,255,.07)}
+
+/* WOW results */
+.result-head{display:grid;grid-template-columns:.72fr 1.28fr;gap:28px;align-items:end;margin-bottom:16px}
+.result-head h2{font-size:clamp(38px,3.6vw,62px);line-height:.98;letter-spacing:-.045em}
+.result-head p{color:#aebed2;font-size:clamp(16px,1.08vw,19px);line-height:1.4}
+.result-panel{border:1px solid rgba(188,218,255,.14);background:linear-gradient(155deg,rgba(18,26,50,.78),rgba(8,12,26,.62));border-radius:28px;padding:16px;box-shadow:0 28px 90px rgba(0,0,0,.25)}
+.result-panel .compare-images{margin-top:10px}
+.result-questions{display:grid;grid-template-columns:repeat(4,1fr);gap:8px;margin-top:10px}
+.result-q{padding:10px 11px;border-radius:13px;border:1px solid rgba(255,255,255,.065);background:rgba(255,255,255,.025);color:#9fb0c7;font-size:11px;line-height:1.35}
+.result-thesis{margin-top:10px;text-align:center;color:#d8e7f6;font-size:14px}
+.result-thesis b{color:#aeeaff}
+
+/* mobile overrides */
+@media(max-width:900px){
+  .branch-weak .scene-inner,.branch-strong .scene-inner,.wow-prompts .scene-inner,.wow-results .scene-inner{justify-content:flex-start}
+  .branch-weak-grid,.branch-strong-grid,.wow-prompt-head,.result-head{grid-template-columns:1fr;gap:12px}
+  .branch-weak .dialog-card{display:flex!important;height:auto;min-height:260px;padding:16px;border-radius:20px}
+  .branch-weak .bubble{font-size:15px;padding:12px 13px}
+  .branch-weak .missing-panel{padding:16px;border-radius:20px}
+  .branch-weak .missing-panel h3{font-size:27px}
+  .branch-strong-copy h2{font-size:36px;max-width:100%}
+  .branch-strong-copy p{font-size:15px;margin-top:10px}
+  .branch-strong .task-card{min-height:0;padding:16px;border-radius:20px}
+  .wow-prompt-head h2,.result-head h2{font-size:36px;max-width:100%}
+  .wow-prompt-head p,.result-head p{font-size:14px}
+  .wow-topline{align-items:flex-start}
+  .live-help{text-align:left;font-size:10px;max-width:none}
+  .prompt-grid{grid-template-columns:1fr;gap:10px}
+  .prompt-card{min-height:0;padding:15px;border-radius:20px}
+  .prompt-preview{max-height:125px}
+  .prompt-actions{padding-top:12px}
+  .run-strip{font-size:10px}
+  .result-questions{grid-template-columns:1fr 1fr}
+  .prompt-modal{padding:8px}
+  .prompt-modal-card{max-height:92dvh;border-radius:20px}
+  .modal-head{padding:13px 14px}.modal-head h3{font-size:18px}
+  .modal-scroll{padding:14px}
+  .modal-section .prose,.modal-section pre{font-size:12px;padding:12px}
+  .modal-actions{padding:11px 14px}
+}
+@media(max-width:390px){
+  .result-questions{grid-template-columns:1fr}
+  .prompt-btn{padding:9px 10px;font-size:11px}
+}
+@media(max-height:560px) and (orientation:landscape){
+  .prompt-grid{grid-template-columns:.72fr 1.28fr}
+  .prompt-card{min-height:250px;padding:12px}
+  .prompt-preview{max-height:104px}
+  .result-questions{grid-template-columns:repeat(4,1fr)}
+}
+
+</style>
+</head>
+<body>
+<div id="app" aria-live="polite">
+  <div class="ambient" aria-hidden="true">
+    <div class="cursor-glow"></div><div class="blob a"></div><div class="blob b"></div><div class="blob c"></div><div class="noise"></div>
+  </div>
+
+  <div class="chrome" aria-hidden="true">
+    <div class="brand"><span class="brand-dot"></span><span>Точка роста · Школа №14</span></div>
+    <div class="scene-count" id="sceneCount">01 / 08</div>
+    <div class="progress-track"><div class="progress-fill" id="progressFill"></div></div>
+    <div class="nav-hint" id="navHint"><span><kbd>→</kbd> далее</span><span><kbd>F</kbd> экран</span></div>
+  </div>
+
+  <main id="stage">
+    <!-- HOME -->
+    <section class="scene s1 active" data-scene="0">
+      <div class="scene-inner">
+        <div class="s1-orbit" id="s1Orbit" aria-hidden="true">
+          <svg class="orbit-svg" viewBox="0 0 500 500">
+            <circle class="orbit-ring" cx="250" cy="250" r="180"/>
+            <circle class="orbit-ring r2" cx="250" cy="250" r="130"/>
+            <path class="orbit-ring" d="M65 250c78-92 291-111 370 0-79 111-292 92-370 0Z" opacity=".6"/>
+            <circle class="orbit-node" cx="405" cy="165" r="5"/>
+            <circle class="orbit-node" cx="135" cy="354" r="4"/>
+            <circle class="orbit-node" cx="307" cy="382" r="3"/>
+          </svg>
+        </div>
+        <div class="s1-head">
+          <div class="eyebrow">Курс 1 · ИИ: говори на его языке</div>
+          <h1 class="hero-title">ИИ уже умеет <span class="accent">многое.</span><br>А ты умеешь заставить его работать на себя?</h1>
+          <p class="lead" style="margin-top:20px">Выберите, где проверить это прямо сейчас.</p>
+        </div>
+        <div class="choice-grid">
+          <button class="choice" data-branch="study"><strong>УЧЁБА</strong><span>Понять · потренироваться · проверить себя</span></button>
+          <button class="choice" data-branch="life"><strong>ЖИЗНЬ</strong><span>Разобраться · сравнить · организовать</span></button>
+          <button class="choice" data-branch="create"><strong>СОЗДАНИЕ</strong><span>Придумать · сделать · улучшить</span></button>
+          <button class="choice wow" data-branch="wow"><strong>ВАУ</strong><span>Одно фото · два промпта · два результата</span></button>
+        </div>
+        <div class="s1-footer">
+          <button class="fullscreen-btn" id="fullscreenBtn">НА ВЕСЬ ЭКРАН</button>
+          <span>или F · можно листать стрелками, кнопками и свайпом</span>
+        </div>
+      </div>
+    </section>
+
+    <!-- REGULAR 2 / 8: WEAK -->
+    <section class="scene branch-weak" data-scene="1">
+      <div class="scene-inner">
+        <div class="eyebrow"><span id="branchWeakLabel">УЧЁБА</span> · первая попытка</div>
+        <h2 class="compare-title">Запрос есть. Но <span style="color:#9ee8ff">задача ещё не поставлена.</span></h2>
+        <div class="branch-weak-grid">
+          <div class="dialog-card">
+            <div class="dialog-head"><span>Обычный чат с ИИ</span><span class="dots"><i></i><i></i><i></i></span></div>
+            <div class="bubble user" id="branchWeakPrompt"></div>
+            <div class="bubble ai" id="branchGenericAnswer"></div>
+          </div>
+          <div class="missing-panel">
+            <h3>Чего не хватает?</h3>
+            <p>ИИ не знает важных условий, поэтому отвечает «вообще», а не под твою реальную ситуацию.</p>
+            <div class="missing-list" id="branchMissing">
+              <div class="missing"></div><div class="missing"></div><div class="missing"></div><div class="missing"></div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- REGULAR 3 / 8: STRONG -->
+    <section class="scene branch-strong" data-scene="2">
+      <div class="scene-inner">
+        <div class="branch-strong-grid">
+          <div class="branch-strong-copy">
+            <div class="eyebrow"><span id="branchStrongLabel">УЧЁБА</span> · та же проблема, но уже как задача</div>
+            <h2>Добавляем то, что <span class="accent">реально влияет на результат.</span></h2>
+            <p>Цель, контекст, ограничения, формат и критерий. Не больше слов ради количества — больше управляемости.</p>
+          </div>
+          <div class="task-card ready answer">
+            <div>
+              <div class="task-label">Реальная задача</div>
+              <div class="task-copy" id="branchTask"></div>
+              <div class="component-row">
+                <span class="component">ЦЕЛЬ</span><span class="component">КОНТЕКСТ</span><span class="component">ОГРАНИЧЕНИЯ</span><span class="component">ФОРМАТ</span><span class="component">КРИТЕРИЙ</span>
+              </div>
+              <div class="mini-heading">Что меняется в ответе</div>
+              <div class="better-answer" id="branchBetter"></div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- WOW 2 / 8: PROMPTS -->
+    <section class="scene wow-prompts" data-scene="3">
+      <div class="scene-inner">
+        <div class="wow-prompt-head">
+          <div>
+            <div class="eyebrow">ВАУ · сначала промпты</div>
+            <h2>Одно фото.<br><span class="accent">Две постановки.</span></h2>
+          </div>
+          <p>Сначала запускаем две генерации на одном и том же исходном фото. Результаты смотрим только на следующем экране.</p>
+        </div>
+
+        <div class="wow-topline">
+          <div class="world-tabs">
+            <button class="world-tab active" data-world="mars">МАРС</button>
+            <button class="world-tab" data-world="jungle">ДЖУНГЛИ</button>
+            <button class="world-tab" data-world="cyberlab">КИБЕРЛАБ</button>
+          </div>
+          <div class="live-help"><b>LIVE:</b> два отдельных окна ChatGPT → <b>Win+Z</b> → 50/50 → одно фото в оба → слабый слева → сильный справа → запустить почти одновременно.</div>
+        </div>
+
+        <div class="prompt-grid">
+          <article class="prompt-card">
+            <div class="prompt-kicker">СЛАБАЯ ПОСТАНОВКА</div>
+            <h3 id="weakPromptTitle">Марс</h3>
+            <div class="prompt-text" id="wowWeakPrompt"></div>
+            <div class="prompt-actions">
+              <button class="prompt-btn" id="copyWeakBtn" type="button">СКОПИРОВАТЬ СЛАБЫЙ</button>
+            </div>
+          </article>
+
+          <article class="prompt-card strong">
+            <div class="prompt-kicker">СИЛЬНАЯ ПОСТАНОВКА</div>
+            <h3 id="strongPromptTitle">Марс</h3>
+            <div class="prompt-preview"><div class="prompt-text" id="wowStrongPreview"></div></div>
+            <div class="prompt-structure"><span>HUMAN PROMPT</span><span>STRUCTURED SPEC / JSON</span><span>ЧЕГО НЕ ДЕЛАТЬ</span></div>
+            <div class="prompt-actions">
+              <button class="prompt-btn" id="expandStrongBtn" type="button">РАЗВЕРНУТЬ СИЛЬНЫЙ ПРОМПТ</button>
+              <button class="prompt-btn primary" id="copyStrongBtn" type="button">СКОПИРОВАТЬ СИЛЬНЫЙ</button>
+            </div>
+          </article>
+        </div>
+
+        <div class="run-strip"><b>Как показать:</b> открой два отдельных окна ChatGPT, нажми <kbd>Win + Z</kbd> и выбери раскладку 50/50. Загрузи одно фото в оба окна. В левом вставь слабый промпт, в правом — сильный. Нажми Enter слева и сразу Enter справа. После запуска вернись сюда и нажми «ДАЛЬШЕ».</div>
+      </div>
+    </section>
+
+    <!-- WOW 3 / 8: RESULTS -->
+    <section class="scene wow-results" data-scene="4">
+      <div class="scene-inner">
+        <div class="result-head">
+          <div>
+            <div class="eyebrow">ВАУ · теперь результат</div>
+            <h2>Одно фото. Две постановки. <span class="accent">Что изменилось?</span></h2>
+          </div>
+          <p>Смотрим не на «красивее / некрасивее», а на управляемость: что сохранилось, что изменилось и насколько результат соответствует задаче.</p>
+        </div>
+        <div class="result-panel">
+          <div class="wow-topline">
+            <div class="world-tabs">
+              <button class="world-tab active" data-world="mars">МАРС</button>
+              <button class="world-tab" data-world="jungle">ДЖУНГЛИ</button>
+              <button class="world-tab" data-world="cyberlab">КИБЕРЛАБ</button>
+            </div>
+            <div class="live-help" id="resultWorldLabel">МАРС · слабая ↔ сильная постановка</div>
+          </div>
+          <div class="source-row">
+            <div class="source-thumb"><img id="sourceImg" src="images/source.jpg" alt="Исходное фото"><div class="source-ph" id="sourcePh">ИСХОДНОЕ<br>ФОТО</div></div>
+            <div class="source-copy"><b>Исходник один и тот же</b><span>Сравниваем только влияние постановки задачи.</span></div>
+          </div>
+          <div class="compare-images">
+            <div class="img-card"><span class="img-tag">СЛАБАЯ</span><img id="weakImg" alt="Слабый результат"><div class="img-placeholder" id="weakPh"><div><strong>СЛАБЫЙ ВАРИАНТ</strong><span>положи готовое изображение в images/</span></div></div></div>
+            <div class="img-card strong"><span class="img-tag">СИЛЬНАЯ</span><img id="strongImg" alt="Сильный результат"><div class="img-placeholder" id="strongPh"><div><strong>СИЛЬНЫЙ ВАРИАНТ</strong><span>положи готовое изображение в images/</span></div></div></div>
+          </div>
+          <div class="result-questions">
+            <div class="result-q">Где лучше сохранились люди и исходная сцена?</div>
+            <div class="result-q">Где результат ближе к тому, что мы реально хотели?</div>
+            <div class="result-q">Какие ограничения сильнее всего повлияли на результат?</div>
+            <div class="result-q">Что всё равно нужно проверить вручную?</div>
+          </div>
+          <div class="result-thesis"><b>Сильнее не тот запрос, где больше слов.</b> Сильнее тот, где точнее задача и яснее критерии проверки.</div>
+        </div>
+      </div>
+    </section>
+
+    <!-- SHARED 4 / 8 -->
+    <section class="scene s3" data-scene="5">
+      <div class="scene-inner">
+        <div class="eyebrow">Как мы работаем с ИИ</div>
+        <h2>Не «волшебный запрос». <span style="color:#a4eaff">Управляемая работа.</span></h2>
+        <div class="flow-wrap">
+          <div class="flow-line"></div>
+          <div class="flow">
+            <div class="flow-step" data-n="01">РЕАЛЬНАЯ<br>ЗАДАЧА</div>
+            <div class="flow-step" data-n="02">КОНТЕКСТ</div>
+            <div class="flow-step" data-n="03">ДИАЛОГ</div>
+            <div class="flow-step" data-n="04">ПРОВЕРКА</div>
+            <div class="flow-step" data-n="05">ДОРАБОТКА</div>
+            <div class="flow-step" data-n="06">РЕЗУЛЬТАТ</div>
+          </div>
+        </div>
+        <div class="big-claim">Мы учимся не «писать промпты».<br><em>Мы учимся решать реальные задачи с ИИ.</em></div>
+      </div>
+    </section>
+
+    <!-- SHARED 5 / 8 -->
+    <section class="scene s5" data-scene="6">
+      <div class="scene-inner">
+        <div>
+          <div class="eyebrow">Занятие = практика</div>
+          <h2 class="practice-claim"><span>Сначала делаешь сам.</span><strong>Потом делаешь лучше.</strong></h2>
+          <p class="practice-note">На занятии <b>вы работаете больше, чем преподаватель говорит.</b> Первая попытка показывает, что уже умеешь именно ты.</p>
+        </div>
+        <div class="practice-panel">
+          <div class="cycle">
+            <div class="cycle-step"><span class="cycle-n">1</span><div><div class="cycle-main">ПОПРОБОВАЛ</div><div class="cycle-sub">самостоятельная первая попытка</div></div><span>→</span></div>
+            <div class="cycle-step"><span class="cycle-n">2</span><div><div class="cycle-main">ПОЛУЧИЛ</div><div class="cycle-sub">смотрю, что реально вышло</div></div><span>→</span></div>
+            <div class="cycle-step"><span class="cycle-n">3</span><div><div class="cycle-main">РАЗОБРАЛ</div><div class="cycle-sub">нахожу сильное и слабое</div></div><span>→</span></div>
+            <div class="cycle-step"><span class="cycle-n">4</span><div><div class="cycle-main">УЛУЧШИЛ</div><div class="cycle-sub">меняю задачу, контекст или стратегию</div></div><span>→</span></div>
+            <div class="cycle-step"><span class="cycle-n">5</span><div><div class="cycle-main">ПРОВЕРИЛ</div><div class="cycle-sub">факты, требования, применимость</div></div><span>→</span></div>
+            <div class="cycle-step"><span class="cycle-n">6</span><div><div class="cycle-main">ПРИМЕНИЛ</div><div class="cycle-sub">в новой или собственной задаче</div></div><span>✓</span></div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- SHARED 6 / 8 -->
+    <section class="scene s6" data-scene="7">
+      <div class="scene-inner">
+        <div class="eyebrow">А что потом?</div>
+        <h2 class="agent-title">Когда одного хорошего диалога уже мало…<span class="agent">ИИ: агентный режим</span></h2>
+        <div class="agent-field">
+          <div class="agent-flow">
+            <div class="agent-node">ЗАДАЧА</div><div class="agent-node">ПРОЦЕСС</div><div class="agent-node">ПОМОЩНИК</div><div class="agent-node">ИНСТРУМЕНТЫ</div><div class="agent-node">АГЕНТ</div><div class="agent-node">ТЕСТ</div><div class="agent-node">НОВАЯ<br>ВЕРСИЯ</div>
+          </div>
+        </div>
+        <p class="agent-copy">Здесь мы уже не просто решаем одну задачу с ИИ — <b>мы проектируем повторяемый способ решать целый класс задач.</b></p>
+      </div>
+    </section>
+
+    <!-- SHARED 7 / 8 -->
+    <section class="scene s7" data-scene="8">
+      <div class="scene-inner">
+        <div class="schedule-head">
+          <div><div class="eyebrow">Кабинет 4 · 2026/2027</div><h2>Расписание занятий</h2></div>
+          <p>Дроздов Дмитрий Владимирович · формат одного занятия: 40 минут + 10 минут перерыв + 40 минут.</p>
+        </div>
+        <div class="schedule-grid">
+          <article class="day"><h3>ПОНЕДЕЛЬНИК</h3><div class="slot"><time>14:30–16:00</time><b>1 группа</b><span>5 класс</span></div><div class="slot"><time>16:10–17:40</time><b>4 группа</b><span>8 класс</span></div><div class="slot"><time>17:50–19:20</time><b>5 группа</b><span>9–11</span></div></article>
+          <article class="day"><h3>ВТОРНИК</h3><div class="slot"><time>14:30–16:00</time><b>2 группа</b><span>6 класс</span></div><div class="slot"><time>16:10–17:40</time><b>3 группа</b><span>7 класс</span></div></article>
+          <article class="day"><h3>СРЕДА</h3><div class="slot"><time>14:30–16:00</time><b>1 группа</b><span>5 класс</span></div><div class="slot"><time>16:10–17:40</time><b>4 группа</b><span>8 класс</span></div><div class="slot"><time>17:50–19:20</time><b>5 группа</b><span>9–11</span></div></article>
+          <article class="day"><h3>ЧЕТВЕРГ</h3><div class="slot"><time>15:00–16:30</time><b>3 группа</b><span>7 класс</span></div><div class="slot"><time>16:10–17:40</time><b>4 группа</b><span>8 класс</span></div><div class="slot"><time>17:50–19:20</time><b>5 группа</b><span>9–11</span></div></article>
+          <article class="day"><h3>ПЯТНИЦА</h3><div class="slot"><time>14:30–16:00</time><b>2 группа</b><span>6 класс</span></div><div class="slot"><time>16:10–17:40</time><b>3 группа</b><span>7 класс</span></div></article>
+          <article class="day"><h3>СУББОТА</h3><div class="slot"><time>10:00–11:30</time><b>1 группа</b><span>5 класс</span></div><div class="slot"><time>11:40–13:10</time><b>2 группа</b><span>6 класс</span></div><div class="slot"><time>13:20–14:50</time><b>3 группа</b><span>7 класс</span></div></article>
+        </div>
+        <div class="schedule-note"><strong>Примечание:</strong> в исходном четверговом расписании 3-я и 4-я группы пересекаются с 16:10 до 16:30.</div>
+      </div>
+    </section>
+
+    <!-- SHARED 8 / 8 -->
+    <section class="scene s8" data-scene="9">
+      <div class="scene-inner">
+        <div class="final-layout">
+          <div class="qr-side">
+            <div class="final-mark"><i></i></div>
+            <div class="eyebrow" style="justify-content:center">Финиш маршрута</div>
+            <h2>Сканируй.<br><span class="accent">Продолжение — здесь.</span></h2>
+            <div class="qr-wrap"><img src="QR_START.png" alt="QR-код страницы"></div>
+            <div class="qr-url">https://drozdov-dmitry.github.io/school14-ai-courses-site/START/START.html</div>
+          </div>
+          <div class="form-card">
+            <h3>Интересен курс?</h3>
+            <p class="form-sub">Оставь короткий ответ — он попадёт преподавателю.</p>
+            <form id="interestForm" method="POST" action="https://script.google.com/macros/s/AKfycbyYPaEYOJ8LMYZOaMH0X8nRPHogMk1rZLnLADAS_pwCsDgtiKYs-FwNEHQaFjz58ZVW/exec" target="submitSink">
+              <div class="fields">
+                <div class="field"><label for="name">ИМЯ</label><input id="name" name="name" required maxlength="80" placeholder="Как тебя зовут?"></div>
+                <div class="field"><label for="klass">КЛАСС</label><input id="klass" name="klass" required maxlength="30" placeholder="Например: 7 класс"></div>
+                <div class="field full"><label for="intent">ЧТО ХОЧЕШЬ СООБЩИТЬ?</label><select id="intent" name="intent" required><option value="">Выбери вариант</option><option>Хочу прийти на курс</option><option>Хочу узнать подробнее</option><option>Хочу оставить отзыв</option></select></div>
+                <div class="field full"><label for="comment">КОММЕНТАРИЙ — НЕОБЯЗАТЕЛЬНО</label><textarea id="comment" name="comment" maxlength="500" placeholder="Вопрос, пожелание или короткий отзыв"></textarea></div>
+              </div>
+              <p class="privacy">Не указывай телефон, адрес, пароли и другие лишние личные данные.</p>
+              <button class="submit" type="submit" id="submitBtn">ОТПРАВИТЬ</button>
+              <div class="form-status" id="formStatus" aria-live="polite"></div>
+            </form>
+            <iframe name="submitSink" id="submitSink" hidden></iframe>
+            <button class="copy-link" id="copyLink" type="button">СКОПИРОВАТЬ ССЫЛКУ НА САЙТ</button>
+          </div>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <div class="nav-controls" aria-label="Навигация">
+    <div class="nav-left">
+      <button class="nav-btn prev" id="prevBtn" type="button">← НАЗАД</button>
+      <button class="nav-btn menu" id="menuBtn" type="button">МЕНЮ</button>
+    </div>
+    <div class="nav-right"><button class="nav-btn next" id="nextBtn" type="button">ДАЛЬШЕ →</button></div>
+  </div>
+
+  <div class="prompt-modal" id="promptModal" role="dialog" aria-modal="true" aria-labelledby="modalTitle">
+    <div class="prompt-modal-card">
+      <div class="modal-head"><h3 id="modalTitle">Сильный промпт</h3><button class="modal-close" id="modalClose" type="button" aria-label="Закрыть">×</button></div>
+      <div class="modal-scroll">
+        <section class="modal-section"><h4>HUMAN PROMPT</h4><div class="prose" id="modalHuman"></div></section>
+        <section class="modal-section"><h4>STRUCTURED SPEC / JSON</h4><pre id="modalJson"></pre></section>
+        <section class="modal-section"><h4>ЧЕГО НЕ ДЕЛАТЬ</h4><div class="prose" id="modalNegative"></div></section>
+      </div>
+      <div class="modal-actions">
+        <button class="prompt-btn" id="modalClose2" type="button">ЗАКРЫТЬ</button>
+        <button class="prompt-btn primary" id="modalCopy" type="button">СКОПИРОВАТЬ ВЕСЬ ПРОМПТ</button>
+      </div>
+    </div>
+  </div>
+
+  <div class="toast" id="toast"></div>
+</div>
+
+<script>
+(function(){
+'use strict';
+
+const PUBLIC_URL="https://drozdov-dmitry.github.io/school14-ai-courses-site/START/START.html";
+const branchData={"study": {"label": "УЧЁБА", "weak": "Объясни мне квадратные уравнения.", "generic": "Квадратное уравнение имеет вид ax² + bx + c = 0. Для решения можно использовать дискриминант D = b² − 4ac…", "missing": ["Где именно ошибка?", "Какой уровень?", "Сколько времени?", "Какой результат нужен?"], "task": "Я в 8 классе. Завтра самостоятельная по квадратным уравнениям. Формулу знаю, но путаюсь при переносе и проверке. У меня 25 минут. Сначала задай 2 коротких вопроса, затем разберём 1 пример вместе и дай 2 для тренировки. Не решай за меня.", "better": "Начнём с диагностики: где чаще ошибка — перенос или подстановка? Покажи один пример, где ответ не сошёлся, и найдём точку ошибки."}, "life": {"label": "ЖИЗНЬ", "weak": "Составь мне план на завтра.", "generic": "Можно начать день с учёбы, затем выделить время на домашние дела, отдых и подготовку к следующему дню…", "missing": ["Что уже занято?", "Сколько времени на дорогу?", "Что обязательно успеть?", "Когда нужен отдых?"], "task": "Завтра уроки до 14:00, тренировка с 17:30 до 19:00. Дорога от школы домой — 25 минут, до тренировки и обратно — по 20. К среде нужно подготовить доклад, на него нужен час. После школы хочу 45 минут отдыха. Собери реалистичный план с 20-минутным запасом и не ставь сложную работу после 21:00.", "better": "Сначала фиксируем жёсткие точки: школа и тренировка. Между ними оставляем дорогу, отдых, час на доклад и отдельный буфер — без плотной стыковки."}, "create": {"label": "СОЗДАНИЕ", "weak": "Сделай мне постер про космос.", "generic": "Можно использовать тёмный фон, крупное изображение планеты, яркий заголовок и несколько интересных фактов о космосе…", "missing": ["Для кого?", "Что главное?", "Где показываем?", "Как понять, что получилось?"], "task": "Нужен горизонтальный постер 16:9 для школьного экрана на тему «Почему Марс красный?». Аудитория — школьники. Один главный вопрос, схема из 3 шагов, не больше 30 слов на экране, крупный текст. Сначала предложи 3 разные концепции; после моего выбора собери черновик. Факты, которые требуют проверки, отметь отдельно.", "better": "Начну с выбора концепции: «Ржавчина в масштабе планеты», «Путь железа: порода → окисление → красная пыль» или «Марс крупным планом»."}};
+const worlds={"mars": {"title": "Марс", "weak": "Сделай из этой фотографии крутой зал на Марсе. Пусть будет футуристично и очень реалистично.", "human": "Отредактируй исходную фотографию. Главная задача — превратить окружающее пространство в реалистичную школьную исследовательскую базу на Марсе, при этом максимально точно сохранить всех людей на фотографии и узнаваемость исходного помещения.\n\nСохрани каждого человека: его личность, лицо, черты лица, возраст, выражение, причёску, цвет кожи, одежду, позу и положение в кадре. Не меняй людей ради стилизации сцены. Основные изменения должны происходить с окружением.\n\nСохрани исходный ракурс камеры, перспективу и общую геометрию помещения. За окнами и в видимых внешних участках покажи реалистичный марсианский ландшафт: красную равнину, скалы, лёгкую пыль и далёкий исследовательский ровер. Внутри добавь умеренные элементы исследовательской станции: функциональные панели, научное оборудование, несколько дисплеев и мягкий холодный свет. Помещение должно оставаться узнаваемым.\n\nИтог должен выглядеть как правдоподобная фотография реального события в переоборудованном помещении, а не как иллюстрация, компьютерная игра или фантастический космический корабль.", "structured": {"edit_type": "environment_transformation", "preserve": {"camera_angle": "preserve source camera angle", "perspective": "preserve source perspective", "room_geometry": "keep recognizable", "major_objects": "keep recognizable unless transformation requires surface-level changes"}, "people": {"preserve_all_people": true, "preserve_identity_as_accurately_as_possible": true, "preserve_faces": true, "preserve_age": true, "preserve_expression": true, "preserve_hairstyle": true, "preserve_skin_tone": true, "preserve_clothing": true, "preserve_pose": true, "preserve_position_in_frame": true}, "change": {"primary_target": "environment only", "environment": "realistic school research base on Mars", "windows_and_exterior": "Martian plain, rocks, light dust, distant research rover", "interior_details": ["functional scientific equipment", "subtle technical panels", "a few realistic displays", "restrained futuristic materials"]}, "lighting": {"interior": "realistic cool laboratory light", "exterior": "soft dusty Martian daylight", "priority": "natural integration with source photo"}, "style": {"medium": "photorealistic photograph", "realism": "high", "mood": "exciting, believable, scientific", "visual_language": "near-future research station"}, "composition": {"keep_source_framing": true, "keep_people_readable": true, "avoid_environment_overpowering_people": true}, "constraints": {"no_random_sci_fi": true, "no_spaceship_interior": true, "no_unrequested_text": true, "no_logos": true, "no_watermarks": true}, "output": {"aspect_ratio": "preserve source", "quality": "high", "goal": "recognizable original people inside a convincingly transformed Martian environment"}}, "negative": "Не добавляй, не удаляй, не заменяй и не дублируй людей. Не меняй лица, черты лица, возраст, выражение, причёску, цвет кожи, одежду, позы или положение людей в кадре. Не «улучшай» и не стилизуй внешность. Не превращай людей в персонажей фантастического фильма. Не деформируй лица, руки и тела. Не добавляй шлемы, скафандры или костюмы, если их нет на исходной фотографии. Не превращай помещение в космический корабль. Не добавляй случайный текст, логотипы, водяные знаки, оружие, фантастических существ или перегруженный sci-fi декор.", "weakImg": "images/mars-weak.jpg", "strongImg": "images/mars-strong.jpg", "structuredText": "{\n  \"edit_type\": \"environment_transformation\",\n  \"preserve\": {\n    \"camera_angle\": \"preserve source camera angle\",\n    \"perspective\": \"preserve source perspective\",\n    \"room_geometry\": \"keep recognizable\",\n    \"major_objects\": \"keep recognizable unless transformation requires surface-level changes\"\n  },\n  \"people\": {\n    \"preserve_all_people\": true,\n    \"preserve_identity_as_accurately_as_possible\": true,\n    \"preserve_faces\": true,\n    \"preserve_age\": true,\n    \"preserve_expression\": true,\n    \"preserve_hairstyle\": true,\n    \"preserve_skin_tone\": true,\n    \"preserve_clothing\": true,\n    \"preserve_pose\": true,\n    \"preserve_position_in_frame\": true\n  },\n  \"change\": {\n    \"primary_target\": \"environment only\",\n    \"environment\": \"realistic school research base on Mars\",\n    \"windows_and_exterior\": \"Martian plain, rocks, light dust, distant research rover\",\n    \"interior_details\": [\n      \"functional scientific equipment\",\n      \"subtle technical panels\",\n      \"a few realistic displays\",\n      \"restrained futuristic materials\"\n    ]\n  },\n  \"lighting\": {\n    \"interior\": \"realistic cool laboratory light\",\n    \"exterior\": \"soft dusty Martian daylight\",\n    \"priority\": \"natural integration with source photo\"\n  },\n  \"style\": {\n    \"medium\": \"photorealistic photograph\",\n    \"realism\": \"high\",\n    \"mood\": \"exciting, believable, scientific\",\n    \"visual_language\": \"near-future research station\"\n  },\n  \"composition\": {\n    \"keep_source_framing\": true,\n    \"keep_people_readable\": true,\n    \"avoid_environment_overpowering_people\": true\n  },\n  \"constraints\": {\n    \"no_random_sci_fi\": true,\n    \"no_spaceship_interior\": true,\n    \"no_unrequested_text\": true,\n    \"no_logos\": true,\n    \"no_watermarks\": true\n  },\n  \"output\": {\n    \"aspect_ratio\": \"preserve source\",\n    \"quality\": \"high\",\n    \"goal\": \"recognizable original people inside a convincingly transformed Martian environment\"\n  }\n}", "full": "HUMAN PROMPT\n\nОтредактируй исходную фотографию. Главная задача — превратить окружающее пространство в реалистичную школьную исследовательскую базу на Марсе, при этом максимально точно сохранить всех людей на фотографии и узнаваемость исходного помещения.\n\nСохрани каждого человека: его личность, лицо, черты лица, возраст, выражение, причёску, цвет кожи, одежду, позу и положение в кадре. Не меняй людей ради стилизации сцены. Основные изменения должны происходить с окружением.\n\nСохрани исходный ракурс камеры, перспективу и общую геометрию помещения. За окнами и в видимых внешних участках покажи реалистичный марсианский ландшафт: красную равнину, скалы, лёгкую пыль и далёкий исследовательский ровер. Внутри добавь умеренные элементы исследовательской станции: функциональные панели, научное оборудование, несколько дисплеев и мягкий холодный свет. Помещение должно оставаться узнаваемым.\n\nИтог должен выглядеть как правдоподобная фотография реального события в переоборудованном помещении, а не как иллюстрация, компьютерная игра или фантастический космический корабль.\n\nSTRUCTURED SPEC / JSON\n\n{\n  \"edit_type\": \"environment_transformation\",\n  \"preserve\": {\n    \"camera_angle\": \"preserve source camera angle\",\n    \"perspective\": \"preserve source perspective\",\n    \"room_geometry\": \"keep recognizable\",\n    \"major_objects\": \"keep recognizable unless transformation requires surface-level changes\"\n  },\n  \"people\": {\n    \"preserve_all_people\": true,\n    \"preserve_identity_as_accurately_as_possible\": true,\n    \"preserve_faces\": true,\n    \"preserve_age\": true,\n    \"preserve_expression\": true,\n    \"preserve_hairstyle\": true,\n    \"preserve_skin_tone\": true,\n    \"preserve_clothing\": true,\n    \"preserve_pose\": true,\n    \"preserve_position_in_frame\": true\n  },\n  \"change\": {\n    \"primary_target\": \"environment only\",\n    \"environment\": \"realistic school research base on Mars\",\n    \"windows_and_exterior\": \"Martian plain, rocks, light dust, distant research rover\",\n    \"interior_details\": [\n      \"functional scientific equipment\",\n      \"subtle technical panels\",\n      \"a few realistic displays\",\n      \"restrained futuristic materials\"\n    ]\n  },\n  \"lighting\": {\n    \"interior\": \"realistic cool laboratory light\",\n    \"exterior\": \"soft dusty Martian daylight\",\n    \"priority\": \"natural integration with source photo\"\n  },\n  \"style\": {\n    \"medium\": \"photorealistic photograph\",\n    \"realism\": \"high\",\n    \"mood\": \"exciting, believable, scientific\",\n    \"visual_language\": \"near-future research station\"\n  },\n  \"composition\": {\n    \"keep_source_framing\": true,\n    \"keep_people_readable\": true,\n    \"avoid_environment_overpowering_people\": true\n  },\n  \"constraints\": {\n    \"no_random_sci_fi\": true,\n    \"no_spaceship_interior\": true,\n    \"no_unrequested_text\": true,\n    \"no_logos\": true,\n    \"no_watermarks\": true\n  },\n  \"output\": {\n    \"aspect_ratio\": \"preserve source\",\n    \"quality\": \"high\",\n    \"goal\": \"recognizable original people inside a convincingly transformed Martian environment\"\n  }\n}\n\nЧЕГО НЕ ДЕЛАТЬ\n\nНе добавляй, не удаляй, не заменяй и не дублируй людей. Не меняй лица, черты лица, возраст, выражение, причёску, цвет кожи, одежду, позы или положение людей в кадре. Не «улучшай» и не стилизуй внешность. Не превращай людей в персонажей фантастического фильма. Не деформируй лица, руки и тела. Не добавляй шлемы, скафандры или костюмы, если их нет на исходной фотографии. Не превращай помещение в космический корабль. Не добавляй случайный текст, логотипы, водяные знаки, оружие, фантастических существ или перегруженный sci-fi декор."}, "jungle": {"title": "Джунгли", "weak": "Преврати эту фотку в джунгли. Сделай красиво, зелено и реалистично.", "human": "Отредактируй исходную фотографию так, будто реальное помещение постепенно оказалось внутри густых тропических джунглей. Сохрани узнаваемость исходного пространства и максимально точно сохрани всех людей на фотографии.\n\nКаждый человек должен остаться тем же человеком: сохранить личность, лицо, черты лица, возраст, выражение, причёску, цвет кожи, одежду, позу и положение в кадре. Не стилизуй людей под приключенческих персонажей. Основные изменения делай в окружении.\n\nСохрани ракурс камеры, перспективу, стены, проёмы, основные линии помещения и расположение крупных объектов. Добавь тропические растения разного масштаба, лианы вдоль стен и потолка, папоротники, широкие листья, мягкие солнечные лучи сквозь зелень и лёгкую влажную дымку. Растительность должна выглядеть так, будто природа постепенно входит в помещение, а не полностью уничтожает его.\n\nИтог — фотореалистичная фотография знакомого помещения, которое всё ещё легко узнать, но которое стало частью настоящих тропических джунглей.", "structured": {"edit_type": "environment_transformation", "preserve": {"camera_angle": "preserve source camera angle", "perspective": "preserve source perspective", "room_geometry": "keep clearly recognizable", "major_objects": "keep recognizable and in place"}, "people": {"preserve_all_people": true, "preserve_identity_as_accurately_as_possible": true, "preserve_faces": true, "preserve_age": true, "preserve_expression": true, "preserve_hairstyle": true, "preserve_skin_tone": true, "preserve_clothing": true, "preserve_pose": true, "preserve_position_in_frame": true}, "change": {"primary_target": "environment only", "environment": "realistic tropical jungle gradually overtaking the room", "vegetation": ["natural vines along walls and ceiling", "ferns", "broad tropical leaves", "layered plants at realistic scale"], "atmosphere": "subtle humid air and light mist"}, "lighting": {"source": "soft natural sunlight filtering through foliage", "effect": "realistic volumetric rays with restrained intensity", "priority": "preserve readable faces and source photo realism"}, "style": {"medium": "photorealistic photograph", "realism": "high", "mood": "lush, surprising, believable", "visual_language": "real tropical nature inside a familiar room"}, "composition": {"keep_source_framing": true, "keep_people_readable": true, "keep_room_recognizable": true, "avoid_covering_faces_with_plants": true}, "constraints": {"no_fantasy_animals": true, "no_magic": true, "no_adventure_costumes": true, "no_unrequested_text": true, "no_logos": true, "no_watermarks": true}, "output": {"aspect_ratio": "preserve source", "quality": "high", "goal": "recognizable original people inside a believable tropical transformation"}}, "negative": "Не добавляй, не удаляй, не заменяй и не дублируй людей. Не меняй лица, черты лица, возраст, выражение, причёску, цвет кожи, одежду, позы или положение людей. Не «улучшай» внешность и не превращай участников в героев приключенческого фильма. Не закрывай лица лианами и листьями. Не добавляй фантастических животных, динозавров, магию, руины, древние храмы или случайные артефакты. Не уничтожай исходную архитектуру помещения. Не добавляй текст, логотипы и водяные знаки.", "weakImg": "images/jungle-weak.jpg", "strongImg": "images/jungle-strong.jpg", "structuredText": "{\n  \"edit_type\": \"environment_transformation\",\n  \"preserve\": {\n    \"camera_angle\": \"preserve source camera angle\",\n    \"perspective\": \"preserve source perspective\",\n    \"room_geometry\": \"keep clearly recognizable\",\n    \"major_objects\": \"keep recognizable and in place\"\n  },\n  \"people\": {\n    \"preserve_all_people\": true,\n    \"preserve_identity_as_accurately_as_possible\": true,\n    \"preserve_faces\": true,\n    \"preserve_age\": true,\n    \"preserve_expression\": true,\n    \"preserve_hairstyle\": true,\n    \"preserve_skin_tone\": true,\n    \"preserve_clothing\": true,\n    \"preserve_pose\": true,\n    \"preserve_position_in_frame\": true\n  },\n  \"change\": {\n    \"primary_target\": \"environment only\",\n    \"environment\": \"realistic tropical jungle gradually overtaking the room\",\n    \"vegetation\": [\n      \"natural vines along walls and ceiling\",\n      \"ferns\",\n      \"broad tropical leaves\",\n      \"layered plants at realistic scale\"\n    ],\n    \"atmosphere\": \"subtle humid air and light mist\"\n  },\n  \"lighting\": {\n    \"source\": \"soft natural sunlight filtering through foliage\",\n    \"effect\": \"realistic volumetric rays with restrained intensity\",\n    \"priority\": \"preserve readable faces and source photo realism\"\n  },\n  \"style\": {\n    \"medium\": \"photorealistic photograph\",\n    \"realism\": \"high\",\n    \"mood\": \"lush, surprising, believable\",\n    \"visual_language\": \"real tropical nature inside a familiar room\"\n  },\n  \"composition\": {\n    \"keep_source_framing\": true,\n    \"keep_people_readable\": true,\n    \"keep_room_recognizable\": true,\n    \"avoid_covering_faces_with_plants\": true\n  },\n  \"constraints\": {\n    \"no_fantasy_animals\": true,\n    \"no_magic\": true,\n    \"no_adventure_costumes\": true,\n    \"no_unrequested_text\": true,\n    \"no_logos\": true,\n    \"no_watermarks\": true\n  },\n  \"output\": {\n    \"aspect_ratio\": \"preserve source\",\n    \"quality\": \"high\",\n    \"goal\": \"recognizable original people inside a believable tropical transformation\"\n  }\n}", "full": "HUMAN PROMPT\n\nОтредактируй исходную фотографию так, будто реальное помещение постепенно оказалось внутри густых тропических джунглей. Сохрани узнаваемость исходного пространства и максимально точно сохрани всех людей на фотографии.\n\nКаждый человек должен остаться тем же человеком: сохранить личность, лицо, черты лица, возраст, выражение, причёску, цвет кожи, одежду, позу и положение в кадре. Не стилизуй людей под приключенческих персонажей. Основные изменения делай в окружении.\n\nСохрани ракурс камеры, перспективу, стены, проёмы, основные линии помещения и расположение крупных объектов. Добавь тропические растения разного масштаба, лианы вдоль стен и потолка, папоротники, широкие листья, мягкие солнечные лучи сквозь зелень и лёгкую влажную дымку. Растительность должна выглядеть так, будто природа постепенно входит в помещение, а не полностью уничтожает его.\n\nИтог — фотореалистичная фотография знакомого помещения, которое всё ещё легко узнать, но которое стало частью настоящих тропических джунглей.\n\nSTRUCTURED SPEC / JSON\n\n{\n  \"edit_type\": \"environment_transformation\",\n  \"preserve\": {\n    \"camera_angle\": \"preserve source camera angle\",\n    \"perspective\": \"preserve source perspective\",\n    \"room_geometry\": \"keep clearly recognizable\",\n    \"major_objects\": \"keep recognizable and in place\"\n  },\n  \"people\": {\n    \"preserve_all_people\": true,\n    \"preserve_identity_as_accurately_as_possible\": true,\n    \"preserve_faces\": true,\n    \"preserve_age\": true,\n    \"preserve_expression\": true,\n    \"preserve_hairstyle\": true,\n    \"preserve_skin_tone\": true,\n    \"preserve_clothing\": true,\n    \"preserve_pose\": true,\n    \"preserve_position_in_frame\": true\n  },\n  \"change\": {\n    \"primary_target\": \"environment only\",\n    \"environment\": \"realistic tropical jungle gradually overtaking the room\",\n    \"vegetation\": [\n      \"natural vines along walls and ceiling\",\n      \"ferns\",\n      \"broad tropical leaves\",\n      \"layered plants at realistic scale\"\n    ],\n    \"atmosphere\": \"subtle humid air and light mist\"\n  },\n  \"lighting\": {\n    \"source\": \"soft natural sunlight filtering through foliage\",\n    \"effect\": \"realistic volumetric rays with restrained intensity\",\n    \"priority\": \"preserve readable faces and source photo realism\"\n  },\n  \"style\": {\n    \"medium\": \"photorealistic photograph\",\n    \"realism\": \"high\",\n    \"mood\": \"lush, surprising, believable\",\n    \"visual_language\": \"real tropical nature inside a familiar room\"\n  },\n  \"composition\": {\n    \"keep_source_framing\": true,\n    \"keep_people_readable\": true,\n    \"keep_room_recognizable\": true,\n    \"avoid_covering_faces_with_plants\": true\n  },\n  \"constraints\": {\n    \"no_fantasy_animals\": true,\n    \"no_magic\": true,\n    \"no_adventure_costumes\": true,\n    \"no_unrequested_text\": true,\n    \"no_logos\": true,\n    \"no_watermarks\": true\n  },\n  \"output\": {\n    \"aspect_ratio\": \"preserve source\",\n    \"quality\": \"high\",\n    \"goal\": \"recognizable original people inside a believable tropical transformation\"\n  }\n}\n\nЧЕГО НЕ ДЕЛАТЬ\n\nНе добавляй, не удаляй, не заменяй и не дублируй людей. Не меняй лица, черты лица, возраст, выражение, причёску, цвет кожи, одежду, позы или положение людей. Не «улучшай» внешность и не превращай участников в героев приключенческого фильма. Не закрывай лица лианами и листьями. Не добавляй фантастических животных, динозавров, магию, руины, древние храмы или случайные артефакты. Не уничтожай исходную архитектуру помещения. Не добавляй текст, логотипы и водяные знаки."}, "cyberlab": {"title": "Киберлаборатория", "weak": "Сделай из этого места суперсовременную киберлабораторию будущего. Добавь неон, компьютеры и технологии.", "human": "Отредактируй исходную фотографию как реалистичную школьную AI- и робототехническую лабораторию ближайшего будущего. Сохрани узнаваемость реального помещения и максимально точно сохрани всех людей на фотографии.\n\nКаждый человек должен оставаться тем же человеком: сохранить личность, лицо, черты лица, возраст, выражение, причёску, цвет кожи, одежду, позу и положение в кадре. Не стилизуй людей под персонажей киберпанка. Основные изменения делай в пространстве вокруг них.\n\nСохрани исходный ракурс, перспективу, геометрию помещения, расположение мебели и крупных объектов. Добавь несколько современных рабочих станций, небольшие робототехнические устройства, аккуратные сенсорные панели, прозрачные информационные интерфейсы только там, где они выглядят функционально, и тонкие световые линии. Используй холодный бело-голубой свет с небольшим фиолетовым акцентом. Материалы, отражения и освещение должны оставаться реалистичными.\n\nЭто лаборатория ближайшего будущего, которую можно представить в современной школе через несколько лет. Она должна выглядеть технологично и убедительно, без визуального шума и фантастического перегруза.", "structured": {"edit_type": "environment_transformation", "preserve": {"camera_angle": "preserve source camera angle", "perspective": "preserve source perspective", "room_geometry": "keep recognizable", "furniture_layout": "preserve overall layout and major positions"}, "people": {"preserve_all_people": true, "preserve_identity_as_accurately_as_possible": true, "preserve_faces": true, "preserve_age": true, "preserve_expression": true, "preserve_hairstyle": true, "preserve_skin_tone": true, "preserve_clothing": true, "preserve_pose": true, "preserve_position_in_frame": true}, "change": {"primary_target": "environment only", "environment": "near-future school AI and robotics laboratory", "technology": ["modern workstations", "small robotics devices", "functional transparent information panels", "subtle data visualization elements", "thin integrated light lines"]}, "lighting": {"base": "clean cool white light", "accents": "restrained blue with small violet accents", "priority": "realistic skin tones and believable reflections"}, "style": {"medium": "photorealistic photograph", "realism": "high", "mood": "advanced, clean, believable", "visual_language": "near-future education technology"}, "composition": {"keep_source_framing": true, "keep_people_readable": true, "keep_room_recognizable": true, "avoid_large_holograms_blocking_people": true}, "constraints": {"no_cyberpunk_overload": true, "no_spaceship_interior": true, "no_weapons": true, "no_random_neon": true, "no_unrequested_text": true, "no_brand_logos": true, "no_watermarks": true}, "output": {"aspect_ratio": "preserve source", "quality": "high", "goal": "recognizable original people inside a credible near-future school technology lab"}}, "negative": "Не добавляй, не удаляй, не заменяй и не дублируй людей. Не меняй лица, возраст, выражение, причёску, цвет кожи, одежду, позы или положение людей в кадре. Не «улучшай» внешность и не превращай участников в киберпанк-персонажей. Не добавляй маски, импланты, шлемы и футуристические костюмы. Не превращай помещение в космический корабль, игровой уровень или ночной клуб. Избегай кислотного неона, огромных голограмм, оружия, хаотичных проводов, случайного текста, брендов и водяных знаков.", "weakImg": "images/cyberlab-weak.jpg", "strongImg": "images/cyberlab-strong.jpg", "structuredText": "{\n  \"edit_type\": \"environment_transformation\",\n  \"preserve\": {\n    \"camera_angle\": \"preserve source camera angle\",\n    \"perspective\": \"preserve source perspective\",\n    \"room_geometry\": \"keep recognizable\",\n    \"furniture_layout\": \"preserve overall layout and major positions\"\n  },\n  \"people\": {\n    \"preserve_all_people\": true,\n    \"preserve_identity_as_accurately_as_possible\": true,\n    \"preserve_faces\": true,\n    \"preserve_age\": true,\n    \"preserve_expression\": true,\n    \"preserve_hairstyle\": true,\n    \"preserve_skin_tone\": true,\n    \"preserve_clothing\": true,\n    \"preserve_pose\": true,\n    \"preserve_position_in_frame\": true\n  },\n  \"change\": {\n    \"primary_target\": \"environment only\",\n    \"environment\": \"near-future school AI and robotics laboratory\",\n    \"technology\": [\n      \"modern workstations\",\n      \"small robotics devices\",\n      \"functional transparent information panels\",\n      \"subtle data visualization elements\",\n      \"thin integrated light lines\"\n    ]\n  },\n  \"lighting\": {\n    \"base\": \"clean cool white light\",\n    \"accents\": \"restrained blue with small violet accents\",\n    \"priority\": \"realistic skin tones and believable reflections\"\n  },\n  \"style\": {\n    \"medium\": \"photorealistic photograph\",\n    \"realism\": \"high\",\n    \"mood\": \"advanced, clean, believable\",\n    \"visual_language\": \"near-future education technology\"\n  },\n  \"composition\": {\n    \"keep_source_framing\": true,\n    \"keep_people_readable\": true,\n    \"keep_room_recognizable\": true,\n    \"avoid_large_holograms_blocking_people\": true\n  },\n  \"constraints\": {\n    \"no_cyberpunk_overload\": true,\n    \"no_spaceship_interior\": true,\n    \"no_weapons\": true,\n    \"no_random_neon\": true,\n    \"no_unrequested_text\": true,\n    \"no_brand_logos\": true,\n    \"no_watermarks\": true\n  },\n  \"output\": {\n    \"aspect_ratio\": \"preserve source\",\n    \"quality\": \"high\",\n    \"goal\": \"recognizable original people inside a credible near-future school technology lab\"\n  }\n}", "full": "HUMAN PROMPT\n\nОтредактируй исходную фотографию как реалистичную школьную AI- и робототехническую лабораторию ближайшего будущего. Сохрани узнаваемость реального помещения и максимально точно сохрани всех людей на фотографии.\n\nКаждый человек должен оставаться тем же человеком: сохранить личность, лицо, черты лица, возраст, выражение, причёску, цвет кожи, одежду, позу и положение в кадре. Не стилизуй людей под персонажей киберпанка. Основные изменения делай в пространстве вокруг них.\n\nСохрани исходный ракурс, перспективу, геометрию помещения, расположение мебели и крупных объектов. Добавь несколько современных рабочих станций, небольшие робототехнические устройства, аккуратные сенсорные панели, прозрачные информационные интерфейсы только там, где они выглядят функционально, и тонкие световые линии. Используй холодный бело-голубой свет с небольшим фиолетовым акцентом. Материалы, отражения и освещение должны оставаться реалистичными.\n\nЭто лаборатория ближайшего будущего, которую можно представить в современной школе через несколько лет. Она должна выглядеть технологично и убедительно, без визуального шума и фантастического перегруза.\n\nSTRUCTURED SPEC / JSON\n\n{\n  \"edit_type\": \"environment_transformation\",\n  \"preserve\": {\n    \"camera_angle\": \"preserve source camera angle\",\n    \"perspective\": \"preserve source perspective\",\n    \"room_geometry\": \"keep recognizable\",\n    \"furniture_layout\": \"preserve overall layout and major positions\"\n  },\n  \"people\": {\n    \"preserve_all_people\": true,\n    \"preserve_identity_as_accurately_as_possible\": true,\n    \"preserve_faces\": true,\n    \"preserve_age\": true,\n    \"preserve_expression\": true,\n    \"preserve_hairstyle\": true,\n    \"preserve_skin_tone\": true,\n    \"preserve_clothing\": true,\n    \"preserve_pose\": true,\n    \"preserve_position_in_frame\": true\n  },\n  \"change\": {\n    \"primary_target\": \"environment only\",\n    \"environment\": \"near-future school AI and robotics laboratory\",\n    \"technology\": [\n      \"modern workstations\",\n      \"small robotics devices\",\n      \"functional transparent information panels\",\n      \"subtle data visualization elements\",\n      \"thin integrated light lines\"\n    ]\n  },\n  \"lighting\": {\n    \"base\": \"clean cool white light\",\n    \"accents\": \"restrained blue with small violet accents\",\n    \"priority\": \"realistic skin tones and believable reflections\"\n  },\n  \"style\": {\n    \"medium\": \"photorealistic photograph\",\n    \"realism\": \"high\",\n    \"mood\": \"advanced, clean, believable\",\n    \"visual_language\": \"near-future education technology\"\n  },\n  \"composition\": {\n    \"keep_source_framing\": true,\n    \"keep_people_readable\": true,\n    \"keep_room_recognizable\": true,\n    \"avoid_large_holograms_blocking_people\": true\n  },\n  \"constraints\": {\n    \"no_cyberpunk_overload\": true,\n    \"no_spaceship_interior\": true,\n    \"no_weapons\": true,\n    \"no_random_neon\": true,\n    \"no_unrequested_text\": true,\n    \"no_brand_logos\": true,\n    \"no_watermarks\": true\n  },\n  \"output\": {\n    \"aspect_ratio\": \"preserve source\",\n    \"quality\": \"high\",\n    \"goal\": \"recognizable original people inside a credible near-future school technology lab\"\n  }\n}\n\nЧЕГО НЕ ДЕЛАТЬ\n\nНе добавляй, не удаляй, не заменяй и не дублируй людей. Не меняй лица, возраст, выражение, причёску, цвет кожи, одежду, позы или положение людей в кадре. Не «улучшай» внешность и не превращай участников в киберпанк-персонажей. Не добавляй маски, импланты, шлемы и футуристические костюмы. Не превращай помещение в космический корабль, игровой уровень или ночной клуб. Избегай кислотного неона, огромных голограмм, оружия, хаотичных проводов, случайного текста, брендов и водяных знаков."}};
+
+const scenes=[...document.querySelectorAll('.scene')];
+const count=document.getElementById('sceneCount');
+const progress=document.getElementById('progressFill');
+const prevBtn=document.getElementById('prevBtn');
+const nextBtn=document.getElementById('nextBtn');
+const menuBtn=document.getElementById('menuBtn');
+const toast=document.getElementById('toast');
+const navHint=document.getElementById('navHint');
+let activeScene=0;
+let route=[0,1,2,5,6,7,8,9];
+let routePos=0;
+let selectedBranch='study';
+let selectedWorld='mars';
+let animTimers=[];
+let toastTimer=null;
+let formSubmitted=false;
+
+function clearTimers(){animTimers.forEach(clearTimeout);animTimers=[]}
+function later(fn,ms){const id=setTimeout(fn,ms);animTimers.push(id);return id}
+function showToast(msg,ms=1800){
+  clearTimeout(toastTimer);toast.textContent=msg;toast.classList.add('show');
+  toastTimer=setTimeout(()=>toast.classList.remove('show'),ms)
+}
+function setRoute(kind){
+  route = kind==='wow' ? [0,3,4,5,6,7,8,9] : [0,1,2,5,6,7,8,9];
+  routePos=0;
+}
+function routeIndexOf(sceneId){return route.indexOf(sceneId)}
+function updateChrome(){
+  count.textContent=String(routePos+1).padStart(2,'0')+' / 08';
+  progress.style.width=((routePos+1)/8*100)+'%';
+  progress.style.background=activeScene===7?'linear-gradient(90deg,var(--violet),var(--magenta),var(--cyan))':'linear-gradient(90deg,var(--blue),var(--cyan))';
+  prevBtn.hidden=routePos===0;
+  menuBtn.hidden=routePos===0;
+  nextBtn.hidden=routePos===0 || routePos===route.length-1;
+}
+function scrollSceneTop(){
+  const inner=scenes[activeScene].querySelector('.scene-inner');
+  if(inner)inner.scrollTop=0;
+}
+function resetAnimations(){
+  clearTimers();
+  document.querySelectorAll('.flow-step,.cycle-step,.agent-node').forEach(el=>el.classList.remove('revealed'));
+}
+function animateCurrent(){
+  clearTimers();
+  if(activeScene===5)[...document.querySelectorAll('.flow-step')].forEach((el,i)=>later(()=>el.classList.add('revealed'),120+i*150));
+  if(activeScene===6)[...document.querySelectorAll('.cycle-step')].forEach((el,i)=>later(()=>el.classList.add('revealed'),100+i*115));
+  if(activeScene===7)[...document.querySelectorAll('.agent-node')].forEach((el,i)=>later(()=>el.classList.add('revealed'),100+i*115));
+}
+function showScene(sceneId,dir='forward'){
+  if(sceneId===activeScene)return;
+  resetAnimations();
+  const old=activeScene;
+  activeScene=sceneId;
+  scenes[old].classList.remove('active');
+  scenes[old].classList.add(dir==='back'?'exit-right':'exit-left');
+  setTimeout(()=>scenes[old].classList.remove('exit-left','exit-right'),560);
+  scenes[activeScene].classList.add('active');
+  scrollSceneTop();
+  updateChrome();
+  animateCurrent();
+}
+function goRoutePos(pos,dir='forward'){
+  pos=Math.max(0,Math.min(route.length-1,pos));
+  routePos=pos;
+  showScene(route[routePos],dir);
+}
+function next(){if(routePos<route.length-1)goRoutePos(routePos+1,'forward')}
+function prev(){if(routePos>0)goRoutePos(routePos-1,'back')}
+function home(){
+  setRoute(selectedBranch==='wow'?'wow':'regular');
+  const old=activeScene;
+  routePos=0;
+  if(old!==0)showScene(0,'back');
+  else updateChrome();
+}
+
+function applyBranch(key){
+  selectedBranch=key;
+  const d=branchData[key]||branchData.study;
+  document.getElementById('branchWeakLabel').textContent=d.label;
+  document.getElementById('branchStrongLabel').textContent=d.label;
+  document.getElementById('branchWeakPrompt').textContent=d.weak;
+  document.getElementById('branchGenericAnswer').textContent=d.generic;
+  [...document.getElementById('branchMissing').children].forEach((el,i)=>el.textContent=d.missing[i]||'');
+  document.getElementById('branchTask').textContent=d.task;
+  document.getElementById('branchBetter').textContent=d.better;
+}
+
+const weakImg=document.getElementById('weakImg');
+const strongImg=document.getElementById('strongImg');
+const weakPh=document.getElementById('weakPh');
+const strongPh=document.getElementById('strongPh');
+const sourceImg=document.getElementById('sourceImg');
+const sourcePh=document.getElementById('sourcePh');
+function loadImage(img,ph,src){
+  img.style.display='none';ph.style.display='grid';
+  img.onload=()=>{img.style.display='block';ph.style.display='none'};
+  img.onerror=()=>{img.style.display='none';ph.style.display='grid'};
+  img.src=src;
+}
+function syncSource(){
+  if(sourceImg.complete&&sourceImg.naturalWidth>0){sourceImg.style.display='block';sourcePh.style.display='none'}
+  else{sourceImg.style.display='none';sourcePh.style.display='grid'}
+}
+sourceImg.addEventListener('load',syncSource);
+sourceImg.addEventListener('error',syncSource);
+syncSource();
+
+function setWorld(key){
+  selectedWorld=key;
+  const w=worlds[key]||worlds.mars;
+  document.querySelectorAll('.world-tab').forEach(b=>b.classList.toggle('active',b.dataset.world===key));
+  document.getElementById('weakPromptTitle').textContent=w.title;
+  document.getElementById('strongPromptTitle').textContent=w.title;
+  document.getElementById('wowWeakPrompt').textContent=w.weak;
+  document.getElementById('wowStrongPreview').textContent=w.human;
+  document.getElementById('resultWorldLabel').textContent=w.title.toUpperCase()+' · слабая ↔ сильная постановка';
+  loadImage(weakImg,weakPh,w.weakImg);
+  loadImage(strongImg,strongPh,w.strongImg);
+}
+setWorld('mars');
+
+async function copyText(text,success){
+  try{
+    await navigator.clipboard.writeText(text);
+    showToast(success||'Скопировано');
+  }catch(err){
+    const ta=document.createElement('textarea');
+    ta.value=text;ta.style.position='fixed';ta.style.opacity='0';document.body.appendChild(ta);ta.select();
+    try{document.execCommand('copy');showToast(success||'Скопировано')}catch(e){prompt('Скопируй текст:',text)}
+    ta.remove();
+  }
+}
+
+document.getElementById('copyWeakBtn').addEventListener('click',()=>copyText(worlds[selectedWorld].weak,'Слабый промпт скопирован'));
+document.getElementById('copyStrongBtn').addEventListener('click',()=>copyText(worlds[selectedWorld].full,'Сильный промпт скопирован'));
+
+const modal=document.getElementById('promptModal');
+function openModal(){
+  const w=worlds[selectedWorld];
+  document.getElementById('modalTitle').textContent='Сильный промпт · '+w.title;
+  document.getElementById('modalHuman').textContent=w.human;
+  document.getElementById('modalJson').textContent=w.structuredText;
+  document.getElementById('modalNegative').textContent=w.negative;
+  modal.classList.add('open');
+}
+function closeModal(){modal.classList.remove('open')}
+document.getElementById('expandStrongBtn').addEventListener('click',openModal);
+document.getElementById('modalClose').addEventListener('click',closeModal);
+document.getElementById('modalClose2').addEventListener('click',closeModal);
+document.getElementById('modalCopy').addEventListener('click',()=>copyText(worlds[selectedWorld].full,'Весь сильный промпт скопирован'));
+modal.addEventListener('click',e=>{if(e.target===modal)closeModal()});
+
+document.querySelectorAll('.choice').forEach(btn=>{
+  btn.addEventListener('pointermove',e=>{
+    const r=btn.getBoundingClientRect();
+    btn.style.setProperty('--cx',(e.clientX-r.left)+'px');
+    btn.style.setProperty('--cy',(e.clientY-r.top)+'px');
+  });
+  btn.addEventListener('click',()=>{
+    const b=btn.dataset.branch;
+    if(b==='wow'){
+      selectedBranch='wow';
+      setRoute('wow');
+      routePos=1;
+      showScene(route[routePos],'forward');
+      return;
+    }
+    applyBranch(b);
+    setRoute('regular');
+    routePos=1;
+    showScene(route[routePos],'forward');
+  });
+});
+document.querySelectorAll('.world-tab').forEach(btn=>btn.addEventListener('click',()=>setWorld(btn.dataset.world)));
+prevBtn.addEventListener('click',prev);
+nextBtn.addEventListener('click',next);
+menuBtn.addEventListener('click',home);
+
+async function fullscreen(){
+  try{
+    if(document.fullscreenElement){await document.exitFullscreen();return}
+    if(document.documentElement.requestFullscreen)await document.documentElement.requestFullscreen();
+  }catch(e){showToast('Для полного экрана используйте меню браузера')}
+}
+document.getElementById('fullscreenBtn').addEventListener('click',fullscreen);
+
+window.addEventListener('keydown',e=>{
+  const tag=(e.target.tagName||'').toLowerCase();
+  if(['input','textarea','select'].includes(tag))return;
+  if(e.key==='Escape'&&modal.classList.contains('open')){closeModal();return}
+  if(e.key==='ArrowRight'||e.key==='PageDown'){e.preventDefault();next();return}
+  if(e.key==='ArrowLeft'||e.key==='PageUp'){e.preventDefault();prev();return}
+  if(e.key==='Home'){e.preventDefault();home();return}
+  if(e.key.toLowerCase()==='f'){e.preventDefault();fullscreen();return}
+  if(e.key.toLowerCase()==='m'){e.preventDefault();home();return}
+});
+
+window.addEventListener('pointermove',e=>{
+  document.documentElement.style.setProperty('--mx',e.clientX+'px');
+  document.documentElement.style.setProperty('--my',e.clientY+'px');
+  const orbit=document.getElementById('s1Orbit');
+  if(orbit){
+    const px=(e.clientX/window.innerWidth-.5),py=(e.clientY/window.innerHeight-.5);
+    orbit.style.setProperty('--px',px.toFixed(3));orbit.style.setProperty('--py',py.toFixed(3));
+  }
+},{passive:true});
+
+/* Touch: vertical scroll stays native; horizontal swipe changes route */
+let touchX=null,touchY=null,touchTarget=null;
+window.addEventListener('touchstart',e=>{
+  if(!e.touches||!e.touches.length)return;
+  touchX=e.touches[0].clientX;touchY=e.touches[0].clientY;touchTarget=e.target;
+},{passive:true});
+window.addEventListener('touchend',e=>{
+  if(touchX===null||!e.changedTouches||!e.changedTouches.length)return;
+  const tag=((touchTarget&&touchTarget.tagName)||'').toLowerCase();
+  const dx=e.changedTouches[0].clientX-touchX;
+  const dy=e.changedTouches[0].clientY-touchY;
+  touchX=touchY=null;
+  if(['input','textarea','select','button'].includes(tag))return;
+  if(modal.classList.contains('open'))return;
+  if(Math.abs(dx)>85&&Math.abs(dx)>Math.abs(dy)*1.25){dx<0?next():prev()}
+},{passive:true});
+
+/* Form */
+const form=document.getElementById('interestForm');
+const submitBtn=document.getElementById('submitBtn');
+const formStatus=document.getElementById('formStatus');
+const sink=document.getElementById('submitSink');
+form.addEventListener('submit',()=>{
+  formSubmitted=true;submitBtn.disabled=true;submitBtn.textContent='ОТПРАВЛЯЕМ…';formStatus.textContent='';
+  setTimeout(()=>{if(formSubmitted)formStatus.textContent='Отправка занимает чуть дольше обычного…'},3500);
+});
+sink.addEventListener('load',()=>{
+  if(!formSubmitted)return;
+  formSubmitted=false;form.reset();submitBtn.disabled=false;submitBtn.textContent='ОТПРАВИТЬ';
+  formStatus.textContent='Готово. Ответ отправлен.';showToast('Ответ отправлен');
+});
+document.getElementById('copyLink').addEventListener('click',()=>copyText(PUBLIC_URL,'Ссылка скопирована'));
+
+function syncAppHeight(){
+  const h=(window.visualViewport&&window.visualViewport.height)?window.visualViewport.height:window.innerHeight;
+  document.documentElement.style.setProperty('--app-height',Math.round(h)+'px');
+}
+syncAppHeight();
+window.addEventListener('resize',syncAppHeight,{passive:true});
+window.addEventListener('orientationchange',()=>setTimeout(syncAppHeight,80),{passive:true});
+if(window.visualViewport){
+  window.visualViewport.addEventListener('resize',syncAppHeight,{passive:true});
+  window.visualViewport.addEventListener('scroll',syncAppHeight,{passive:true});
+}
+if(window.innerWidth<1000||window.innerHeight<650)document.getElementById('app').classList.add('low-power');
+setTimeout(()=>navHint.classList.add('fade'),5000);
+
+applyBranch('study');
+updateChrome();
+})();
+</script>
+</body>
+</html>
