@@ -1,0 +1,707 @@
+<!doctype html>
+<html lang="ru">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta name="color-scheme" content="dark">
+<meta name="theme-color" content="#080b18">
+<title>ИИ: от вопроса к реальной задаче · Блок 1</title>
+<style>
+:root{
+  --bg:#070914;
+  --bg2:#0b1020;
+  --card:rgba(16,21,42,.72);
+  --card2:rgba(21,27,53,.88);
+  --text:#f6f8ff;
+  --muted:#aeb8d4;
+  --line:rgba(159,179,255,.16);
+  --cyan:#66e8ff;
+  --blue:#7297ff;
+  --violet:#a57cff;
+  --pink:#ff7bca;
+  --green:#75f0b5;
+  --yellow:#ffd978;
+  --danger:#ff8a9b;
+  --shadow:0 24px 70px rgba(0,0,0,.34);
+  --r:24px;
+  --max:1180px;
+}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth;background:var(--bg)}
+body{
+  margin:0;
+  color:var(--text);
+  background:
+    radial-gradient(circle at 15% -10%,rgba(67,130,255,.20),transparent 35rem),
+    radial-gradient(circle at 90% 12%,rgba(176,78,255,.18),transparent 32rem),
+    linear-gradient(180deg,#080b18 0%,#060812 60%,#080b16 100%);
+  font-family:"Segoe UI Variable","Segoe UI",Inter,Arial,sans-serif;
+  line-height:1.58;
+  min-height:100vh;
+  overflow-x:hidden;
+}
+body:before{
+  content:"";
+  position:fixed;inset:0;pointer-events:none;z-index:-2;
+  background-image:
+    linear-gradient(rgba(255,255,255,.025) 1px,transparent 1px),
+    linear-gradient(90deg,rgba(255,255,255,.025) 1px,transparent 1px);
+  background-size:48px 48px;
+  mask-image:linear-gradient(to bottom,black,transparent 86%);
+}
+.aurora{
+  position:fixed;z-index:-1;pointer-events:none;filter:blur(60px);opacity:.32;
+  width:38vw;height:38vw;border-radius:50%;
+  background:linear-gradient(135deg,var(--cyan),var(--violet),var(--pink));
+  animation:float 14s ease-in-out infinite alternate;
+}
+.a1{left:-13vw;top:18vh}.a2{right:-18vw;top:55vh;animation-delay:-5s;opacity:.18}
+@keyframes float{to{transform:translate3d(7vw,-3vh,0) rotate(18deg) scale(1.06)}}
+a{color:inherit}
+.wrap{width:min(calc(100% - 32px),var(--max));margin:auto}
+.topbar{
+  position:sticky;top:0;z-index:50;
+  backdrop-filter:blur(18px);-webkit-backdrop-filter:blur(18px);
+  background:rgba(7,9,20,.74);border-bottom:1px solid var(--line)
+}
+.topbar-inner{
+  width:min(calc(100% - 32px),var(--max));margin:auto;
+  display:flex;gap:16px;align-items:center;justify-content:space-between;
+  min-height:62px
+}
+.brand{font-weight:850;letter-spacing:.02em;font-size:.95rem;white-space:nowrap}
+.brand b{color:var(--cyan)}
+.nav{display:flex;gap:8px;overflow:auto;scrollbar-width:none}
+.nav::-webkit-scrollbar{display:none}
+.nav a{
+  flex:none;text-decoration:none;color:var(--muted);font-size:.88rem;font-weight:700;
+  padding:8px 11px;border-radius:999px;border:1px solid transparent
+}
+.nav a:hover,.nav a:focus-visible{color:#fff;border-color:var(--line);background:rgba(255,255,255,.04);outline:none}
+.hero{padding:clamp(54px,8vw,110px) 0 48px;position:relative}
+.eyebrow{
+  display:inline-flex;align-items:center;gap:8px;
+  color:var(--cyan);font-weight:850;font-size:.82rem;letter-spacing:.08em;text-transform:uppercase
+}
+.dot{width:8px;height:8px;border-radius:50%;background:var(--cyan);box-shadow:0 0 18px var(--cyan)}
+h1{
+  margin:.18em 0 .28em;
+  font-size:clamp(3rem,8.4vw,7.7rem);
+  line-height:.92;letter-spacing:-.055em;
+  max-width:1000px
+}
+h1 .grad{
+  background:linear-gradient(100deg,#fff 0%,var(--cyan) 35%,#9faeff 64%,var(--pink) 100%);
+  -webkit-background-clip:text;background-clip:text;color:transparent
+}
+.lead{
+  color:var(--muted);font-size:clamp(1.08rem,2vw,1.34rem);max-width:790px;margin:0 0 28px
+}
+.chain{
+  display:flex;flex-wrap:wrap;gap:9px;align-items:center;margin:24px 0 0
+}
+.chip{
+  border:1px solid var(--line);border-radius:999px;background:rgba(255,255,255,.045);
+  padding:8px 12px;font-size:.88rem;font-weight:800;color:#dce4ff
+}
+.arrow{color:#64708f;font-size:.95rem}
+.hero-actions{display:flex;gap:10px;flex-wrap:wrap;margin-top:28px}
+.btn{
+  appearance:none;border:0;border-radius:14px;padding:12px 16px;
+  background:linear-gradient(135deg,#456fff,#8b65ff);color:#fff;
+  font:inherit;font-weight:850;cursor:pointer;text-decoration:none;box-shadow:0 12px 32px rgba(80,96,255,.22)
+}
+.btn.secondary{background:rgba(255,255,255,.06);border:1px solid var(--line);box-shadow:none;color:#eef2ff}
+.btn:hover{transform:translateY(-1px)}
+.btn:focus-visible,.track-btn:focus-visible,.task:focus-visible,summary:focus-visible{
+  outline:3px solid rgba(102,232,255,.55);outline-offset:3px
+}
+.section{padding:26px 0 58px}
+.section-head{display:flex;justify-content:space-between;gap:18px;align-items:end;margin-bottom:20px}
+.kicker{color:var(--cyan);font-size:.78rem;text-transform:uppercase;letter-spacing:.1em;font-weight:850}
+h2{font-size:clamp(1.75rem,4.5vw,3.35rem);line-height:1.03;letter-spacing:-.035em;margin:.18em 0 .2em}
+.section-intro{color:var(--muted);max-width:740px;margin:0}
+.core-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:12px}
+.core{
+  position:relative;overflow:hidden;
+  min-height:180px;padding:22px;border-radius:22px;border:1px solid var(--line);
+  background:linear-gradient(150deg,rgba(24,30,61,.82),rgba(12,15,31,.82));
+}
+.core:after{
+  content:"";position:absolute;width:100px;height:100px;border-radius:50%;
+  right:-35px;bottom:-45px;background:var(--c,var(--blue));filter:blur(28px);opacity:.26
+}
+.core .n{font-size:.75rem;font-weight:900;color:var(--c,var(--cyan));letter-spacing:.1em}
+.core h3{margin:28px 0 8px;font-size:1.18rem;line-height:1.15}
+.core p{margin:0;color:var(--muted);font-size:.94rem}
+.c1{--c:var(--cyan)}.c2{--c:var(--blue)}.c3{--c:var(--violet)}.c4{--c:var(--pink)}.c5{--c:var(--green)}.c6{--c:var(--yellow)}.c7{--c:#86a6ff}.c8{--c:#b48bff}.c9{--c:#7df1cf}
+.accordion{display:grid;gap:12px}
+details{
+  border:1px solid var(--line);border-radius:20px;background:var(--card);
+  box-shadow:0 12px 32px rgba(0,0,0,.10);overflow:hidden
+}
+details[open]{background:var(--card2);box-shadow:var(--shadow)}
+summary{
+  list-style:none;cursor:pointer;padding:20px 22px;
+  display:grid;grid-template-columns:auto 1fr auto;gap:14px;align-items:center;
+  font-size:clamp(1.02rem,2vw,1.2rem);font-weight:850
+}
+summary::-webkit-details-marker{display:none}
+.summary-num{
+  width:34px;height:34px;border-radius:10px;display:grid;place-items:center;
+  background:rgba(105,142,255,.12);border:1px solid rgba(126,158,255,.18);
+  color:#b8c9ff;font-size:.8rem
+}
+.chev{width:28px;height:28px;border-radius:9px;background:rgba(255,255,255,.05);display:grid;place-items:center;color:var(--muted);transition:.25s}
+details[open] .chev{transform:rotate(45deg);color:#fff}
+.detail-body{padding:0 22px 24px 70px;color:#dfe5f7}
+.detail-body p{max-width:850px}
+.detail-body .muted{color:var(--muted)}
+.example-grid{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin:14px 0}
+.example{
+  border-radius:16px;border:1px solid var(--line);padding:16px;background:rgba(255,255,255,.035)
+}
+.example.bad{border-color:rgba(255,120,145,.22);background:rgba(255,90,120,.045)}
+.example.good{border-color:rgba(117,240,181,.22);background:rgba(80,220,150,.045)}
+.label{font-size:.72rem;font-weight:900;letter-spacing:.09em;text-transform:uppercase;color:var(--muted)}
+.bad .label{color:#ff9bab}.good .label{color:#8df5c2}
+.quote{
+  margin:10px 0 0;padding:14px 15px;border-radius:14px;background:#090d1a;border:1px solid var(--line);
+  color:#fff;font-weight:650
+}
+.mini-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin-top:14px}
+.mini{padding:14px;border-radius:15px;background:rgba(255,255,255,.035);border:1px solid var(--line)}
+.mini b{display:block;margin-bottom:4px}.mini span{color:var(--muted);font-size:.9rem}
+.table-wrap{overflow:auto;border-radius:15px;border:1px solid var(--line);margin-top:14px}
+table{border-collapse:collapse;width:100%;min-width:650px;background:#0b0f1d}
+th,td{padding:12px 14px;text-align:left;border-bottom:1px solid var(--line)}
+th{color:#bdc9e9;font-size:.82rem;text-transform:uppercase;letter-spacing:.06em}
+td{color:#eef2ff}
+.track-panel{
+  border:1px solid var(--line);border-radius:22px;padding:18px;background:rgba(17,22,44,.70);margin-bottom:16px
+}
+.track-controls{display:flex;gap:8px;flex-wrap:wrap}
+.track-btn{
+  appearance:none;border:1px solid var(--line);background:rgba(255,255,255,.035);color:#dce4ff;
+  border-radius:999px;padding:9px 13px;font:inherit;font-weight:800;cursor:pointer
+}
+.track-btn.active{background:linear-gradient(135deg,#456fff,#9867ff);border-color:transparent;color:#fff}
+.track-note{color:var(--muted);font-size:.9rem;margin:10px 0 0}
+.task-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:10px}
+.task{
+  text-align:left;color:#f5f7ff;font:inherit;cursor:pointer;
+  border:1px solid var(--line);border-radius:18px;padding:17px;
+  background:linear-gradient(145deg,rgba(27,34,67,.82),rgba(11,15,30,.78));
+  min-height:140px;transition:.18s
+}
+.task:hover{transform:translateY(-2px);border-color:rgba(130,160,255,.35)}
+.task .emoji{font-size:1.45rem;display:block;margin-bottom:22px}
+.task b{display:block;font-size:1.02rem;line-height:1.18;margin-bottom:6px}
+.task small{color:var(--muted);line-height:1.35}
+.task .copyhint{display:block;color:#7fe9ff;margin-top:11px;font-size:.75rem;font-weight:850}
+.task[data-track]{display:none}
+body[data-track="all"] .task[data-track],
+body[data-track="5"] .task[data-track~="5"],
+body[data-track="8"] .task[data-track~="8"],
+body[data-track="senior"] .task[data-track~="senior"]{display:block}
+.audience-only{display:none}
+body[data-track="all"] .audience-only,
+body[data-track="senior"] .audience-only{display:block}
+.tools{display:grid;grid-template-columns:repeat(3,1fr);gap:10px}
+.tool{
+  display:flex;flex-direction:column;min-height:130px;text-decoration:none;
+  border:1px solid var(--line);border-radius:18px;padding:17px;background:rgba(255,255,255,.035)
+}
+.tool:hover{border-color:rgba(110,225,255,.36);background:rgba(102,232,255,.055)}
+.tool b{font-size:1.05rem}.tool span{color:var(--muted);font-size:.9rem;margin-top:5px}
+.tool em{margin-top:auto;color:var(--cyan);font-style:normal;font-size:.78rem;font-weight:850}
+.final{
+  margin:28px 0 70px;padding:clamp(26px,5vw,54px);border:1px solid var(--line);border-radius:28px;
+  background:
+    radial-gradient(circle at 80% 20%,rgba(151,90,255,.18),transparent 20rem),
+    linear-gradient(145deg,rgba(25,31,64,.9),rgba(10,13,28,.95));
+  box-shadow:var(--shadow)
+}
+.final h2{max-width:900px}.formula{font-size:clamp(1rem,2.4vw,1.36rem);font-weight:850;color:#e8ecff;margin-top:20px}
+.formula .hi{color:var(--cyan)}
+.toolbar{display:flex;gap:8px;flex-wrap:wrap}
+.ghost{
+  appearance:none;border:1px solid var(--line);border-radius:12px;background:rgba(255,255,255,.04);
+  color:#dce4ff;font:inherit;font-size:.82rem;font-weight:800;padding:8px 11px;cursor:pointer
+}
+.toast{
+  position:fixed;right:18px;bottom:18px;z-index:100;
+  background:#10172a;border:1px solid rgba(117,240,181,.25);color:#dfffee;
+  border-radius:14px;padding:12px 15px;box-shadow:var(--shadow);
+  opacity:0;transform:translateY(16px);pointer-events:none;transition:.22s
+}
+.toast.show{opacity:1;transform:none}
+.footer{color:#7e89a8;font-size:.84rem;padding:0 0 46px}
+.hide{display:none!important}
+@media(max-width:900px){
+  .core-grid{grid-template-columns:repeat(2,1fr)}
+  .task-grid,.tools{grid-template-columns:repeat(2,1fr)}
+  .mini-grid{grid-template-columns:1fr 1fr}
+}
+@media(max-width:640px){
+  .wrap,.topbar-inner{width:min(calc(100% - 20px),var(--max))}
+  .topbar-inner{min-height:56px}.nav{display:none}
+  .hero{padding-top:48px}.hero-actions{display:grid;grid-template-columns:1fr 1fr}
+  .core-grid,.task-grid,.tools,.example-grid,.mini-grid{grid-template-columns:1fr}
+  .core{min-height:145px}
+  summary{grid-template-columns:auto 1fr auto;padding:17px 15px;gap:10px}
+  .detail-body{padding:0 15px 20px}
+  .summary-num{width:30px;height:30px}
+  .section{padding-bottom:42px}
+}
+@media(prefers-reduced-motion:reduce){
+  *{scroll-behavior:auto!important;animation:none!important;transition:none!important}
+}
+@media print{
+  body{background:#fff;color:#111}.aurora,.topbar,.hero-actions,.track-panel,.toolbar,.toast{display:none!important}
+  .wrap{width:100%}.hero{padding:20px 0}
+  h1,.section h2{color:#111}.lead,.section-intro,.muted{color:#444}
+  details{background:#fff;color:#111;border-color:#ccc;box-shadow:none}
+  details .detail-body{display:block!important;color:#111}
+  details:not([open]) .detail-body{display:block!important}
+  .core,.task,.tool,.example,.mini,.final{background:#fff!important;color:#111!important;border-color:#ccc}
+}
+</style>
+</head>
+<body data-track="all">
+<div class="aurora a1"></div><div class="aurora a2"></div>
+
+<header class="topbar">
+  <div class="topbar-inner">
+    <div class="brand"><b>ИИ</b> · говори на его языке</div>
+    <nav class="nav" aria-label="Разделы">
+      <a href="#core">Суть</a>
+      <a href="#knowledge">Знания</a>
+      <a href="#tasks">Задачи</a>
+      <a href="#tools">Инструменты</a>
+      <a href="#longgame">Длинная игра</a>
+    </nav>
+  </div>
+</header>
+
+<main>
+<section class="hero">
+  <div class="wrap">
+    <div class="eyebrow"><span class="dot"></span>C1 · смысловой блок 1</div>
+    <h1>От вопроса к <span class="grad">реальной задаче</span></h1>
+    <p class="lead">ИИ становится полезным не тогда, когда ты знаешь «магический промпт», а когда понимаешь, <b>что хочешь получить, что важно сообщить, как улучшить ответ и как проверить результат.</b></p>
+
+    <div class="chain" aria-label="Главная формула">
+      <span class="chip">задача</span><span class="arrow">→</span>
+      <span class="chip">контекст</span><span class="arrow">→</span>
+      <span class="chip">ограничения</span><span class="arrow">→</span>
+      <span class="chip">критерии</span><span class="arrow">→</span>
+      <span class="chip">диалог</span><span class="arrow">→</span>
+      <span class="chip">проверка</span><span class="arrow">→</span>
+      <span class="chip">применение</span>
+    </div>
+
+    <div class="hero-actions">
+      <a class="btn" href="#tasks">Выбрать реальную задачу</a>
+      <a class="btn secondary" href="#knowledge">Разобраться, как это работает</a>
+    </div>
+  </div>
+</section>
+
+<section class="section" id="core">
+  <div class="wrap">
+    <div class="section-head">
+      <div>
+        <div class="kicker">Самое важное</div>
+        <h2>Весь блок — в 9 тезисах</h2>
+        <p class="section-intro">Если запомнишь только это — уже сможешь работать с ИИ заметно сильнее.</p>
+      </div>
+    </div>
+    <div class="core-grid">
+      <article class="core c1"><div class="n">01</div><h3>ИИ не читает мысли</h3><p>Он знает только то, что ты передал: цель, ситуацию, материалы и требования.</p></article>
+      <article class="core c2"><div class="n">02</div><h3>Вопрос ≠ задача</h3><p>У задачи есть желаемый результат и понятно, что с ним делать дальше.</p></article>
+      <article class="core c3"><div class="n">03</div><h3>Контекст меняет решение</h3><p>Передавай не «побольше текста», а только то, что реально влияет на ответ.</p></article>
+      <article class="core c4"><div class="n">04</div><h3>Ограничения помогают</h3><p>Срок, размер, стиль, формат и запреты отсекают неподходящие варианты.</p></article>
+      <article class="core c5"><div class="n">05</div><h3>Критерии = «что значит хорошо»</h3><p>Не «сделай круто», а конкретные признаки хорошего результата.</p></article>
+      <article class="core c6"><div class="n">06</div><h3>Первый ответ — версия 1</h3><p>Критикуй, уточняй, сравнивай и переделывай. Диалог сильнее одного запроса.</p></article>
+      <article class="core c7"><div class="n">07</div><h3>Промпт — не заклинание</h3><p>Сильный запрос появляется из понимания задачи, а не из «волшебной формулы».</p></article>
+      <article class="core c8"><div class="n">08</div><h3>Проверка зависит от результата</h3><p>Факт проверяют источником, код — запуском, картинку — критериями, расчёт — пересчётом.</p></article>
+      <article class="core c9"><div class="n">09</div><h3>Финал — применение</h3><p>Хороший результат не лежит в чате: ты используешь его в учёбе, игре, проекте или жизни.</p></article>
+    </div>
+  </div>
+</section>
+
+<section class="section" id="knowledge">
+  <div class="wrap">
+    <div class="section-head">
+      <div>
+        <div class="kicker">От сути к частностям</div>
+        <h2>Раскрой только то, что тебе сейчас нужно</h2>
+        <p class="section-intro">Каждый пункт — отдельный инструмент мышления. Нажми, чтобы увидеть примеры и детали.</p>
+      </div>
+      <div class="toolbar">
+        <button class="ghost" id="openAll" type="button">Открыть всё</button>
+        <button class="ghost" id="closeAll" type="button">Свернуть</button>
+      </div>
+    </div>
+
+    <div class="accordion">
+      <details>
+        <summary><span class="summary-num">01</span><span>ИИ получает не твою мысль, а то, что ты ему передал</span><span class="chev">+</span></summary>
+        <div class="detail-body">
+          <div class="example-grid">
+            <div class="example bad"><div class="label">Слишком мало данных</div><div class="quote">«Сделай мне крутой аватар.»</div></div>
+            <div class="example good"><div class="label">Есть реальная задача</div><div class="quote">«Мне нужен квадратный аватар для профиля. Персонаж приключенческой игры: тёмно-синяя куртка, золотая эмблема, ночной город. Лицо не использовать. В маленьком кружке должно всё читаться.»</div></div>
+          </div>
+          <p>Во втором случае ИИ знает, <b>что делать, где это будет использоваться и какие условия важны.</b></p>
+          <div class="mini-grid">
+            <div class="mini"><b>Цель</b><span>Что ты хочешь получить и зачем?</span></div>
+            <div class="mini"><b>Контекст</b><span>Что ИИ должен знать о ситуации?</span></div>
+            <div class="mini"><b>Исходные данные</b><span>Что уже есть: фото, текст, пример, файл, ошибка?</span></div>
+            <div class="mini"><b>Ограничения</b><span>Что нельзя менять? Размер? Срок? Условия?</span></div>
+            <div class="mini"><b>Формат</b><span>Текст, список, таблица, картинка, план, видео?</span></div>
+            <div class="mini"><b>Критерии</b><span>Как ты поймёшь, что результат хороший?</span></div>
+          </div>
+        </div>
+      </details>
+
+      <details>
+        <summary><span class="summary-num">02</span><span>Вопрос и задача — не одно и то же</span><span class="chev">+</span></summary>
+        <div class="detail-body">
+          <div class="example-grid">
+            <div class="example bad"><div class="label">Вопрос</div><div class="quote">«Расскажи про Minecraft.»</div><p class="muted">Ответ может быть интересным, но непонятно, что с ним делать.</p></div>
+            <div class="example good"><div class="label">Задача</div><div class="quote">«Придумай нового моба для снежного биома Minecraft. Он не должен быть слишком сильным, у него одна необычная способность, а описание должно подходить для будущего концепт-арта.»</div></div>
+          </div>
+          <div class="example-grid">
+            <div class="example"><div class="label">Учёба</div><div class="quote">«Завтра самостоятельная по квадратным уравнениям. Формулу знаю, но путаюсь при переносе членов. Выясни двумя вопросами, где ошибка, затем разберём один пример и дай два похожих без решения.»</div></div>
+            <div class="example"><div class="label">Будущее</div><div class="quote">«Я в 10 классе, люблю информатику и дизайн. Подбери 5 направлений, которые стоит попробовать. Для каждого — чем занимаются, бесплатная проба на неделю и признаки, что мне это подходит.»</div></div>
+          </div>
+        </div>
+      </details>
+
+      <details>
+        <summary><span class="summary-num">03</span><span>Контекст — это не «написать побольше»</span><span class="chev">+</span></summary>
+        <div class="detail-body">
+          <p><b>Хороший контекст — только информация, которая может изменить решение.</b></p>
+          <div class="example-grid">
+            <div class="example bad"><div class="label">Плохо</div><div class="quote">«Напиши мне программу тренировок.»</div></div>
+            <div class="example good"><div class="label">Лучше</div><div class="quote">«Нужна 10-минутная домашняя разминка перед уроками: без оборудования и прыжков, потому что внизу соседи. Цель — проснуться и размяться, а не устать.»</div></div>
+          </div>
+          <p>Проверочный вопрос: <b>«Если ИИ этого не знает — может ли он дать неподходящий результат?»</b> Если да — это важный контекст.</p>
+        </div>
+      </details>
+
+      <details>
+        <summary><span class="summary-num">04</span><span>Ограничения помогают выбрать</span><span class="chev">+</span></summary>
+        <div class="detail-body">
+          <p>Без ограничений существует слишком много формально подходящих вариантов.</p>
+          <div class="mini-grid">
+            <div class="mini"><b>Объём</b><span>не больше 100 слов</span></div>
+            <div class="mini"><b>Время</b><span>15 минут на выполнение</span></div>
+            <div class="mini"><b>Цена</b><span>только бесплатные инструменты</span></div>
+            <div class="mini"><b>Формат</b><span>изображение 1:1</span></div>
+            <div class="mini"><b>Сохранить</b><span>не менять лицо / смысл / исходные данные</span></div>
+            <div class="mini"><b>Граница помощи</b><span>не давать готовый ответ сразу</span></div>
+          </div>
+          <p>Ограничения превращают «что-нибудь хорошее» в конкретную задачу.</p>
+        </div>
+      </details>
+
+      <details>
+        <summary><span class="summary-num">05</span><span>Критерии: что значит «круто»?</span><span class="chev">+</span></summary>
+        <div class="detail-body">
+          <p>«Сделай красиво / умно / интересно» — это впечатление. Критерий — <b>наблюдаемый признак качества.</b></p>
+          <div class="mini-grid">
+            <div class="mini"><b>Аватар</b><span>читается в маленьком размере, один главный акцент, квадратный формат</span></div>
+            <div class="mini"><b>Объяснение</b><span>после него я могу решить похожую задачу; есть пример и самопроверка</span></div>
+            <div class="mini"><b>Информация</b><span>есть источник, дата, первоисточник и отделены спорные утверждения</span></div>
+          </div>
+        </div>
+      </details>
+
+      <details>
+        <summary><span class="summary-num">06</span><span>Первый ответ — это версия 1</span><span class="chev">+</span></summary>
+        <div class="detail-body">
+          <p><b>Слабый цикл:</b> запрос → ответ → готово.</p>
+          <p><b>Сильный цикл:</b> задача → ответ v1 → оценка → уточнение → v2 → проверка → применение.</p>
+          <div class="mini-grid">
+            <div class="mini"><b>Критика</b><span>«Это слишком общее. Вот что не подходит…»</span></div>
+            <div class="mini"><b>Отбор</b><span>«Сохрани идею №2, остальные отбрось.»</span></div>
+            <div class="mini"><b>Ограничение</b><span>«Здесь ты не учёл моё условие…»</span></div>
+            <div class="mini"><b>Варианты</b><span>«Дай три действительно разных подхода.»</span></div>
+            <div class="mini"><b>Вопросы</b><span>«Сначала задай мне вопросы.»</span></div>
+            <div class="mini"><b>Следующий шаг</b><span>«Не решай за меня — помоги понять, что делать дальше.»</span></div>
+          </div>
+        </div>
+      </details>
+
+      <details>
+        <summary><span class="summary-num">07</span><span>Промпт — не заклинание</span><span class="chev">+</span></summary>
+        <div class="detail-body">
+          <p>Не существует универсальной фразы, после которой любой ИИ всегда выдаёт идеальный результат.</p>
+          <div class="quote">Что я хочу сделать? → Что ИИ должен знать? → Какие ограничения? → Как выглядит хороший результат? → Как я проверю? → Что буду делать после первого ответа?</div>
+          <p>Если ты понимаешь задачу, запрос собрать намного проще.</p>
+        </div>
+      </details>
+
+      <details>
+        <summary><span class="summary-num">08</span><span>ИИ можно назначать разные роли</span><span class="chev">+</span></summary>
+        <div class="detail-body">
+          <div class="mini-grid">
+            <div class="mini"><b>Объяснитель</b><span>«Объясни так, чтобы я понял принцип.»</span></div>
+            <div class="mini"><b>Тренер</b><span>«Дай задачу и не показывай решение, пока я не попробую.»</span></div>
+            <div class="mini"><b>Критик</b><span>«Найди три слабых места и объясни почему.»</span></div>
+            <div class="mini"><b>Редактор</b><span>«Сохрани смысл, но сделай понятнее и короче.»</span></div>
+            <div class="mini"><b>Исследователь</b><span>«Какие факты требуют проверки и где первоисточник?»</span></div>
+            <div class="mini"><b>Планировщик</b><span>«Разбей задачу на шаги и сначала спроси о недостающих данных.»</span></div>
+          </div>
+        </div>
+      </details>
+
+      <details>
+        <summary><span class="summary-num">09</span><span>Проверять надо конкретный результат</span><span class="chev">+</span></summary>
+        <div class="detail-body">
+          <div class="table-wrap">
+            <table>
+              <thead><tr><th>Результат</th><th>Как проверять</th></tr></thead>
+              <tbody>
+                <tr><td>Факт</td><td>Независимый источник / первоисточник</td></tr>
+                <tr><td>Дата</td><td>Официальный или актуальный источник</td></tr>
+                <tr><td>Расчёт</td><td>Пересчитать другим способом</td></tr>
+                <tr><td>Инструкция</td><td>Выполнить по шагам</td></tr>
+                <tr><td>Код</td><td>Запустить и протестировать</td></tr>
+                <tr><td>Картинка</td><td>Сравнить с замыслом и ограничениями</td></tr>
+                <tr><td>Текст</td><td>Сверить с целью, аудиторией и критериями</td></tr>
+                <tr><td>План</td><td>Проверить, можно ли реально выполнить каждый шаг</td></tr>
+              </tbody>
+            </table>
+          </div>
+          <p>Главный вопрос: <b>«Если ИИ ошибся здесь — что произойдёт?»</b> Чем серьёзнее последствия, тем серьёзнее проверка.</p>
+        </div>
+      </details>
+    </div>
+  </div>
+</section>
+
+<section class="section" id="tasks">
+  <div class="wrap">
+    <div class="section-head">
+      <div>
+        <div class="kicker">Практика</div>
+        <h2>Возьми задачу — или замени своей</h2>
+        <p class="section-intro">Не знаешь, с чего начать? Выбери интересный вход. Нажатие на карточку копирует идею в буфер.</p>
+      </div>
+    </div>
+
+    <div class="track-panel">
+      <div class="track-controls" aria-label="Возрастной ракурс">
+        <button class="track-btn active" data-set-track="all" type="button">Все идеи</button>
+        <button class="track-btn" data-set-track="5" type="button">5 класс</button>
+        <button class="track-btn" data-set-track="8" type="button">8 класс</button>
+        <button class="track-btn" data-set-track="senior" type="button">9–11 классы</button>
+      </div>
+      <p class="track-note" id="trackNote">Показаны все входы. Можно выбрать любую идею или предложить свою.</p>
+    </div>
+
+    <div class="task-grid">
+      <button class="task" data-track="5 8" data-copy="Я хочу сделать новый аватар и реально использовать его в профиле. Помоги сначала определить стиль, ограничения и критерии хорошего результата.">
+        <span class="emoji">🧑‍🚀</span><b>Новый аватар</b><small>Не просто картинка: придумай критерии и реально поставь результат в профиль.</small><span class="copyhint">Нажми, чтобы скопировать идею</span>
+      </button>
+      <button class="task" data-track="5 8" data-copy="Я хочу придумать своего персонажа для Minecraft, сделать визуальный концепт, а потом довести дизайн до рабочего Minecraft-скина.">
+        <span class="emoji">⛏️</span><b>Minecraft: от идеи до скина</b><small>Концепт → детали → специальная skin-текстура → использование в игре.</small><span class="copyhint">Скопировать</span>
+      </button>
+      <button class="task" data-track="5 8" data-copy="Я хочу придумать принт или эмблему для Roblox, сделать изображение и затем попробовать использовать его как Classic T-shirt или decal.">
+        <span class="emoji">🧱</span><b>Roblox: футболка или decal</b><small>Создай цифровой объект, который можно потом использовать внутри Roblox.</small><span class="copyhint">Скопировать</span>
+      </button>
+      <button class="task" data-track="5 8" data-copy="Я хочу создать собственного игрового питомца, моба или предмет. Помоги сначала определить мир, функцию, ограничения и то, чем он будет отличаться от других.">
+        <span class="emoji">🐉</span><b>Свой моб / питомец / предмет</b><small>Придумай функцию, правила и внешний вид — потом визуализируй.</small><span class="copyhint">Скопировать</span>
+      </button>
+      <button class="task" data-track="5 8" data-copy="Я хочу сделать набор стикеров с общей идеей и единым стилем. Помоги выбрать тему, эмоции, ограничения и критерии набора.">
+        <span class="emoji">✨</span><b>Стикерпак</b><small>Одна идея → несколько эмоций → единый визуальный язык.</small><span class="copyhint">Скопировать</span>
+      </button>
+      <button class="task" data-track="5 8" data-copy="У меня есть тема для обложки или постера. Помоги превратить идею в конкретную задачу: аудитория, формат, главный акцент, стиль и критерии.">
+        <span class="emoji">🎬</span><b>Обложка / постер</b><small>Для видео, канала, проекта, события или собственной истории.</small><span class="copyhint">Скопировать</span>
+      </button>
+
+      <button class="task" data-track="8 senior" data-copy="Есть тема, которую мне объяснили непонятно. Помоги сначала определить, что именно я не понимаю, затем объясни принцип и дай задачу для самостоятельной проверки.">
+        <span class="emoji">🧠</span><b>Разобраться в теме</b><small>Не получить готовый ответ, а понять принцип и проверить себя.</small><span class="copyhint">Скопировать</span>
+      </button>
+      <button class="task" data-track="8 senior" data-copy="Я увидел утверждение в интернете и хочу понять, правда ли это. Помоги выделить проверяемые факты, найти первоисточники и сравнить версии.">
+        <span class="emoji">🔎</span><b>Проверить вирусный факт</b><small>От уверенного текста — к источнику, дате и доказательству.</small><span class="copyhint">Скопировать</span>
+      </button>
+      <button class="task" data-track="8 senior" data-copy="Я хочу сравнить несколько вариантов покупки по своим критериям, а не по рекламным описаниям. Сначала помоги сформулировать мои реальные требования.">
+        <span class="emoji">⚖️</span><b>Выбрать технику / покупку</b><small>Сформулируй критерии → сравни варианты → проверь важное.</small><span class="copyhint">Скопировать</span>
+      </button>
+      <button class="task" data-track="8 senior" data-copy="Я хочу начать собственный мини-проект. Помоги определить реальную цель, пользователя, первый результат на одну неделю и критерий успеха.">
+        <span class="emoji">🚀</span><b>Начать свой проект</b><small>От идеи — к первому работающему результату и следующей версии.</small><span class="copyhint">Скопировать</span>
+      </button>
+
+      <button class="task" data-track="senior" data-copy="Я хочу создать личного AI-тьютора для подготовки к ЕГЭ. Начнём с предмета, цели, слабых тем, тренировочного цикла и способа проверять себя без помощи ИИ.">
+        <span class="emoji">🎓</span><b>Мой AI-тьютор для ЕГЭ</b><small>Цель → диагностика → тренировка → журнал ошибок → проверка без ИИ.</small><span class="copyhint">Скопировать</span>
+      </button>
+      <button class="task" data-track="senior" data-copy="Я хочу исследовать вуз, специальность или профессию через реальные пробы. Помоги выбрать несколько направлений и для каждого придумать бесплатную практическую пробу на неделю.">
+        <span class="emoji">🧭</span><b>Вуз / профессия через пробы</b><small>Не список профессий, а маленькие реальные эксперименты.</small><span class="copyhint">Скопировать</span>
+      </button>
+      <button class="task" data-track="senior" data-copy="Я хочу найти повторяющуюся рутину, которую можно частично автоматизировать. Помоги описать текущий процесс, повторяющиеся шаги, решения человека и места, где полезен ИИ.">
+        <span class="emoji">⚙️</span><b>Убери мою рутину</b><small>Сначала процесс, потом помощник, workflow или агент.</small><span class="copyhint">Скопировать</span>
+      </button>
+      <button class="task" data-track="senior" data-copy="У меня есть повторяющаяся задача. Хочу понять, можно ли сделать под неё специализированного AI-помощника. Помоги описать вход, правила, результат, ограничения и тесты.">
+        <span class="emoji">🤖</span><b>Личный AI-помощник</b><small>Одна повторяющаяся задача → понятные правила → тестирование.</small><span class="copyhint">Скопировать</span>
+      </button>
+    </div>
+  </div>
+</section>
+
+<section class="section" id="tools">
+  <div class="wrap">
+    <div class="section-head">
+      <div>
+        <div class="kicker">Инструменты</div>
+        <h2>Текст — только один формат</h2>
+        <p class="section-intro">Выбирай инструмент под задачу. Конкретные сервисы меняются — способ мышления остаётся.</p>
+      </div>
+    </div>
+    <div class="tools">
+      <a class="tool" href="https://giga.chat/" target="_blank" rel="noopener"><b>GigaChat</b><span>Текст, диалог и другие доступные функции.</span><em>Открыть ↗</em></a>
+      <a class="tool" href="https://chat.z.ai/" target="_blank" rel="noopener"><b>Z.ai</b><span>Диалог и работа с генеративным ИИ.</span><em>Открыть ↗</em></a>
+      <a class="tool" href="https://fusionbrain.ai/" target="_blank" rel="noopener"><b>FusionBrain / Kandinsky</b><span>Генерация изображений.</span><em>Открыть ↗</em></a>
+      <a class="tool" href="https://www.kandinskylab.ai/" target="_blank" rel="noopener"><b>Kandinsky Lab</b><span>Создание и редактирование изображений.</span><em>Открыть ↗</em></a>
+      <a class="tool" href="https://ya.ru/shedevrum" target="_blank" rel="noopener"><b>Шедеврум</b><span>Изображения и доступные мультимодальные режимы.</span><em>Открыть ↗</em></a>
+      <a class="tool" href="https://www.kandinskylab.ai/models/video/" target="_blank" rel="noopener"><b>Kandinsky Video</b><span>Генерация короткого видео.</span><em>Открыть ↗</em></a>
+    </div>
+  </div>
+</section>
+
+<section class="section" id="longgame">
+  <div class="wrap">
+    <div class="section-head">
+      <div>
+        <div class="kicker">Применение</div>
+        <h2>Сделал — и что дальше?</h2>
+        <p class="section-intro">Сильная задача продолжается после занятия. Это и есть «длинная игра».</p>
+      </div>
+    </div>
+
+    <div class="accordion">
+      <details>
+        <summary><span class="summary-num">A</span><span>Из ИИ — в реальный цифровой мир</span><span class="chev">+</span></summary>
+        <div class="detail-body">
+          <div class="mini-grid">
+            <div class="mini"><b>Аватар</b><span>концепт → выбор → доработка → реальный профиль</span></div>
+            <div class="mini"><b>Minecraft</b><span>персонаж → визуальный концепт → специальный PNG-скин → импорт → новая версия</span></div>
+            <div class="mini"><b>Roblox</b><span>принт / эмблема → изображение → Classic T-shirt или decal в Studio</span></div>
+          </div>
+          <p class="muted">Важно: обычная красивая картинка персонажа не является готовым Minecraft-скином. Для игры нужна специальная развёрнутая текстура.</p>
+        </div>
+      </details>
+
+      <details class="audience-only">
+        <summary><span class="summary-num">B</span><span>Проект «Мой AI-тьютор для ЕГЭ» · 9–11</span><span class="chev">+</span></summary>
+        <div class="detail-body">
+          <p>Не «решай за меня задачи». Цель — построить систему, которая помогает становиться сильнее и показывает, где остаются ошибки.</p>
+          <div class="quote">цель → диагностика → слабые темы → план → объяснение → тренировка → проверка → журнал ошибок → повторение → попытка без ИИ → новый план</div>
+          <p>Такой проект можно развивать месяцами.</p>
+        </div>
+      </details>
+
+      <details class="audience-only">
+        <summary><span class="summary-num">C</span><span>Проект «Убери мою рутину» · 9–11</span><span class="chev">+</span></summary>
+        <div class="detail-body">
+          <p>Начни не с агента, а с повторяющейся реальной работы.</p>
+          <div class="quote">Что я делаю сейчас? → Какие шаги повторяются? → Где решение принимает человек? → Где полезен ИИ? → Как проверить качество?</div>
+          <p>Только после описания процесса решай, достаточно ли инструкции, специализированного помощника, workflow или уже нужен агентный процесс.</p>
+        </div>
+      </details>
+
+      <details>
+        <summary><span class="summary-num">✓</span><span>Признак хорошей работы</span><span class="chev">+</span></summary>
+        <div class="detail-body">
+          <div class="mini-grid">
+            <div class="mini"><b>Задача</b><span>Что я реально хотел получить?</span></div>
+            <div class="mini"><b>Контекст</b><span>Что я передал ИИ и почему?</span></div>
+            <div class="mini"><b>Итерация</b><span>Что изменил после первого ответа?</span></div>
+            <div class="mini"><b>Проверка</b><span>Как убедился, что результат подходит?</span></div>
+            <div class="mini"><b>Мой вклад</b><span>Что решил или сделал я сам?</span></div>
+            <div class="mini"><b>Применение</b><span>Где результат живёт дальше?</span></div>
+          </div>
+        </div>
+      </details>
+    </div>
+
+    <section class="final">
+      <div class="kicker">Финальная формула</div>
+      <h2>Не «написать хороший промпт». <span class="grad">Научиться управлять решением задачи.</span></h2>
+      <div class="formula"><span class="hi">понять задачу</span> → передать контекст → задать ограничения и критерии → вести диалог → проверить → доработать → <span class="hi">применить</span></div>
+    </section>
+
+    <footer class="footer">Курс «ИИ: говори на его языке» · C1 · смысловой блок 1 · версия лендинга 0.1</footer>
+  </div>
+</section>
+</main>
+
+<div class="toast" id="toast" role="status" aria-live="polite">Идея скопирована</div>
+
+<script>
+(function(){
+  const qs = new URLSearchParams(location.search);
+  const allowed = new Set(["all","5","8","senior"]);
+  const startTrack = allowed.has(qs.get("track")) ? qs.get("track") : "all";
+  const notes = {
+    all:"Показаны все входы. Можно выбрать любую идею или предложить свою.",
+    "5":"Фокус: быстрый визуальный результат, игра, аватар и цифровой объект, который можно реально использовать.",
+    "8":"Фокус: визуал + реальные учебные, информационные и проектные задачи.",
+    senior:"Фокус: ЕГЭ, личные проекты, профессии, автоматизация рутины и переход к помощникам/агентным процессам."
+  };
+  const body=document.body, note=document.getElementById("trackNote");
+  const trackButtons=[...document.querySelectorAll("[data-set-track]")];
+
+  function setTrack(track, push=true){
+    if(!allowed.has(track)) track="all";
+    body.dataset.track=track;
+    trackButtons.forEach(b=>b.classList.toggle("active",b.dataset.setTrack===track));
+    note.textContent=notes[track];
+    if(push){
+      const u=new URL(location.href);
+      if(track==="all") u.searchParams.delete("track"); else u.searchParams.set("track",track);
+      history.replaceState(null,"",u);
+    }
+  }
+  setTrack(startTrack,false);
+  trackButtons.forEach(b=>b.addEventListener("click",()=>setTrack(b.dataset.setTrack)));
+
+  document.getElementById("openAll").addEventListener("click",()=>{
+    document.querySelectorAll("#knowledge details").forEach(d=>d.open=true);
+  });
+  document.getElementById("closeAll").addEventListener("click",()=>{
+    document.querySelectorAll("#knowledge details").forEach(d=>d.open=false);
+  });
+
+  const toast=document.getElementById("toast");
+  let timer;
+  function showToast(msg){
+    toast.textContent=msg;
+    toast.classList.add("show");
+    clearTimeout(timer);
+    timer=setTimeout(()=>toast.classList.remove("show"),1800);
+  }
+
+  document.querySelectorAll(".task[data-copy]").forEach(btn=>{
+    btn.addEventListener("click",async()=>{
+      const text=btn.dataset.copy;
+      try{
+        await navigator.clipboard.writeText(text);
+        showToast("Идея скопирована — вставь её в новый чат");
+      }catch(e){
+        const ta=document.createElement("textarea");
+        ta.value=text;ta.style.position="fixed";ta.style.opacity="0";
+        document.body.appendChild(ta);ta.select();
+        try{document.execCommand("copy");showToast("Идея скопирована");}
+        catch(_){showToast("Не удалось скопировать автоматически");}
+        ta.remove();
+      }
+    });
+  });
+})();
+</script>
+</body>
+</html>
