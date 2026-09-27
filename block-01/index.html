@@ -281,6 +281,45 @@ body[data-track="senior"] .audience-only{display:block}
   opacity:0;transform:translateY(16px);pointer-events:none;transition:.22s
 }
 .toast.show{opacity:1;transform:none}
+
+/* Student submission */
+.submit-card{
+  margin:28px 0 70px;padding:clamp(24px,5vw,48px);
+  border:1px solid rgba(117,240,181,.20);border-radius:28px;
+  background:radial-gradient(circle at 90% 0,rgba(117,240,181,.12),transparent 24rem),
+             linear-gradient(145deg,rgba(18,30,48,.94),rgba(9,14,27,.97));
+  box-shadow:var(--shadow)
+}
+.submit-card h2{margin-bottom:8px}
+.submit-lead{color:var(--muted);max-width:820px;margin:0 0 22px}
+.submit-grid{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+.submit-field{display:flex;flex-direction:column;gap:7px}
+.submit-field.full{grid-column:1/-1}
+.submit-field label{font-size:.76rem;font-weight:900;letter-spacing:.08em;text-transform:uppercase;color:#b9c7e8}
+.submit-field input,.submit-field textarea{
+  width:100%;border:1px solid var(--line);border-radius:14px;
+  background:#090d1a;color:#f5f7ff;font:inherit;padding:12px 13px;outline:none
+}
+.submit-field input:focus,.submit-field textarea:focus{
+  border-color:rgba(102,232,255,.55);box-shadow:0 0 0 3px rgba(102,232,255,.10)
+}
+.submit-field textarea{min-height:260px;resize:vertical;line-height:1.45}
+.submit-help{color:#8491ad;font-size:.78rem;margin-top:3px}
+.submit-actions{display:flex;gap:12px;align-items:center;flex-wrap:wrap;margin-top:16px}
+.submit-action{
+  appearance:none;border:0;border-radius:14px;padding:12px 18px;
+  background:linear-gradient(135deg,#25a778,#55d8a5);color:#04140e;
+  font:inherit;font-weight:950;cursor:pointer
+}
+.submit-action:disabled{opacity:.55;cursor:wait}
+.submit-status{font-size:.9rem;color:#92f2c5;font-weight:800;min-height:1.4em}
+.submit-note{
+  margin-top:16px;padding:12px 14px;border-radius:14px;
+  border:1px solid var(--line);background:rgba(255,255,255,.025);
+  color:#96a2bc;font-size:.82rem
+}
+@media(max-width:640px){.submit-grid{grid-template-columns:1fr}.submit-field.full{grid-column:auto}}
+
 .footer{color:#7e89a8;font-size:.84rem;padding:0 0 46px}
 .hide{display:none!important}
 @media(max-width:900px){
@@ -707,7 +746,54 @@ body[data-track="senior"] .audience-only{display:block}
       <div class="formula"><span class="hi">понять задачу</span> → передать контекст → задать ограничения и критерии → вести диалог → проверить → доработать → <span class="hi">применить</span></div>
     </section>
 
-    <footer class="footer">Курс «ИИ: говори на его языке» · C1 · смысловой блок 1 · версия лендинга 0.1</footer>
+
+    <section class="submit-card" id="submit-work">
+      <div class="kicker">Обратная связь</div>
+      <h2>Сдай свою работу</h2>
+      <p class="submit-lead">Скопируй весь диалог с ИИ — от первого сообщения до последнего ответа — и вставь его сюда. Никаких файлов создавать не нужно.</p>
+
+      <form id="studentWorkForm" method="POST"
+            action="https://script.google.com/macros/s/AKfycbyYPaEYOJ8LMYZOaMH0X8nRPHogMk1rZLnLADAS_pwCsDgtiKYs-FwNEHQaFjz58ZVW/exec"
+            target="workSubmitSink">
+        <div class="submit-grid">
+          <div class="submit-field">
+            <label for="studentName">Имя и фамилия</label>
+            <input id="studentName" required maxlength="120" autocomplete="name" placeholder="Например: Анна Иванова">
+          </div>
+          <div class="submit-field">
+            <label for="studentClass">Класс</label>
+            <input id="studentClass" required maxlength="30" placeholder="Например: 7 класс">
+          </div>
+          <div class="submit-field">
+            <label for="studentGroup">Номер группы</label>
+            <input id="studentGroup" required maxlength="10" placeholder="Например: 3">
+          </div>
+          <div class="submit-field">
+            <label for="studentService">Какой сервис использовал</label>
+            <input id="studentService" required maxlength="80" placeholder="GigaChat, Z.ai, Kandinsky...">
+          </div>
+          <div class="submit-field full">
+            <label for="studentDialog">Полный скопированный диалог</label>
+            <textarea id="studentDialog" required maxlength="48000" placeholder="Вставь сюда весь диалог целиком..."></textarea>
+            <div class="submit-help">Не пересказывай диалог своими словами — вставь исходную ветку целиком.</div>
+          </div>
+        </div>
+
+        <input type="hidden" id="postName" name="name">
+        <input type="hidden" id="postClass" name="klass">
+        <input type="hidden" id="postIntent" name="intent">
+        <textarea id="postComment" name="comment" hidden></textarea>
+
+        <div class="submit-actions">
+          <button class="submit-action" id="workSubmitBtn" type="submit">ОТПРАВИТЬ РАБОТУ</button>
+          <div class="submit-status" id="workSubmitStatus" aria-live="polite"></div>
+        </div>
+      </form>
+      <iframe name="workSubmitSink" id="workSubmitSink" hidden></iframe>
+      <div class="submit-note">Используется уже существующая форма курса: данные уходят в связанную Google Таблицу. Группа и сервис записываются вместе с диалогом.</div>
+    </section>
+
+    <footer class="footer">Курс «ИИ: говори на его языке» · C1 · смысловой блок 1 · версия лендинга 0.5</footer>
   </div>
 </section>
 </main>
@@ -719,11 +805,11 @@ body[data-track="senior"] .audience-only{display:block}
   const qs = new URLSearchParams(location.search);
 
   const groupData={
-    "1":{name:"ИИ · Группа 1 · 5 класс",klass:"5 класс",url:"https://max.ru/join/v1Oub1A4THNcWRXXOQWvXk8ZHVovQqQkQ-f2HTTC1Wo",qr:"data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAVcAAAFXCAIAAACZU5pPAAAHR0lEQVR42u3d0Y6bShBF0csV///LkzcritAIuX2qqs1azxmDsbOFVerm+Pn5+Q94sP9dAlABQAUAFQBUAFABQAUAFQBUAFABQAUAFQBUAFABQAUAFQBUAFABQAUAFQBUAFABQAUAFQBUAFABQAWAL3ImXvQ4jmnv8/JxjL3nef8JkZfnufiAyfvvvexAiatU9poDvzbuBQAVAFQAUAFABQAVAH53lh0pMeG4lJjuLA4aE39+/71f/nlidHr/6PcPVHaRH/JNdi8AqACgAoAKACoAqADwcvYevmzBWULZaKrsNRevZ9k8tfdz/75vsnsB8IsAUAFABQAVAFQAeKbTJfjH921NmVgpmLC40LB3N1f3AoAKACoAqACgAoAKANsxKfxX2Qaevbtlls3/EisFB85o3QsAKgCoAKACgAoAKgBsp3lSOHD70EuJZwom/jxxnmWntMvax4HfZPcCgAoAKgCoAKACgAoAb6ibFA5cB7a4sm1xtVziX+5yngP/5dbfZPcCgAoAKgCoAKACgAoAb4hMCp/8yLdLZUPBxc9o4Fhu8TUTQ1b3AoAKACoAqACgAoAKAN9h4prCstFU77QssbItsfdp2fBy0eJesr0D0cTbdC8AqACgAoAKACoAqADwuyMxeBg41dvm8whckMT1TKwUTFyQgd/PxZN3LwCoAKACgAoAKgCoAPApdbuPli2hWxwfbr04bPFAZUsSey9d75VfXGBqTSHgFwGgAoAKACoAqADwKUfZ1CSx/q/3NcvW1d0/z8UDbf2avX/e+47cCwAqAKgAoAKACgAqALxhm0nhLkv9yvar3EXvvpq9X5tddsd1LwB+EQAqAKgAoAKACgDPFNl9tGyn0EuJ6WNi4FQ2RipbeZn487JZcuLK7zI+dC8AfhEAKgCoAKACgAoAz3QMHE2V7f95X9nIJ/Hee4eCixe59yol/rz303QvAKgAoAKACgAqAKgA8FI3KSzTOzHa5TV3GdwOHOBtvdGoewFABQAVAFQAUAFABYCXs+xIZdtI9s5syoaCi/9y8dINHIztsu4zMaN1LwCoAKACgAoAKgCoAPCGo3e6U7Y47P7Rd1lTeP9AiSuf+Ih7r2fvQNTuo4BfBIAKACoAqACgAkC9Y5cNEq/PvvUpdAPfZuLkB+7VmfjzxevZu++rewFABQAVAFQAUAFABYA3nAPPaXFAUrbka+Dasvt/XvYsycVTunybvcO2std0LwCoAKACgAoAKgCoABAVmRQOXAPXe6DFow9cwLf4NnsfiNg7Je2debsXAFQAUAFABQAVAFQAeIlMChPL3QauKVw8etm0bOCDGxMfx8B9dAcuXnQvAKgAoAKACgAqAKgA8FK3pjAxcOp9Bt7Aky/7jO7/y8Q7Gnjpyv7cvQCgAoAKACoAqACgAsCnND+nsGwCd2ng0rSyvTp79z4t2xC1d5vTxPfTvQCgAoAKACoAqACgAsCnHGWDsYFL/cr21dxlIFo2mvq+Jy/2Hsi9AKACgAoAKgCoAKACwBuO3p0tyw5UNmi8f5739T778CGXrvn/YevyVvcC4BcBoAKACgAqAKgA8EzNawrLlM3A7h+97jNuPfnEEs/epw9+33fJvQD4RQCoAKACgAoAKgA8U+Q5hbsMBRMHKrueA4+eWFOYuCCJhywO/H66FwBUAFABQAUAFQBUAPjd2Xv4gVuSDjzP3tfsPfnFj+P+aybWFN6/Sr3jQ/cC4BcBoAKACgAqAKgA8EyRSWHZ6q77R0+sQls8+uL17F1oeF9i3LX43nfZFNRzCgG/CAAVAFQAUAFABYCoY+CCs+97ouEuG6L2bh/a+957r1Lv8lb3AuAXAaACgAoAKgCoAPBMdWsKE+vAEnrXlg0c3JYNRMvmqWVzSruPAn4RACoAqACgAoAKAJNts6Zwl109e58UuOj7Vgr2rk8t+9a5FwBUAFABQAUAFQBUAHhD83MKF/98lzFSYvPSxGeUOPoun1HiPAe+pnsBQAUAFQBUAFABQAWAl8ikcJeFXPf/5cB3NFDvrrOJpai9S/3cCwAqAKgAoAKACgAqAESdZUca+KDBxGq5snlV2TsqO6WyXWcHfml7p4/uBcAvAkAFABUAVABQAeCZzt7DJx40WHb0xGq5gY85LNsMtmzymvgylF1k9wKACgAqAKgAoAKACgCfcj75zZcNGhcnRol56v0Dle3V2TurW/yGeE4h4BcBoAKACgAqAKgAsJ1HTwoX16uVLfVLDNsSI7TFQWPZlDTxGZV9xO4FABUAVABQAUAFABUAPqV5Utg7IFmUmIEtTsvK9j7d5V8mPrjeK+9eAFABQAUAFQBUAFAB4FOOgYuuEgau/1u8dGUzxcSnmVg+uHigskHjwFWS7gXALwJABQAVAFQAUAHgmY6tV/UB7gUAFQBUAFABQAUAFQBUAFABQAUAFQBUAFABQAUAFQBUAFABQAUAFQBUAFABQAUAFQBUAFABQAUAFQBUAPjbH4xp0LcEqEFaAAAAAElFTkSuQmCC"},
-    "2":{name:"ИИ · Группа 2 · 6 класс",klass:"6 класс",url:"https://max.ru/join/k27ZyupS9f1iEjVxFAIQMiX0my48L55ZmZrgrFC6-rE",qr:"data:image/png;base64,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"},
-    "3":{name:"ИИ · Группа 3 · 7 класс",klass:"7 класс",url:"https://max.ru/join/stelQsCvnfLiGhmzo28dC63jTzH1pTMIYIJo_qDn9jk",qr:"data:image/png;base64,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"},
-    "4":{name:"ИИ · Группа 4 · 8 класс",klass:"8 класс",url:"https://max.ru/join/4uqvL91oV2qpWeyysgghx02JS7KMgrgnXbSz35ahPf4",qr:"data:image/png;base64,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"},
-    "5":{name:"ИИ · Группа 5 · 9–11 классы",klass:"9–11 классы",url:"https://max.ru/join/VpNCeX9ppnlBuImWuJC3YEDI2VarAWYTr3wb2MdFmcc",qr:"data:image/png;base64,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"}
+    "1":{name:"ИИ · Группа 1 · 5 класс",klass:"5 класс",url:"https://max.ru/join/v1Oub1A4THNcWRXXOQWvXk8ZHVovQqQkQ-f2HTTC1Wo",qr:"qr/group-1.svg"},
+    "2":{name:"ИИ · Группа 2 · 6 класс",klass:"6 класс",url:"https://max.ru/join/k27ZyupS9f1iEjVxFAIQMiX0my48L55ZmZrgrFC6-rE",qr:"qr/group-2.svg"},
+    "3":{name:"ИИ · Группа 3 · 7 класс",klass:"7 класс",url:"https://max.ru/join/stelQsCvnfLiGhmzo28dC63jTzH1pTMIYIJo_qDn9jk",qr:"qr/group-3.svg"},
+    "4":{name:"ИИ · Группа 4 · 8 класс",klass:"8 класс",url:"https://max.ru/join/4uqvL91oV2qpWeyysgghx02JS7KMgrgnXbSz35ahPf4",qr:"qr/group-4.svg"},
+    "5":{name:"ИИ · Группа 5 · 9–11 классы",klass:"9–11 классы",url:"https://max.ru/join/VpNCeX9ppnlBuImWuJC3YEDI2VarAWYTr3wb2MdFmcc",qr:"qr/group-5.svg"}
   };
   const groupButtons=[...document.querySelectorAll("[data-group]")];
   const qrBox=document.getElementById("qrBox");
@@ -745,6 +831,10 @@ body[data-track="senior"] .audience-only{display:block}
     qrBox.classList.add("ready");
     try{localStorage.setItem("school14-ai-group",group)}catch(e){}
     document.body.dataset.group=group;
+    const sg=document.getElementById("studentGroup");
+    const sc=document.getElementById("studentClass");
+    if(sg) sg.value=group;
+    if(sc && g.klass) sc.value=g.klass;
     if(push){
       const u=new URL(location.href);
       u.searchParams.set("group",group);
@@ -797,6 +887,52 @@ body[data-track="senior"] .audience-only{display:block}
     toast.classList.add("show");
     clearTimeout(timer);
     timer=setTimeout(()=>toast.classList.remove("show"),1800);
+  }
+
+
+  const workForm=document.getElementById("studentWorkForm");
+  const workSink=document.getElementById("workSubmitSink");
+  const workBtn=document.getElementById("workSubmitBtn");
+  const workStatus=document.getElementById("workSubmitStatus");
+  let workSubmitted=false;
+
+  if(workForm){
+    workForm.addEventListener("submit",()=>{
+      const fullName=document.getElementById("studentName").value.trim();
+      const klass=document.getElementById("studentClass").value.trim();
+      const group=document.getElementById("studentGroup").value.trim();
+      const service=document.getElementById("studentService").value.trim();
+      const dialog=document.getElementById("studentDialog").value.trim();
+
+      document.getElementById("postName").value=fullName;
+      document.getElementById("postClass").value=klass;
+      document.getElementById("postIntent").value="Учебная работа · группа "+group+" · "+service;
+      document.getElementById("postComment").value=
+        "Группа: "+group+"\n"+
+        "Класс: "+klass+"\n"+
+        "Сервис: "+service+"\n\n"+
+        "ДИАЛОГ:\n"+dialog;
+
+      workSubmitted=true;
+      workBtn.disabled=true;
+      workBtn.textContent="ОТПРАВЛЯЕМ…";
+      workStatus.textContent="";
+      setTimeout(()=>{if(workSubmitted) workStatus.textContent="Отправка занимает чуть дольше обычного…";},3500);
+    });
+
+    workSink.addEventListener("load",()=>{
+      if(!workSubmitted) return;
+      workSubmitted=false;
+      const keptGroup=document.getElementById("studentGroup").value;
+      const keptClass=document.getElementById("studentClass").value;
+      workForm.reset();
+      document.getElementById("studentGroup").value=keptGroup;
+      document.getElementById("studentClass").value=keptClass;
+      workBtn.disabled=false;
+      workBtn.textContent="ОТПРАВИТЬ РАБОТУ";
+      workStatus.textContent="Готово. Работа отправлена ✓";
+      showToast("Работа отправлена");
+    });
   }
 
   document.querySelectorAll(".task[data-copy]").forEach(btn=>{
