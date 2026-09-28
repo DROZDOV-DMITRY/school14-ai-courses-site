@@ -731,7 +731,7 @@ body[data-track="senior"] .audience-only{display:block}
 <section class="submit-card" id="submit-work">
       <div class="kicker">Обратная связь</div>
       <h2>Сдай свою работу</h2>
-      <p class="submit-lead">Скопируй весь диалог с ИИ — от первого сообщения до последнего ответа — и вставь его сюда. Никаких файлов создавать не нужно. Если диалог длинный, сайт сам отправит его частями.</p>
+      <p class="submit-lead">Скопируй весь диалог с ИИ — от первого сообщения до последнего ответа — и вставь его сюда. Сайт отправит его одним пакетом: полный исходный текст сохранится отдельным TXT-файлом на Google Диске, а в таблицу попадут метаданные, ссылка и короткое превью.</p>
 
       <form id="studentWorkForm" method="POST"
             action="https://script.google.com/macros/s/AKfycbyYPaEYOJ8LMYZOaMH0X8nRPHogMk1rZLnLADAS_pwCsDgtiKYs-FwNEHQaFjz58ZVW/exec"
@@ -755,7 +755,7 @@ body[data-track="senior"] .audience-only{display:block}
           </div>
           <div class="submit-field full">
             <label for="studentDialog">Полный скопированный диалог</label>
-            <textarea id="studentDialog" required maxlength="48000" placeholder="Вставь сюда весь диалог целиком..."></textarea>
+            <textarea id="studentDialog" required placeholder="Вставь сюда весь диалог целиком..."></textarea>
             <div class="submit-help">Не пересказывай диалог своими словами — вставь исходную ветку целиком.</div>
           </div>
         </div>
@@ -765,7 +765,7 @@ body[data-track="senior"] .audience-only{display:block}
         </div>
       </form>
       <iframe name="workSubmitSink" id="workSubmitSink" hidden></iframe>
-      <div class="submit-note">Данные уходят в связанную Google Таблицу. Длинный диалог автоматически разбивается на части с одним ID, чтобы ничего не потерялось.</div>
+      <div class="submit-note">Полный исходный диалог хранится отдельным TXT-файлом на Google Диске. Google Таблица используется как индекс: время, ученик, группа, сервис, ссылка на файл, размер и SHA-256.</div>
     </section>
 
     <footer class="footer">Курс «ИИ: говори на его языке» · C1 · смысловой блок 1 · версия лендинга 0.7</footer>
@@ -839,44 +839,108 @@ body[data-track="senior"] .audience-only{display:block}
     catch(e){const ta=document.createElement("textarea");ta.value=text;ta.style.position="fixed";ta.style.opacity="0";document.body.appendChild(ta);ta.select();document.execCommand("copy");ta.remove();showToast("Идея скопирована");}
   }));
 
-  // Existing backend cuts comment to 500 chars. Long dialogue is transparently split into safe chunks.
+  // v0.8: dialogue is submitted once. The backend preserves the full original as a TXT file.
   const workForm=document.getElementById("studentWorkForm"),workBtn=document.getElementById("workSubmitBtn"),
         workStatus=document.getElementById("workSubmitStatus"),sink=document.getElementById("workSubmitSink");
 
-  function postChunk(payload){
+  function makeSubmissionId(){
+    let core="";
+    try{
+      if(window.crypto&&typeof window.crypto.randomUUID==="function")core=window.crypto.randomUUID();
+    }catch(e){}
+    if(!core)core=Date.now().toString(36)+"-"+Math.random().toString(36).slice(2,12);
+    return "SUB-"+core.replace(/[^A-Za-z0-9._-]/g,"-");
+  }
+
+  function postStudentWork(payload){
     return new Promise((resolve,reject)=>{
-      const f=document.createElement("form");f.method="POST";f.action=ENDPOINT;f.target="workSubmitSink";f.style.display="none";
-      Object.entries(payload).forEach(([name,value])=>{const el=document.createElement("textarea");el.name=name;el.value=value;f.appendChild(el);});
-      document.body.appendChild(f);let done=false;
-      const onload=()=>{if(done)return;done=true;sink.removeEventListener("load",onload);f.remove();resolve();};
-      sink.addEventListener("load",onload);
-      setTimeout(()=>{if(!done){done=true;sink.removeEventListener("load",onload);f.remove();reject(new Error("timeout"));}},12000);
+      const f=document.createElement("form");
+      f.method="POST";f.action=ENDPOINT;f.target="workSubmitSink";f.style.display="none";
+
+      Object.entries(payload).forEach(([name,value])=>{
+        const el=document.createElement("textarea");
+        el.name=name;el.value=String(value??"");f.appendChild(el);
+      });
+
+      document.body.appendChild(f);
+      let finished=false;
+
+      const cleanup=()=>{
+        window.removeEventListener("message",onMessage);
+        clearTimeout(timer);
+        if(f.isConnected)f.remove();
+      };
+
+      const onMessage=event=>{
+        if(finished)return;
+        if(event.source!==sink.contentWindow)return;
+        const data=event.data;
+        if(!data||data.channel!=="S14_INTAKE_V08")return;
+        if(data.submission_id!==payload.submission_id)return;
+
+        finished=true;
+        cleanup();
+
+        if(data.ok)resolve(data);
+        else reject(new Error(data.message||data.code||"Сервер не подтвердил сохранение"));
+      };
+
+      window.addEventListener("message",onMessage);
+
+      const timer=setTimeout(()=>{
+        if(finished)return;
+        finished=true;
+        cleanup();
+        reject(new Error("Нет подтверждения сохранения от сервера. Повторно не отправляй работу вслепую — сообщи преподавателю."));
+      },45000);
+
       f.submit();
     });
   }
 
   if(workForm){
     workForm.removeAttribute("action");workForm.removeAttribute("target");
+
     workForm.addEventListener("submit",async e=>{
       e.preventDefault();
-      const name=document.getElementById("studentName").value.trim(),klass=document.getElementById("studentClass").value.trim(),
-            group=document.getElementById("studentGroup").value.trim(),service=document.getElementById("studentService").value.trim(),
-            dialog=document.getElementById("studentDialog").value.trim();
-      if(!name||!klass||!group||!service||!dialog)return;
-      const id=(Date.now().toString(36)+Math.random().toString(36).slice(2,6)).toUpperCase(),CHUNK=430,parts=[];
-      for(let i=0;i<dialog.length;i+=CHUNK)parts.push(dialog.slice(i,i+CHUNK));
+
+      const name=document.getElementById("studentName").value.trim(),
+            klass=document.getElementById("studentClass").value.trim(),
+            group=document.getElementById("studentGroup").value.trim(),
+            service=document.getElementById("studentService").value.trim(),
+            dialog=document.getElementById("studentDialog").value;
+
+      if(!name||!klass||!group||!service||!dialog.trim())return;
+
+      const submissionId=makeSubmissionId();
+
       workBtn.disabled=true;
+      workStatus.textContent="Сохраняем полный диалог…";
+
       try{
-        for(let i=0;i<parts.length;i++){
-          workStatus.textContent="Отправляем "+(i+1)+" / "+parts.length+"…";
-          const part=String(i+1).padStart(2,"0")+"/"+String(parts.length).padStart(2,"0");
-          await postChunk({name,klass,intent:"Работа · G"+group+" · "+service+" · "+id+" · "+part,comment:"ID "+id+" · "+part+"\n"+parts[i]});
-        }
-        workStatus.textContent="Готово. Работа отправлена ✓";
-        document.getElementById("studentName").value="";document.getElementById("studentService").value="";document.getElementById("studentDialog").value="";
-        showToast("Работа отправлена");
-      }catch(err){workStatus.textContent="Не удалось отправить все части. Не закрывай страницу и попробуй ещё раз.";}
-      finally{workBtn.disabled=false;}
+        const result=await postStudentWork({
+          submission_type:"STUDENT_WORK",
+          submission_id:submissionId,
+          name,
+          klass,
+          group,
+          ai_service:service,
+          intent:"Учебная работа · группа "+group+" · "+service,
+          dialogue:dialog
+        });
+
+        if(!result.file_url)throw new Error("Сервер подтвердил запись, но не вернул ссылку на оригинал.");
+
+        workStatus.textContent="Готово. Полный диалог сохранён ✓";
+        document.getElementById("studentName").value="";
+        document.getElementById("studentService").value="";
+        document.getElementById("studentDialog").value="";
+        showToast("Полный диалог сохранён");
+      }catch(err){
+        workStatus.textContent="Не подтверждено: "+(err&&err.message?err.message:"ошибка сохранения");
+      }finally{
+        workBtn.disabled=false;
+      }
     });
   }
 })();
