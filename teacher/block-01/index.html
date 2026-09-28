@@ -1,0 +1,200 @@
+<!doctype html>
+<html lang="ru">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta name="robots" content="noindex,nofollow">
+<meta name="theme-color" content="#f7fbff">
+<title>Шпаргалка преподавателя · C1 · Блок 1</title>
+<style>
+:root{
+  --bg:#f7fafc;--paper:#ffffff;--ink:#162238;--muted:#68758b;--line:#dce5ef;
+  --blue:#3478f6;--blue2:#eaf3ff;--mint:#e9f8f2;--mint-ink:#177457;
+  --sand:#fff6df;--sand-ink:#8a6210;--rose:#fff0f2;--rose-ink:#a44556;
+  --violet:#f3efff;--violet-ink:#6249a5;--shadow:0 18px 50px rgba(28,58,92,.10);
+  --r:22px;--max:1120px;
+}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{margin:0;background:
+  radial-gradient(circle at 10% 0,#e9f4ff 0,transparent 28rem),
+  radial-gradient(circle at 95% 18%,#edf9f3 0,transparent 24rem),
+  var(--bg);
+  color:var(--ink);font-family:"Segoe UI Variable","Segoe UI",Arial,sans-serif;line-height:1.52}
+a{color:inherit}
+.wrap{width:min(calc(100% - 28px),var(--max));margin:auto}
+.top{position:sticky;top:0;z-index:50;background:rgba(247,250,252,.90);backdrop-filter:blur(16px);
+ border-bottom:1px solid rgba(205,218,232,.85)}
+.topin{min-height:58px;display:flex;align-items:center;justify-content:space-between;gap:14px}
+.brand{font-weight:900}.brand b{color:var(--blue)}
+.nav{display:flex;gap:6px;overflow:auto;scrollbar-width:none}.nav::-webkit-scrollbar{display:none}
+.nav a{flex:none;text-decoration:none;padding:7px 10px;border-radius:999px;color:var(--muted);font-size:.82rem;font-weight:800}
+.nav a:hover{background:#fff;color:var(--ink)}
+.hero{padding:52px 0 24px}
+.kicker{font-size:.78rem;font-weight:900;letter-spacing:.09em;text-transform:uppercase;color:var(--blue)}
+h1{font-size:clamp(2.45rem,7vw,5.8rem);line-height:.93;letter-spacing:-.055em;margin:.14em 0 .2em;max-width:900px}
+.lead{font-size:clamp(1.03rem,2vw,1.25rem);color:var(--muted);max-width:800px;margin:0}
+.actions{display:flex;gap:10px;flex-wrap:wrap;margin-top:22px}
+.btn{display:inline-flex;align-items:center;gap:8px;text-decoration:none;border:1px solid #cbd9e8;border-radius:14px;
+ padding:11px 14px;background:#fff;font-weight:850;box-shadow:0 5px 20px rgba(28,58,92,.07)}
+.btn.primary{background:var(--blue);color:#fff;border-color:var(--blue)}
+.flow{margin-top:28px;background:#fff;border:1px solid var(--line);border-radius:18px;padding:14px 16px;box-shadow:var(--shadow)}
+.flow b{display:block;margin-bottom:8px}.flowline{display:flex;gap:7px;flex-wrap:wrap;align-items:center}
+.chip{padding:6px 9px;border-radius:999px;background:var(--blue2);font-size:.82rem;font-weight:850;color:#285caa}
+.arr{color:#a3afbd}
+.section{padding:20px 0 34px}.head{margin-bottom:14px}
+h2{font-size:clamp(1.7rem,4vw,2.65rem);line-height:1.02;letter-spacing:-.035em;margin:.16em 0 .18em}
+.sub{color:var(--muted);margin:0;max-width:780px}
+.grid{display:grid;grid-template-columns:repeat(3,1fr);gap:12px}
+.card{background:var(--paper);border:1px solid var(--line);border-radius:var(--r);padding:18px;box-shadow:0 8px 26px rgba(28,58,92,.055)}
+.card h3{font-size:1.07rem;margin:0 0 8px}.card p{margin:0;color:var(--muted)}
+.card.blue{background:var(--blue2);border-color:#cfe1ff}.card.mint{background:var(--mint);border-color:#cbeedf}
+.card.sand{background:var(--sand);border-color:#f0dfae}.card.rose{background:var(--rose);border-color:#f1cbd2}.card.violet{background:var(--violet);border-color:#ded3ff}
+.bigcheck{display:grid;gap:9px}
+.check{display:grid;grid-template-columns:28px 1fr;gap:10px;align-items:start;padding:13px 14px;border-radius:16px;background:#fff;border:1px solid var(--line)}
+.check input{width:20px;height:20px;margin-top:2px;accent-color:var(--blue)} .check strong{display:block}.check small{display:block;color:var(--muted);margin-top:2px}
+.today{display:grid;grid-template-columns:repeat(3,1fr);gap:10px}
+.slot{border:1px solid var(--line);border-radius:18px;padding:16px;background:#fff}
+.slot time{font-weight:950;font-size:1.18rem;color:var(--blue)}.slot b{display:block;margin-top:5px}.slot span{color:var(--muted);font-size:.9rem}
+.steps{display:grid;gap:10px;counter-reset:step}
+.step{counter-increment:step;background:#fff;border:1px solid var(--line);border-radius:20px;padding:17px 18px;display:grid;grid-template-columns:42px 1fr;gap:12px}
+.step:before{content:counter(step);width:36px;height:36px;border-radius:11px;background:var(--blue2);color:#2f68c3;display:grid;place-items:center;font-weight:950}
+.step h3{margin:1px 0 5px;font-size:1.05rem}.step p{margin:0;color:var(--muted)}
+.say{margin-top:9px;padding:10px 12px;border-left:3px solid var(--blue);background:#f7fbff;border-radius:0 12px 12px 0;color:#33445c;font-weight:700}
+details{background:#fff;border:1px solid var(--line);border-radius:18px;overflow:hidden;margin-bottom:9px}
+summary{cursor:pointer;list-style:none;padding:15px 16px;font-weight:900;display:flex;justify-content:space-between;gap:10px}
+summary::-webkit-details-marker{display:none}.detail{padding:0 16px 16px;color:var(--muted)}.detail b{color:var(--ink)}
+.pills{display:flex;gap:7px;flex-wrap:wrap;margin-top:9px}.pill{font-size:.78rem;font-weight:850;padding:6px 9px;border-radius:999px;background:#f1f5f9;color:#46566c}
+.obs{display:grid;grid-template-columns:repeat(2,1fr);gap:10px}.obs .card{min-height:115px}
+.note{padding:14px 16px;border-radius:16px;background:var(--sand);border:1px solid #f0dfae;color:#6f531b}
+textarea{width:100%;min-height:150px;border:1px solid var(--line);border-radius:16px;padding:13px;background:#fff;color:var(--ink);font:inherit;resize:vertical;outline:none}
+textarea:focus{border-color:#88b7ff;box-shadow:0 0 0 3px #e3efff}
+.micro{font-size:.8rem;color:var(--muted)}
+.footer{padding:18px 0 46px;color:#8190a4;font-size:.82rem}
+@media(max-width:900px){.grid{grid-template-columns:1fr 1fr}.today{grid-template-columns:1fr}.obs{grid-template-columns:1fr}}
+@media(max-width:640px){.wrap{width:min(calc(100% - 18px),var(--max))}.nav{display:none}.hero{padding-top:36px}.grid{grid-template-columns:1fr}.flowline{gap:5px}.chip{font-size:.76rem}.step{grid-template-columns:36px 1fr;padding:14px}.step:before{width:32px;height:32px}}
+@media print{.top,.actions{display:none}.card,.step,details,.flow{box-shadow:none}body{background:#fff}}
+</style>
+</head>
+<body>
+<header class="top"><div class="wrap topin"><div class="brand"><b>ИИ</b> · шпаргалка преподавателя</div>
+<nav class="nav"><a href="#before">До урока</a><a href="#run">Ход</a><a href="#observe">Наблюдать</a><a href="#groups">Группы</a><a href="#fail">Сбои</a></nav></div></header>
+
+<main>
+<section class="hero"><div class="wrap">
+<div class="kicker">C1 · смысловой блок 1 · первый запуск</div>
+<h1>Не сценарий. <br>Опорная карта урока.</h1>
+<p class="lead">Короткие тезисы, чтобы не читать методичку во время занятия: что проверить до старта, куда вести разговор, что наблюдать и где не мешать ученику думать самому.</p>
+<div class="actions">
+<a class="btn primary" href="https://drozdov-dmitry.github.io/school14-ai-courses-site/block-01/" target="_blank" rel="noopener">Открыть страницу ученика ↗</a>
+<a class="btn" href="https://drozdov-dmitry.github.io/school14-ai-courses-site/block-01/#submit-work" target="_blank" rel="noopener">Форма сдачи ↗</a>
+</div>
+<div class="flow">
+<b>Контур, который держим глазами</b>
+<div class="flowline">
+<span class="chip">смартфон</span><span class="arr">→</span><span class="chip">QR MAX</span><span class="arr">→</span>
+<span class="chip">групповой чат</span><span class="arr">→</span><span class="chip">школьный ПК / инкогнито</span><span class="arr">→</span>
+<span class="chip">MAX Web</span><span class="arr">→</span><span class="chip">лендинг урока</span><span class="arr">→</span>
+<span class="chip">реальная задача</span><span class="arr">→</span><span class="chip">ИИ</span><span class="arr">→</span>
+<span class="chip">полный диалог</span><span class="arr">→</span><span class="chip">форма</span><span class="arr">→</span>
+<span class="chip">Google Sheets</span><span class="arr">→</span><span class="chip">состояние группы</span>
+</div></div>
+</div></section>
+
+<section class="section" id="before"><div class="wrap">
+<div class="head"><div class="kicker">До первого ученика</div><h2>Что ещё сделать сегодня</h2><p class="sub">Это минимальный preflight. Не расширять систему перед первым запуском.</p></div>
+<div class="bigcheck" id="checks">
+<label class="check"><input type="checkbox" data-k="landing"><span><strong>Открыть live-лендинг на школьном ПК</strong><small>Проверить первый экран, расписание, MAX-блок, практику, инструменты и форму сдачи.</small></span></label>
+<label class="check"><input type="checkbox" data-k="max"><span><strong>Закрепить ссылку на урок в пяти чатах MAX</strong><small>Сегодня критичны группы 1, 4 и 5. С компьютера проверить вход в MAX через инкогнито.</small></span></label>
+<label class="check"><input type="checkbox" data-k="ai"><span><strong>Сделать по одной живой пробе в GigaChat и Z.ai</strong><small>Новый чат → русский запрос → второй ход → копирование всей ветки. В GigaChat отдельно проверить изображение.</small></span></label>
+<label class="check"><input type="checkbox" data-k="form"><span><strong>Ещё раз отправить тест через форму</strong><small>Имя/ФИО, класс, группа, сервис, длинный диалог. Убедиться, что строка дошла в Google Sheets.</small></span></label>
+<label class="check"><input type="checkbox" data-k="projector"><span><strong>Проверить проектор и масштаб браузера</strong><small>Лендинг должен читаться с последней парты; отдельное окно ученика и эта шпаргалка — в разных вкладках.</small></span></label>
+<label class="check"><input type="checkbox" data-k="fallback"><span><strong>Определить fallback на случай сбоя</strong><small>Если один ИИ не работает — второй. Если MAX мешает — открыть URL урока напрямую. Если форма падает — сохранить полный диалог до восстановления.</small></span></label>
+</div>
+
+<div class="head" style="margin-top:28px"><div class="kicker">Сегодня · понедельник</div><h2>Три первых запуска</h2></div>
+<div class="today">
+<div class="slot"><time>14:30–16:00</time><b>Группа 1 · 5 класс</b><span>визуальный вход, игры, аватар, быстрый вкус результата</span></div>
+<div class="slot"><time>16:10–17:40</time><b>Группа 4 · 8 класс</b><span>реальная задача, проект, учеба, контент, код/дизайн по интересу</span></div>
+<div class="slot"><time>17:50–19:20</time><b>Группа 5 · 9–11 классы</b><span>ЕГЭ-тьютор, рутина, профессии, код, помощники и автоматизация</span></div>
+</div>
+</div></section>
+
+<section class="section" id="run"><div class="wrap">
+<div class="head"><div class="kicker">Куда вести урок</div><h2>Один смысловой маршрут</h2><p class="sub">Не надо успевать всё. Дошли до полезной глубины — там и остановились. Следующее занятие продолжает тот же блок.</p></div>
+<div class="steps">
+<div class="step"><div><h3>Сонастройка: зачем ты сюда пришёл?</h3><p>Вытянуть реальные мотивы, интересы, раздражающую рутину, учебные сложности, желание что-то сделать или выпустить наружу.</p><div class="say">«Что ты реально хотел бы сделать с ИИ — не для урока, а для себя?»</div></div></div>
+<div class="step"><div><h3>Выбор входа: своё или с нашего «стола»</h3><p>Не заставлять всех делать одно. Если своей идеи нет — дать выбрать пример, который цепляет именно этого ученика.</p><div class="say">«Где результат потом будет жить: игра, соцсеть, учёба, проект, экзамен, код, повседневная задача?»</div></div></div>
+<div class="step"><div><h3>Первый самостоятельный ход</h3><p>Пусть ученик сам сформулирует задачу и увидит первый ответ. Не улучшать за него сразу. Это даёт диагностический материал.</p><div class="say">«Сделай первую версию сам. Потом посмотрим, чего ИИ не понял.»</div></div></div>
+<div class="step"><div><h3>Знание появляется из результата</h3><p>Теперь раскрывать: задача → контекст → исходные данные → ограничения → критерии → диалог → проверка → применение. Привязывать каждый элемент к тому, что только что произошло у ученика.</p><div class="say">«Что ИИ не знал? Что из-за этого получилось не так?»</div></div></div>
+<div class="step"><div><h3>Итерация: версия 1 — не финал</h3><p>Попросить изменить конкретную вещь, сравнить результат и объяснить, почему вторая версия лучше или хуже.</p><div class="say">«Назови один недостаток ответа и исправь его следующим сообщением.»</div></div></div>
+<div class="step"><div><h3>Длинная игра + сдача</h3><p>Связать результат с реальным продолжением: использовать, импортировать, опубликовать, тренироваться, автоматизировать. Затем скопировать всю ветку в форму.</p><div class="say">«Если это не закончится сегодня — во что это может превратиться за месяц?»</div></div></div>
+</div>
+<div class="note" style="margin-top:14px"><b>Важно для диагностики:</b> если ученик уже прочитал содержательные подсказки на лендинге, его первый запрос всё равно полезен как наблюдение, но это уже не «чистый baseline без помощи». Не смешивать эти два вывода.</div>
+</div></section>
+
+<section class="section" id="observe"><div class="wrap">
+<div class="head"><div class="kicker">Не оценка, а наблюдение</div><h2>Что замечать по ходу</h2></div>
+<div class="obs">
+<div class="card blue"><h3>1. Постановка задачи</h3><p>Есть ли реальный результат и зачем он нужен, или только общий вопрос?</p></div>
+<div class="card mint"><h3>2. Контекст</h3><p>Передаёт ли ученик то, что реально меняет ответ?</p></div>
+<div class="card sand"><h3>3. Критерии и ограничения</h3><p>Может ли сказать, что значит «хорошо» именно для его задачи?</p></div>
+<div class="card violet"><h3>4. Диалог</h3><p>Принимает первый ответ или умеет назвать недостаток и сделать следующий ход?</p></div>
+<div class="card rose"><h3>5. Проверка</h3><p>Возникает ли вопрос «откуда это известно / работает ли / подходит ли»?</p></div>
+<div class="card"><h3>6. Самостоятельность</h3><p>Что придумал и решил сам, а где фактически следовал готовой инструкции?</p></div>
+<div class="card"><h3>7. Длинная игра</h3><p>Есть ли задача, к которой ученик захочет вернуться после занятия?</p></div>
+<div class="card"><h3>8. Технический барьер</h3><p>Авторизация, копирование диалога, вкладки, MAX, клавиатура, сервис — отдельно от педагогического вывода.</p></div>
+</div>
+</div></section>
+
+<section class="section" id="groups"><div class="wrap">
+<div class="head"><div class="kicker">Одно ядро · разные входы</div><h2>Возрастные акценты</h2></div>
+<details><summary>5 класс · группа 1 <span>+</span></summary><div class="detail"><b>Вход:</b> аватар, персонаж, Minecraft/Roblox, мем, изображение, история. <b>Главное:</b> быстро получить эффект «я сделал», затем показать, что точность задачи меняет результат. Не перегружать терминами.</div></details>
+<details><summary>6 класс · группа 2 <span>+</span></summary><div class="detail"><b>Вход:</b> визуал + простая учебная/личная задача. <b>Главное:</b> добавить контекст и один-два критерия; научить делать второй ход вместо принятия первого ответа.</div></details>
+<details><summary>7 класс · группа 3 <span>+</span></summary><div class="detail"><b>Вход:</b> игра, контент, учеба, поиск идеи, проект. <b>Главное:</b> сильнее вытягивать собственную постановку задачи и раннюю проверку результата.</div></details>
+<details open><summary>8 класс · группа 4 <span>+</span></summary><div class="detail"><b>Вход:</b> реальный мини-проект, код, дизайн, контент, исследование. <b>Главное:</b> сравнение вариантов, критерии, проверка и применение результата вне чата.</div></details>
+<details open><summary>9–11 классы · группа 5 <span>+</span></summary><div class="detail"><b>Вход:</b> ЕГЭ-тьютор, личный помощник, автоматизация рутины, профессии/вуз, код. <b>Главное:</b> не «показать агента», а найти повторяющийся процесс, входы, правила, выход и контроль качества. Агентность — продолжение реальной задачи.</div></details>
+</div></section>
+
+<section class="section" id="fail"><div class="wrap">
+<div class="head"><div class="kicker">Если что-то сломалось</div><h2>Не разваливаем урок</h2></div>
+<div class="grid">
+<div class="card rose"><h3>MAX не открывается</h3><p>Дать прямую ссылку на лендинг. Коммуникационный слой можно восстановить позже.</p></div>
+<div class="card sand"><h3>GigaChat не работает</h3><p>Перейти в Z.ai или другой заранее проверенный сервис. Важен процесс, а не бренд.</p></div>
+<div class="card blue"><h3>Форма не отправляет</h3><p>Не терять ветку. Оставить чат открытым / скопировать диалог во временное безопасное место и отправить позже.</p></div>
+<div class="card mint"><h3>Ученик «не знает, что делать»</h3><p>Не диктовать запрос. Спросить: что любит, что бесит, что хотел бы упростить, сделать, понять или показать другим.</p></div>
+<div class="card violet"><h3>Очень сильный ученик</h3><p>Дать длинную игру: перенос на другой контекст, код, автоматизацию, помощника, проверяемый мини-проект.</p></div>
+<div class="card"><h3>Не успели блок</h3><p>Ничего не ускорять ради галочки. Первый смысловой блок может спокойно продолжиться на следующем занятии.</p></div>
+</div>
+</div></section>
+
+<section class="section"><div class="wrap">
+<div class="head"><div class="kicker">После каждой группы · 3 минуты</div><h2>Зафиксировать, пока не забыл</h2><p class="sub">Только факты и сигналы. Без длинного отчёта.</p></div>
+<div class="grid">
+<div class="card"><h3>Общие интересы</h3><p>Что реально выбирали: игры, изображения, учёба, код, ЕГЭ, автоматизация…</p></div>
+<div class="card"><h3>Общий провал</h3><p>Задача, контекст, критерии, итерация, проверка, техническая проблема?</p></div>
+<div class="card"><h3>Сильные сигналы</h3><p>Кто сам задавал критерии, проверял, переносил, строил длинный проект?</p></div>
+</div>
+<div style="margin-top:12px">
+<textarea id="quickNotes" placeholder="Группа … · что заметил · что изменить на следующем занятии…"></textarea>
+<div class="micro">Черновик сохраняется только в этом браузере.</div>
+</div>
+</div></section>
+</main>
+
+<footer class="footer"><div class="wrap">Шпаргалка преподавателя · C1 · Блок 1 · v0.1 · отдельная служебная страница, не связана навигацией со страницей ученика.</div></footer>
+
+<script>
+(function(){
+  document.querySelectorAll('#checks input[type="checkbox"]').forEach(cb=>{
+    const key='teacher-c1-check-'+cb.dataset.k;
+    try{cb.checked=localStorage.getItem(key)==='1'}catch(e){}
+    cb.addEventListener('change',()=>{try{localStorage.setItem(key,cb.checked?'1':'0')}catch(e){}});
+  });
+  const notes=document.getElementById('quickNotes'), nk='teacher-c1-quick-notes';
+  try{notes.value=localStorage.getItem(nk)||''}catch(e){}
+  notes.addEventListener('input',()=>{try{localStorage.setItem(nk,notes.value)}catch(e){}});
+})();
+</script>
+</body>
+</html>
