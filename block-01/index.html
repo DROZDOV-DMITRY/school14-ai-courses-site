@@ -781,11 +781,11 @@ body[data-track="senior"] .audience-only{display:block}
   const qs=new URLSearchParams(location.search);
 
   const groupData={
-    "1":{name:"ИИ · Группа 1 · 5 класс",klass:"5 класс",url:"https://max.ru/join/v1Oub1A4THNcWRXXOQWvXk8ZHVovQqQkQ-f2HTTC1Wo",qr:"qr/group-1.png"},
-    "2":{name:"ИИ · Группа 2 · 6 класс",klass:"6 класс",url:"https://max.ru/join/VPnKrGE-3lemkGPtgUigu2lylcPoCe8NNaFPDTPxLRI",qr:"qr/group-2.png"},
-    "3":{name:"ИИ · Группа 3 · 7 класс",klass:"7 класс",url:"https://max.ru/join/pl0PR2CrQ_atbXyQPG_fR2OdmIS1ZEe9UpJ_wLfpHCU",qr:"qr/group-3.png"},
-    "4":{name:"ИИ · Группа 4 · 8 класс",klass:"8 класс",url:"https://max.ru/join/ASMnCyBIGTcR3dlnMxIJoqXELdCUm8jMsgoVcAIDZWc",qr:"qr/group-4.png"},
-    "5":{name:"ИИ · Группа 5 · 9–11 классы",klass:"9–11 классы",url:"https://max.ru/join/KDZ3ZwJn-nKrtxL2mw1bDt65vOHOilkEeT100YJlN0s",qr:"qr/group-5.png"}
+    "1":{name:"ИИ · Группа 1 · 5 класс",klass:"5 класс",url:"https://max.ru/join/v1Oub1A4THNcWRXXOQWvXk8ZHVovQqQkQ-f2HTTC1Wo",qr:"qr/group-1.svg"},
+    "2":{name:"ИИ · Группа 2 · 6 класс",klass:"6 класс",url:"https://max.ru/join/VPnKrGE-3lemkGPtgUigu2lylcPoCe8NNaFPDTPxLRI",qr:"qr/group-2.svg"},
+    "3":{name:"ИИ · Группа 3 · 7 класс",klass:"7 класс",url:"https://max.ru/join/pl0PR2CrQ_atbXyQPG_fR2OdmIS1ZEe9UpJ_wLfpHCU",qr:"qr/group-3.svg"},
+    "4":{name:"ИИ · Группа 4 · 8 класс",klass:"8 класс",url:"https://max.ru/join/ASMnCyBIGTcR3dlnMxIJoqXELdCUm8jMsgoVcAIDZWc",qr:"qr/group-4.svg"},
+    "5":{name:"ИИ · Группа 5 · 9–11 классы",klass:"9–11 классы",url:"https://max.ru/join/KDZ3ZwJn-nKrtxL2mw1bDt65vOHOilkEeT100YJlN0s",qr:"qr/group-5.svg"}
   };
 
   const body=document.body,groupButtons=[...document.querySelectorAll("[data-group]")];
@@ -873,7 +873,6 @@ body[data-track="senior"] .audience-only{display:block}
 
       const onMessage=event=>{
         if(finished)return;
-        if(event.source!==sink.contentWindow)return;
         const data=event.data;
         if(!data||data.channel!=="S14_INTAKE_V08")return;
         if(data.submission_id!==payload.submission_id)return;
