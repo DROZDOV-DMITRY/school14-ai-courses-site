@@ -1,0 +1,49 @@
+{
+  "schema": "S14_AI_KIT_MANIFEST_V1",
+  "kit_version": "2026.10.01.3",
+  "created_utc": "2026-10-01",
+  "course_tabs": [
+    "https://drozdov-dmitry.github.io/school14-ai-courses-site/block-01/",
+    "https://chat.deepseek.com/",
+    "https://github.com/",
+    "https://web.max.ru/"
+  ],
+  "files": [
+    {
+      "path": "S14_APPLY_UPDATE_V1.cmd",
+      "source": "S14_APPLY_UPDATE_V1.cmd",
+      "sha256": "896E3D19BA8EA8BD21E59739AE853803DBE5C3F321489DA096A47C5BD08A354F",
+      "target": null
+    },
+    {
+      "path": "bin/S14_COURSE_EDGE_LAUNCHER_V1.cmd",
+      "source": "S14_COURSE_EDGE_LAUNCHER_V1.cmd",
+      "sha256": "D5A23D9AF6F072E02E62B5E7C1238E5B985E993D84AD5459A1A168C6664721C0",
+      "target": "%LOCALAPPDATA%\\S14Course\\bin\\S14_COURSE_EDGE_LAUNCHER_V1.cmd"
+    },
+    {
+      "path": "installers/Hiddify/Hiddify-Windows-Setup-x64-v4.1.1.exe",
+      "source": "https://github.com/hiddify/hiddify-app/releases/download/v4.1.1/Hiddify-Windows-Setup-x64.exe",
+      "sha256": "3F6182B610168C0BB386FFEA1FC7F68318D3DF23C15840C8B13A3BE51B080A96",
+      "size_bytes": 36486310,
+      "authenticode_required": true,
+      "target": "%LOCALAPPDATA%\\S14Course\\Installers\\Hiddify\\Hiddify-Windows-Setup-x64-v4.1.1.exe"
+    }
+  ],
+  "hiddify": {
+    "version": "4.1.1",
+    "source_project": "hiddify/hiddify-app",
+    "release_date": "2026-03-05",
+    "sha256": "3F6182B610168C0BB386FFEA1FC7F68318D3DF23C15840C8B13A3BE51B080A96",
+    "publisher_status": "VERIFY_ON_WINDOWS_DURING_FLASH_REFRESH",
+    "admin_requirement": "INSTALLER_AND_VPN_SERVICE_MAY_REQUIRE_UAC_ADMIN",
+    "install_action": "NOT_AUTOMATIC",
+    "uninstall_path": "EVIDENCE_GAP_UNTIL_FIELD_INSTALL"
+  },
+  "policy": {
+    "network_mutation_on_apply": false,
+    "vpn_autostart": false,
+    "hiddify_auto_install": false,
+    "system_proxy_write": false
+  }
+}
