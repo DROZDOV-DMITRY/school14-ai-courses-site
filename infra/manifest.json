@@ -1,6 +1,6 @@
 {
   "schema": "S14_AI_KIT_MANIFEST_V1",
-  "kit_version": "2026.10.01.3",
+  "kit_version": "2026.10.02.1",
   "created_utc": "2026-10-01",
   "course_tabs": [
     "https://drozdov-dmitry.github.io/school14-ai-courses-site/block-01/",
@@ -26,8 +26,9 @@
       "source": "https://github.com/hiddify/hiddify-app/releases/download/v4.1.1/Hiddify-Windows-Setup-x64.exe",
       "sha256": "3F6182B610168C0BB386FFEA1FC7F68318D3DF23C15840C8B13A3BE51B080A96",
       "size_bytes": 36486310,
-      "authenticode_required": true,
-      "target": "%LOCALAPPDATA%\\S14Course\\Installers\\Hiddify\\Hiddify-Windows-Setup-x64-v4.1.1.exe"
+      "target": "%LOCALAPPDATA%\\S14Course\\Installers\\Hiddify\\Hiddify-Windows-Setup-x64-v4.1.1.exe",
+      "publisher_verification": "OFFICIAL_GITHUB_RELEASE_ASSET_DIGEST",
+      "authenticode_status": "NotSigned"
     }
   ],
   "hiddify": {
@@ -35,7 +36,7 @@
     "source_project": "hiddify/hiddify-app",
     "release_date": "2026-03-05",
     "sha256": "3F6182B610168C0BB386FFEA1FC7F68318D3DF23C15840C8B13A3BE51B080A96",
-    "publisher_status": "VERIFY_ON_WINDOWS_DURING_FLASH_REFRESH",
+    "publisher_status": "OFFICIAL_GITHUB_RELEASE_DIGEST_VERIFIED; AUTHENTICODE_NOT_PRESENT",
     "admin_requirement": "INSTALLER_AND_VPN_SERVICE_MAY_REQUIRE_UAC_ADMIN",
     "install_action": "NOT_AUTOMATIC",
     "uninstall_path": "EVIDENCE_GAP_UNTIL_FIELD_INSTALL"
