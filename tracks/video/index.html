@@ -10,12 +10,10 @@
   <script defer src="/school14-ai-courses-site/assets/s14-metrika.js"></script>
   <script defer src="/school14-ai-courses-site/assets/s14-site.js"></script>
   <style>
-    body.creator-page{
+    body.creator-menu{
       --accent:#d4b06a;
       --accent2:#7d2948;
       --accent3:#2e6664;
-      --panel:#151114;
-      --panel2:#121a1a;
       --line:rgba(222,194,138,.18);
       background:
         radial-gradient(circle at 12% 0,rgba(125,41,72,.22),transparent 30rem),
@@ -23,96 +21,52 @@
         radial-gradient(circle at 52% 72%,rgba(212,176,106,.08),transparent 34rem),
         linear-gradient(180deg,#0b0b0d,#0d0c0f 58%,#0a0e0e);
     }
-    .creator-page .topbar{background:rgba(11,11,13,.91)}
-    .creator-page .eyebrow,.creator-page .kicker,.creator-page .brand b{color:var(--accent)}
-    .creator-page .hero h1{
+    .creator-menu .topbar{background:rgba(11,11,13,.91)}
+    .creator-menu .brand b,.creator-menu .eyebrow,.creator-menu .kicker{color:var(--accent)}
+    .creator-menu .hero h1{
+      max-width:1000px;
       background:linear-gradient(110deg,#fff 5%,#ead8b4 45%,#d6b46e 72%,#fff 100%);
       -webkit-background-clip:text;background-clip:text;color:transparent;
     }
-    .today{
-      margin-top:28px;
-      padding:22px;
-      border:1px solid rgba(212,176,106,.28);
-      border-radius:26px;
-      background:
-        linear-gradient(135deg,rgba(125,41,72,.16),rgba(46,102,100,.11) 58%,rgba(212,176,106,.08));
-      box-shadow:0 24px 70px rgba(0,0,0,.24);
+    .route-note{
+      margin-top:26px;padding:18px 20px;border-radius:20px;
+      border:1px solid rgba(212,176,106,.24);
+      background:linear-gradient(120deg,rgba(125,41,72,.12),rgba(46,102,100,.10));
+      color:#d7d0c7;
     }
-    .today-head{display:flex;justify-content:space-between;gap:14px;align-items:flex-start;flex-wrap:wrap}
-    .today-step{font-size:.76rem;font-weight:950;letter-spacing:.09em;text-transform:uppercase;color:var(--accent)}
-    .today h2{margin:.12em 0 .15em;font-size:clamp(1.8rem,4.7vw,3.6rem)}
-    .today-intro{margin:0;color:#d7d2cf;max-width:780px}
-    .today-skills{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;margin-top:20px}
-    .today-skill{
-      min-height:170px;padding:18px;border-radius:20px;
-      border:1px solid rgba(255,255,255,.09);
-      background:rgba(8,8,10,.47)
+    .route-note b{color:#fff}
+    .lesson-menu{display:grid;grid-template-columns:repeat(2,1fr);gap:14px;margin-top:22px}
+    .lesson-card{
+      position:relative;display:block;text-decoration:none;color:inherit;padding:22px;
+      border:1px solid var(--line);border-radius:24px;
+      background:linear-gradient(145deg,rgba(22,17,20,.92),rgba(10,14,14,.94));
+      min-height:220px;transition:transform .18s,border-color .18s,background .18s;
     }
-    .today-skill .num{
-      width:34px;height:34px;border-radius:11px;display:grid;place-items:center;
-      font-weight:950;color:#111;background:var(--accent);margin-bottom:28px
+    a.lesson-card:hover,a.lesson-card:focus-visible{
+      transform:translateY(-3px);
+      border-color:rgba(212,176,106,.48);
+      background:linear-gradient(145deg,rgba(125,41,72,.16),rgba(46,102,100,.12));
+      outline:none;
     }
-    .today-skill:nth-child(2) .num{background:#a64668;color:#fff}
-    .today-skill:nth-child(3) .num{background:#397b78;color:#fff}
-    .today-skill h3{margin:0 0 7px;font-size:1.08rem}
-    .today-skill p{margin:0;color:#b8b3b1}
-    .product{
-      margin-top:12px;padding:18px 20px;border-radius:20px;
-      background:linear-gradient(120deg,rgba(212,176,106,.14),rgba(255,255,255,.035));
-      border:1px solid rgba(212,176,106,.22)
-    }
-    .product-label{font-size:.72rem;letter-spacing:.09em;text-transform:uppercase;font-weight:950;color:var(--accent)}
-    .product strong{display:block;font-size:1.16rem;margin-top:5px}
-    .product p{margin:5px 0 0;color:#c9c2be}
-    .rule-strip{
-      display:flex;gap:10px;align-items:flex-start;margin-top:12px;padding:13px 15px;
-      border-left:3px solid var(--accent3);background:rgba(46,102,100,.09);border-radius:0 14px 14px 0
-    }
-    .rule-strip b{white-space:nowrap}.rule-strip span{color:#c4cfcd}
-    .journey{
-      border:1px solid var(--line);border-radius:22px;background:rgba(255,255,255,.025);overflow:hidden
-    }
-    .journey summary{
-      cursor:pointer;list-style:none;padding:19px 20px;font-weight:950;
-      display:flex;justify-content:space-between;align-items:center;gap:12px
-    }
-    .journey summary::-webkit-details-marker{display:none}
-    .journey summary::after{content:"＋";color:var(--accent);font-size:1.35rem}
-    .journey[open] summary::after{content:"−"}
-    .journey-inner{padding:0 20px 20px}
-    .journey-note{color:var(--muted);max-width:860px;margin:0 0 16px}
-    .lesson-list{display:grid;gap:10px}
-    .lesson{
-      display:grid;grid-template-columns:74px minmax(160px,.8fr) 1.5fr 1.1fr;
-      gap:14px;align-items:start;padding:15px;border-radius:17px;
-      border:1px solid rgba(255,255,255,.065);background:rgba(5,6,8,.32)
-    }
-    .lesson.current{border-color:rgba(212,176,106,.32);background:rgba(212,176,106,.055)}
-    .lesson-n{font-size:.72rem;letter-spacing:.08em;text-transform:uppercase;font-weight:950;color:var(--accent)}
-    .lesson-title{font-weight:900}
-    .lesson-skills,.lesson-product{color:var(--muted);font-size:.89rem}
-    .lesson-product b{color:#e9e1d7}
-    .tool-drawer{margin-top:12px}
-    .mini-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:10px}
-    .mini-card{padding:15px;border-radius:17px;border:1px solid var(--line);background:rgba(255,255,255,.025)}
-    .mini-card b{display:block;margin-bottom:5px}.mini-card span{color:var(--muted);font-size:.88rem}
+    .lesson-card.active{border-color:rgba(212,176,106,.34);box-shadow:0 18px 50px rgba(0,0,0,.22)}
+    .lesson-card.locked{opacity:.72;cursor:default}
+    .lesson-top{display:flex;justify-content:space-between;gap:12px;align-items:flex-start}
+    .lesson-num{font-size:.72rem;letter-spacing:.09em;text-transform:uppercase;font-weight:950;color:var(--accent)}
+    .lesson-state{font-size:.7rem;font-weight:900;padding:5px 8px;border:1px solid var(--line);border-radius:999px;color:#cfc8be}
+    .lesson-card.active .lesson-state{background:rgba(212,176,106,.12);color:#f0ddb8;border-color:rgba(212,176,106,.28)}
+    .lesson-card h3{font-size:1.45rem;margin:20px 0 8px}
+    .lesson-card p{margin:0;color:var(--muted);max-width:560px}
+    .lesson-skills{display:flex;gap:7px;flex-wrap:wrap;margin-top:18px}
+    .lesson-skills span{padding:6px 8px;border-radius:999px;background:rgba(255,255,255,.04);border:1px solid rgba(255,255,255,.07);font-size:.72rem;font-weight:850;color:#d8d0c6}
+    .open-label{display:block;margin-top:18px;color:var(--accent);font-weight:950;font-size:.82rem}
+    .principles{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;margin-top:18px}
+    .principle{padding:17px;border-radius:18px;border:1px solid var(--line);background:rgba(255,255,255,.025)}
+    .principle b{display:block;margin-bottom:6px}.principle span{color:var(--muted);font-size:.9rem}
     .safety{border-color:rgba(125,41,72,.34);background:rgba(125,41,72,.08)}
-    .creator-page .copy-btn{background:linear-gradient(135deg,#d6b46e,#a64668);color:#120d0f}
-    @media(max-width:900px){
-      .today-skills{grid-template-columns:1fr}
-      .today-skill{min-height:0}
-      .today-skill .num{margin-bottom:16px}
-      .lesson{grid-template-columns:64px 1fr}.lesson-skills,.lesson-product{grid-column:2}
-      .mini-grid{grid-template-columns:1fr}
-    }
-    @media(max-width:560px){
-      .today{padding:17px}
-      .lesson{grid-template-columns:1fr}.lesson-skills,.lesson-product{grid-column:1}
-      .rule-strip{display:block}.rule-strip b{display:block;margin-bottom:4px}
-    }
+    @media(max-width:820px){.lesson-menu,.principles{grid-template-columns:1fr}.lesson-card{min-height:0}}
   </style>
 </head>
-<body class="creator-page">
+<body class="creator-menu">
 <header class="topbar">
   <div class="topbar-inner">
     <a class="brand" href="../../block-01/"><b>ИИ</b> · направления</a>
@@ -120,7 +74,6 @@
     <nav class="nav" id="siteNav">
       <a href="../../block-01/#missions">Все направления</a>
       <a href="../../skills/input/">Голос и клавиатура</a>
-      <a href="../../block-01/#skeleton">Скелет запроса</a>
       <a href="../../block-01/#submit">Сдать работу</a>
     </nav>
   </div>
@@ -129,47 +82,95 @@
 <main>
 <section class="hero">
   <div class="wrap">
-    <div class="crumbs"><a href="../../block-01/">Занятие 1</a><span>→</span><span>Блогинг / короткие видео</span></div>
-    <div class="eyebrow">🎬 практика короткого видео</div>
+    <div class="crumbs"><a href="../../block-01/">Все направления</a><span>→</span><span>Блогинг / короткие видео</span></div>
+    <div class="eyebrow">🎬 учебная ветка</div>
     <h1>Блогинг / короткие видео</h1>
-    <p class="lead">Путь от простого повторения тренда до собственного формата. На каждом занятии — три новых навыка и один законченный ролик.</p>
+    <p class="lead">От повторения тренда — к свободе в кадре, собственной подаче и своему формату. Каждое занятие добавляет три навыка и заканчивается готовым роликом.</p>
 
-    <div class="today" id="today">
-      <div class="today-head">
-        <div>
-          <div class="today-step">Сегодня · шаг 1 из 10</div>
-          <h2>Первый тренд без зажима</h2>
-          <p class="today-intro">Не нужно говорить в камеру. Выбери короткий танцевальный или двигательный тренд, разложи его на части и сними свою первую законченную версию.</p>
+    <div class="route-note">
+      <b>Как идти по ветке:</b> проходи занятия по порядку. Новый шаг не отменяет предыдущие навыки — он добавляет ещё три. Поэтому ролики становятся сложнее постепенно, а не за один урок.
+    </div>
+  </div>
+</section>
+
+<section class="section" id="lessons">
+  <div class="wrap">
+    <div class="kicker">Занятия</div>
+    <h2>Выбери следующий шаг</h2>
+    <p class="section-intro">Сейчас открыт первый урок. Остальные пункты показывают маршрут ветки и будут превращаться в отдельные рабочие страницы по мере разработки.</p>
+
+    <div class="lesson-menu">
+      <a class="lesson-card active" href="lesson-01/">
+        <div class="lesson-top">
+          <span class="lesson-num">Занятие 1</span>
+          <span class="lesson-state">Открыто</span>
+        </div>
+        <h3>Тело без зажима</h3>
+        <p>Первый актёрский навык для камеры: убрать лишнее напряжение, сделать форму ясной и заменить позирование конкретным действием.</p>
+        <div class="lesson-skills">
+          <span>напряжение</span><span>форма</span><span>действие</span>
+        </div>
+        <span class="open-label">Открыть занятие →</span>
+      </a>
+
+      <div class="lesson-card locked">
+        <div class="lesson-top">
+          <span class="lesson-num">Занятие 2</span>
+          <span class="lesson-state">Следом</span>
+        </div>
+        <h3>Чистое движение</h3>
+        <p>Амплитуда, конечная точка и повторяемость. Учимся делать движение читаемым и воспроизводимым.</p>
+        <div class="lesson-skills">
+          <span>амплитуда</span><span>точность</span><span>повтор</span>
         </div>
       </div>
 
-      <div class="today-skills">
-        <article class="today-skill">
-          <div class="num">1</div>
-          <h3>Держать себя в кадре</h3>
-          <p>Поставь телефон так, чтобы нужная часть тела не выпадала из кадра. Выбери точку взгляда и место, где начинается движение.</p>
-        </article>
-        <article class="today-skill">
-          <div class="num">2</div>
-          <h3>Двигаться в ритм</h3>
-          <p>Разбей тренд на 3–5 опорных движений. Сначала собери последовательность без спешки, затем попади в музыкальные акценты.</p>
-        </article>
-        <article class="today-skill">
-          <div class="num">3</div>
-          <h3>Снять зажим</h3>
-          <p>Сделай три дубля: обычный, более свободный и нарочно энергичный. Сравни их и выбери версию, где движение выглядит естественно.</p>
-        </article>
+      <div class="lesson-card locked">
+        <div class="lesson-top">
+          <span class="lesson-num">Занятие 3</span>
+          <span class="lesson-state">В маршруте</span>
+        </div>
+        <h3>Ритм и энергия</h3>
+        <p>Музыкальный акцент, контраст и пауза. Учимся менять качество исполнения, не меняя сам тренд.</p>
+        <div class="lesson-skills">
+          <span>ритм</span><span>контраст</span><span>пауза</span>
+        </div>
       </div>
 
-      <div class="product">
-        <div class="product-label">Продукт занятия</div>
-        <strong>Вертикальный ролик 10–15 секунд</strong>
-        <p>Один выбранный тренд, минимум три дубля, одна финальная версия. Ролик должен быть закончен и сохранён в MP4. Публикация сегодня не обязательна.</p>
+      <div class="lesson-card locked">
+        <div class="lesson-top">
+          <span class="lesson-num">Занятие 4</span>
+          <span class="lesson-state">В маршруте</span>
+        </div>
+        <h3>Лицо и взгляд</h3>
+        <p>Намерение, контакт с камерой и точный масштаб мимики — без отдельного «изображения эмоций».</p>
+        <div class="lesson-skills">
+          <span>намерение</span><span>взгляд</span><span>мимика</span>
+        </div>
       </div>
 
-      <div class="rule-strip">
-        <b>Правило:</b>
-        <span>не исправляй всё сразу. Между дублями меняй только одну вещь: кадр, ритм или свободу движения.</span>
+      <div class="lesson-card locked">
+        <div class="lesson-top">
+          <span class="lesson-num">Занятие 5</span>
+          <span class="lesson-state">В маршруте</span>
+        </div>
+        <h3>Камера — партнёр</h3>
+        <p>Дистанция, метка и способность продолжать после ошибки. Подстраиваем исполнение под кадр.</p>
+        <div class="lesson-skills">
+          <span>дистанция</span><span>метка</span><span>продолжение</span>
+        </div>
+      </div>
+
+      <div class="lesson-card locked">
+        <div class="lesson-top">
+          <span class="lesson-num">Занятие 6</span>
+          <span class="lesson-state">В маршруте</span>
+        </div>
+        <h3>Из тренда — своё</h3>
+        <p>Находим узнаваемое ядро, меняем один параметр и добавляем собственный элемент.</p>
+        <div class="lesson-skills">
+          <span>ядро</span><span>изменение</span><span>свой элемент</span>
+        </div>
       </div>
     </div>
   </div>
@@ -177,148 +178,26 @@
 
 <section class="section">
   <div class="wrap">
-    <div class="kicker">ИИ сегодня</div>
-    <h2>Разбери тренд, а не отдай его ИИ</h2>
-    <p class="section-intro">ИИ помогает увидеть структуру движения и подготовить следующий дубль. Исполняешь, сравниваешь и выбираешь ты.</p>
-    <div class="prompt">
-      <div class="label">Запрос для разбора</div>
-      <pre>Я повторяю короткий танцевальный или двигательный тренд.
+    <div class="kicker">Правила ветки</div>
+    <h2>Не «будь увереннее» — управляй конкретным</h2>
 
-Не придумывай движения за меня. Я опишу последовательность движений или дам свои наблюдения.
-
-1. Разбей тренд на 3–5 опорных движений.
-2. Для каждого укажи: исходную позу, само движение, конечную позу и момент музыкального акцента.
-3. Дай короткий чек-лист кадра: что должно полностью попадать в кадр и где лучше поставить телефон.
-4. После моего первого дубля я напишу, что получилось плохо. Предложи только ОДНО изменение для следующего дубля.
-
-Не переписывай всю постановку после каждой ошибки.</pre>
-      <div class="copy-row">
-        <button class="copy-btn" type="button" data-copy="Я повторяю короткий танцевальный или двигательный тренд.&#10;&#10;Не придумывай движения за меня. Я опишу последовательность движений или дам свои наблюдения.&#10;&#10;1. Разбей тренд на 3–5 опорных движений.&#10;2. Для каждого укажи: исходную позу, само движение, конечную позу и момент музыкального акцента.&#10;3. Дай короткий чек-лист кадра: что должно полностью попадать в кадр и где лучше поставить телефон.&#10;4. После моего первого дубля я напишу, что получилось плохо. Предложи только ОДНО изменение для следующего дубля.&#10;&#10;Не переписывай всю постановку после каждой ошибки.">Скопировать запрос</button>
-        <span class="copy-hint">После первого дубля продолжай тот же диалог.</span>
-      </div>
+    <div class="principles">
+      <div class="principle"><b>Три навыка за урок</b><span>На занятии не пытаемся улучшить всё сразу. Есть три наблюдаемые задачи и один продукт.</span></div>
+      <div class="principle"><b>Один параметр за дубль</b><span>Сравниваем версии и меняем одну вещь. Так понятно, что именно дало результат.</span></div>
+      <div class="principle"><b>Продукт остаётся</b><span>Каждое занятие заканчивается сохранённым роликом, а не только упражнениями.</span></div>
     </div>
-  </div>
-</section>
 
-<section class="section">
-  <div class="wrap">
-    <div class="kicker">Путь</div>
-    <h2>Три навыка за раз</h2>
-    <p class="section-intro">Следующий шаг добавляет новые навыки, но предыдущие продолжают работать. Вся траектория спрятана здесь, чтобы на занятии не перегружать экран.</p>
-
-    <details class="journey">
-      <summary>Открыть путь из 10 занятий</summary>
-      <div class="journey-inner">
-        <p class="journey-note">Раскрепощение не изучается отдельной лекцией. Оно накапливается через повтор: камера → движение → выразительность → образ → импровизация → собственная версия.</p>
-
-        <div class="lesson-list">
-          <div class="lesson current">
-            <div class="lesson-n">Шаг 1</div>
-            <div class="lesson-title">Я в кадре</div>
-            <div class="lesson-skills">Кадр · ритм · три дубля с разной свободой движения</div>
-            <div class="lesson-product"><b>Продукт:</b> повтор простого тренда, 10–15 секунд</div>
-          </div>
-          <div class="lesson">
-            <div class="lesson-n">Шаг 2</div>
-            <div class="lesson-title">Чистое движение</div>
-            <div class="lesson-skills">Точность · амплитуда · повторяемость последовательности</div>
-            <div class="lesson-product"><b>Продукт:</b> более чистая версия тренда без лишних движений</div>
-          </div>
-          <div class="lesson">
-            <div class="lesson-n">Шаг 3</div>
-            <div class="lesson-title">Выразительность</div>
-            <div class="lesson-skills">Мимика · взгляд · энергия движения</div>
-            <div class="lesson-product"><b>Продукт:</b> две разные подачи одного тренда и выбранная финальная</div>
-          </div>
-          <div class="lesson">
-            <div class="lesson-n">Шаг 4</div>
-            <div class="lesson-title">Камера работает на тебя</div>
-            <div class="lesson-skills">Ракурс · расстояние · свет</div>
-            <div class="lesson-product"><b>Продукт:</b> ролик с осознанно выбранным кадром</div>
-          </div>
-          <div class="lesson">
-            <div class="lesson-n">Шаг 5</div>
-            <div class="lesson-title">Переход</div>
-            <div class="lesson-skills">Совпадение позы · движение через склейку · попадание в музыкальный акцент</div>
-            <div class="lesson-product"><b>Продукт:</b> ролик из двух сцен с чистым переходом</div>
-          </div>
-          <div class="lesson">
-            <div class="lesson-n">Шаг 6</div>
-            <div class="lesson-title">Образ</div>
-            <div class="lesson-skills">Одежда или реквизит · фон · единое настроение кадра</div>
-            <div class="lesson-product"><b>Продукт:</b> тренд в собственном визуальном образе</div>
-          </div>
-          <div class="lesson">
-            <div class="lesson-n">Шаг 7</div>
-            <div class="lesson-title">Не копировать, а менять</div>
-            <div class="lesson-skills">Узнаваемое ядро тренда · импровизация · одно осмысленное изменение</div>
-            <div class="lesson-product"><b>Продукт:</b> собственная вариация узнаваемого тренда</div>
-          </div>
-          <div class="lesson">
-            <div class="lesson-n">Шаг 8</div>
-            <div class="lesson-title">Своя рубрика</div>
-            <div class="lesson-skills">Повторяемая идея · узнаваемая подача · запас следующих выпусков</div>
-            <div class="lesson-product"><b>Продукт:</b> первый выпуск рубрики + две идеи продолжения</div>
-          </div>
-          <div class="lesson">
-            <div class="lesson-n">Шаг 9</div>
-            <div class="lesson-title">Готово к зрителю</div>
-            <div class="lesson-skills">Первый кадр · короткая подпись · проверка безопасности и согласий</div>
-            <div class="lesson-product"><b>Продукт:</b> полностью упакованный ролик, готовый к разрешённой публикации</div>
-          </div>
-          <div class="lesson">
-            <div class="lesson-n">Шаг 10</div>
-            <div class="lesson-title">Следующая версия</div>
-            <div class="lesson-skills">Обратная связь или доступные показатели · одна гипотеза · одно изменение</div>
-            <div class="lesson-product"><b>Продукт:</b> версия B и объяснение, что именно изменено и зачем</div>
-          </div>
-        </div>
-      </div>
-    </details>
-  </div>
-</section>
-
-<section class="section">
-  <div class="wrap">
-    <div class="kicker">Внутри ветки</div>
-    <h2>Инструменты подключаются по мере роста</h2>
-    <p class="section-intro">Не нужно осваивать всё сразу. На конкретном занятии берём только то, что помогает закончить сегодняшний продукт.</p>
-
-    <details class="journey tool-drawer">
-      <summary>Открыть технические возможности</summary>
-      <div class="journey-inner">
-        <div class="mini-grid">
-          <div class="mini-card"><b>Своя съёмка</b><span>Телефон, кадр, свет, несколько дублей, отбор.</span></div>
-          <div class="mini-card"><b>ИИ-видео и изображения</b><span>Подключаются, когда нужны фон, вставка, движение или визуальный элемент.</span></div>
-          <div class="mini-card"><b>Монтаж</b><span>Порядок фрагментов, ритм, склейки, звук и субтитры.</span></div>
-          <div class="mini-card"><b>Серия</b><span>Один принцип, узнаваемая подача, несколько выпусков без начала с нуля.</span></div>
-          <div class="mini-card"><b>Разбор результата</b><span>Сравнить версии, выбрать одно улучшение, снять следующую.</span></div>
-          <div class="mini-card"><b>Публикация</b><span>Отдельный шаг. Используем только разрешённый режим и актуальные правила выбранной площадки.</span></div>
-        </div>
-      </div>
-    </details>
-  </div>
-</section>
-
-<section class="section">
-  <div class="wrap">
     <div class="callout safety">
-      <b>Публичный аккаунт не нужен для прохождения первых шагов.</b>
-      <p>Тренд можно снять, смонтировать и разобрать без публикации. Личный или школьный аккаунт, съёмка других людей и размещение идентифицируемого материала требуют отдельного разрешённого режима.</p>
+      <b>Публикация — отдельный этап.</b>
+      <p>Первые занятия можно полностью пройти без публичного аккаунта. Учебные дубли допустимо оставить только для класса и самого ученика.</p>
     </div>
 
-    <div class="callout">
-      <b>Не начинай заново.</b>
-      <p>Сохраняй исходники и финальную версию каждого занятия. Следующий ролик должен опираться на уже освоенное, а не обнулять работу.</p>
-    </div>
-
-    <div class="sourcebox"><b>Статус:</b> школьная учебная ветка. Пересобрано 05.10.2026. Внешние платформы и их правила меняются; перед публичной публикацией проверяем актуальные условия отдельно.</div>
-    <footer class="footer">Курс «ИИ: говори на его языке» · ветка «Блогинг / короткие видео» · v2.0</footer>
+    <div class="sourcebox"><b>Статус:</b> главное меню ветки. Обновлено 05.10.2026. Подстраницы будут добавляться последовательно, по мере готовности занятий.</div>
+    <footer class="footer">Курс «ИИ: говори на его языке» · ветка «Блогинг / короткие видео»</footer>
   </div>
 </section>
 </main>
 
-<div class="toast" id="toast">Скопировано</div>
 <script src="../assets/track.js"></script>
 </body>
 </html>
