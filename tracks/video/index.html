@@ -1,12 +1,324 @@
-<!doctype html><html lang="ru"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover"><meta name="theme-color" content="#080b18"><title>Видео / блогинг / контент · ИИ: говори на его языке</title><link rel="stylesheet" href="../assets/track.css"><script src="/school14-ai-courses-site/assets/s14-metrika-config.js"></script>
-<script defer src="/school14-ai-courses-site/assets/s14-metrika.js"></script>
-<script defer src="/school14-ai-courses-site/assets/s14-site.js"></script>
-</head><body style="--accent:#ff8bc9"><header class="topbar"><div class="topbar-inner"><a class="brand" href="../../block-01/"><b>ИИ</b> · направления</a><button class="menu-toggle" id="menuToggle" type="button" aria-expanded="false" aria-controls="siteNav" aria-label="Открыть меню"><span></span><span></span><span></span></button><nav class="nav" id="siteNav"><a href="../../block-01/#missions">Все направления</a><a href="../../skills/input/">Голос и клавиатура</a><a href="../../block-01/#skeleton">Скелет запроса</a><a href="../../block-01/#submit">Сдать работу</a></nav></div></header><main><section class="hero"><div class="wrap"><div class="crumbs"><a href="../../block-01/">Занятие 1</a><span>→</span><span>Видео / блогинг / контент</span></div><div class="eyebrow">🎬 направление</div><h1>Видео / блогинг / контент</h1><p class="lead">Выбери конкретную подзадачу: снять, сгенерировать, смонтировать, озвучить или собрать серию. Результат — законченный файл или рабочий проект.</p><div class="skills"><a class="skill" href="../../skills/input/">🎙 Голосовой ввод</a><a class="skill" href="../../skills/input/#typing">⌨ Печать</a><a class="skill" href="../../block-01/#skeleton">🧠 Архитектура запроса</a><a class="skill" href="../../block-01/#verify">✅ Проверка</a><a class="skill" href="../../block-01/#submit">💾 Сдать диалог</a></div></div></section><section class="section"><div class="wrap"><div class="kicker">Выбери подветку</div><h2>Видео — это не одна задача</h2><div class="grid"><div class="card good"><h3>Снимаю сам</h3><p>Телефон → сценарий → кадры → монтаж → MP4.</p></div><div class="card"><h3>AI-video</h3><p>Референс/кадр → движение → отбор дублей → монтаж.</p></div><div class="card"><h3>Блог / короткий ролик</h3><p>Тема → зритель → hook → сценарий → упаковка.</p></div><div class="card"><h3>Монтаж</h3><p>Из готовых фрагментов сделать ритм и историю.</p></div><div class="card"><h3>Голос / субтитры</h3><p>Дикторский текст, запись, титры, синхронизация.</p></div><div class="card"><h3>Серия</h3><p>Рубрика, единый стиль, повторяемый процесс.</p></div></div><div class="prompt"><div class="label">Стартовый запрос</div><pre>Я хочу сделать короткий ролик до 30 секунд. Не пиши сценарий сразу. Сначала спроси:
-1) для кого ролик;
-2) что зритель должен почувствовать или понять;
-3) что у меня есть: телефон, свои видео, картинки, AI-генератор, голос;
-4) буду ли я сниматься сам.
+<!doctype html>
+<html lang="ru">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+  <meta name="theme-color" content="#0b0b0d">
+  <title>Блогинг / короткие видео · ИИ: говори на его языке</title>
+  <link rel="stylesheet" href="../assets/track.css">
+  <script src="/school14-ai-courses-site/assets/s14-metrika-config.js"></script>
+  <script defer src="/school14-ai-courses-site/assets/s14-metrika.js"></script>
+  <script defer src="/school14-ai-courses-site/assets/s14-site.js"></script>
+  <style>
+    body.creator-page{
+      --accent:#d4b06a;
+      --accent2:#7d2948;
+      --accent3:#2e6664;
+      --panel:#151114;
+      --panel2:#121a1a;
+      --line:rgba(222,194,138,.18);
+      background:
+        radial-gradient(circle at 12% 0,rgba(125,41,72,.22),transparent 30rem),
+        radial-gradient(circle at 92% 14%,rgba(46,102,100,.18),transparent 28rem),
+        radial-gradient(circle at 52% 72%,rgba(212,176,106,.08),transparent 34rem),
+        linear-gradient(180deg,#0b0b0d,#0d0c0f 58%,#0a0e0e);
+    }
+    .creator-page .topbar{background:rgba(11,11,13,.91)}
+    .creator-page .eyebrow,.creator-page .kicker,.creator-page .brand b{color:var(--accent)}
+    .creator-page .hero h1{
+      background:linear-gradient(110deg,#fff 5%,#ead8b4 45%,#d6b46e 72%,#fff 100%);
+      -webkit-background-clip:text;background-clip:text;color:transparent;
+    }
+    .today{
+      margin-top:28px;
+      padding:22px;
+      border:1px solid rgba(212,176,106,.28);
+      border-radius:26px;
+      background:
+        linear-gradient(135deg,rgba(125,41,72,.16),rgba(46,102,100,.11) 58%,rgba(212,176,106,.08));
+      box-shadow:0 24px 70px rgba(0,0,0,.24);
+    }
+    .today-head{display:flex;justify-content:space-between;gap:14px;align-items:flex-start;flex-wrap:wrap}
+    .today-step{font-size:.76rem;font-weight:950;letter-spacing:.09em;text-transform:uppercase;color:var(--accent)}
+    .today h2{margin:.12em 0 .15em;font-size:clamp(1.8rem,4.7vw,3.6rem)}
+    .today-intro{margin:0;color:#d7d2cf;max-width:780px}
+    .today-skills{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;margin-top:20px}
+    .today-skill{
+      min-height:170px;padding:18px;border-radius:20px;
+      border:1px solid rgba(255,255,255,.09);
+      background:rgba(8,8,10,.47)
+    }
+    .today-skill .num{
+      width:34px;height:34px;border-radius:11px;display:grid;place-items:center;
+      font-weight:950;color:#111;background:var(--accent);margin-bottom:28px
+    }
+    .today-skill:nth-child(2) .num{background:#a64668;color:#fff}
+    .today-skill:nth-child(3) .num{background:#397b78;color:#fff}
+    .today-skill h3{margin:0 0 7px;font-size:1.08rem}
+    .today-skill p{margin:0;color:#b8b3b1}
+    .product{
+      margin-top:12px;padding:18px 20px;border-radius:20px;
+      background:linear-gradient(120deg,rgba(212,176,106,.14),rgba(255,255,255,.035));
+      border:1px solid rgba(212,176,106,.22)
+    }
+    .product-label{font-size:.72rem;letter-spacing:.09em;text-transform:uppercase;font-weight:950;color:var(--accent)}
+    .product strong{display:block;font-size:1.16rem;margin-top:5px}
+    .product p{margin:5px 0 0;color:#c9c2be}
+    .rule-strip{
+      display:flex;gap:10px;align-items:flex-start;margin-top:12px;padding:13px 15px;
+      border-left:3px solid var(--accent3);background:rgba(46,102,100,.09);border-radius:0 14px 14px 0
+    }
+    .rule-strip b{white-space:nowrap}.rule-strip span{color:#c4cfcd}
+    .journey{
+      border:1px solid var(--line);border-radius:22px;background:rgba(255,255,255,.025);overflow:hidden
+    }
+    .journey summary{
+      cursor:pointer;list-style:none;padding:19px 20px;font-weight:950;
+      display:flex;justify-content:space-between;align-items:center;gap:12px
+    }
+    .journey summary::-webkit-details-marker{display:none}
+    .journey summary::after{content:"＋";color:var(--accent);font-size:1.35rem}
+    .journey[open] summary::after{content:"−"}
+    .journey-inner{padding:0 20px 20px}
+    .journey-note{color:var(--muted);max-width:860px;margin:0 0 16px}
+    .lesson-list{display:grid;gap:10px}
+    .lesson{
+      display:grid;grid-template-columns:74px minmax(160px,.8fr) 1.5fr 1.1fr;
+      gap:14px;align-items:start;padding:15px;border-radius:17px;
+      border:1px solid rgba(255,255,255,.065);background:rgba(5,6,8,.32)
+    }
+    .lesson.current{border-color:rgba(212,176,106,.32);background:rgba(212,176,106,.055)}
+    .lesson-n{font-size:.72rem;letter-spacing:.08em;text-transform:uppercase;font-weight:950;color:var(--accent)}
+    .lesson-title{font-weight:900}
+    .lesson-skills,.lesson-product{color:var(--muted);font-size:.89rem}
+    .lesson-product b{color:#e9e1d7}
+    .tool-drawer{margin-top:12px}
+    .mini-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:10px}
+    .mini-card{padding:15px;border-radius:17px;border:1px solid var(--line);background:rgba(255,255,255,.025)}
+    .mini-card b{display:block;margin-bottom:5px}.mini-card span{color:var(--muted);font-size:.88rem}
+    .safety{border-color:rgba(125,41,72,.34);background:rgba(125,41,72,.08)}
+    .creator-page .copy-btn{background:linear-gradient(135deg,#d6b46e,#a64668);color:#120d0f}
+    @media(max-width:900px){
+      .today-skills{grid-template-columns:1fr}
+      .today-skill{min-height:0}
+      .today-skill .num{margin-bottom:16px}
+      .lesson{grid-template-columns:64px 1fr}.lesson-skills,.lesson-product{grid-column:2}
+      .mini-grid{grid-template-columns:1fr}
+    }
+    @media(max-width:560px){
+      .today{padding:17px}
+      .lesson{grid-template-columns:1fr}.lesson-skills,.lesson-product{grid-column:1}
+      .rule-strip{display:block}.rule-strip b{display:block;margin-bottom:4px}
+    }
+  </style>
+</head>
+<body class="creator-page">
+<header class="topbar">
+  <div class="topbar-inner">
+    <a class="brand" href="../../block-01/"><b>ИИ</b> · направления</a>
+    <button class="menu-toggle" id="menuToggle" type="button" aria-expanded="false" aria-controls="siteNav" aria-label="Открыть меню"><span></span><span></span><span></span></button>
+    <nav class="nav" id="siteNav">
+      <a href="../../block-01/#missions">Все направления</a>
+      <a href="../../skills/input/">Голос и клавиатура</a>
+      <a href="../../block-01/#skeleton">Скелет запроса</a>
+      <a href="../../block-01/#submit">Сдать работу</a>
+    </nav>
+  </div>
+</header>
 
-После ответов предложи 3 идеи. Для выбранной идеи дай: крючок первых 2 секунд, план 4–6 кадров, текст/реплики, список того, что надо снять или сгенерировать, и простой монтажный план. Не выдумывай факты.</pre><div class="copy-row"><button class="copy-btn" type="button" data-copy="Я хочу сделать короткий ролик до 30 секунд. Не пиши сценарий сразу. Сначала спроси:&#10;1) для кого ролик;&#10;2) что зритель должен почувствовать или понять;&#10;3) что у меня есть: телефон, свои видео, картинки, AI-генератор, голос;&#10;4) буду ли я сниматься сам.&#10;&#10;После ответов предложи 3 идеи. Для выбранной идеи дай: крючок первых 2 секунд, план 4–6 кадров, текст/реплики, список того, что надо снять или сгенерировать, и простой монтажный план. Не выдумывай факты.">Скопировать запрос</button><span class="copy-hint">После первого ответа не начинай новый чат — улучшай этот.</span></div></div></div></section>
-<section class="section"><div class="wrap"><div class="kicker">Общий pipeline</div><h2>Один цикл для любого ролика</h2><div class="steps"><div class="step"><b>Цель</b><span>Для кого и зачем ролик существует.</span></div><div class="step"><b>Сценарий</b><span>Hook → развитие → финал.</span></div><div class="step"><b>Материал</b><span>Что снимаем сами, что генерируем, что уже есть.</span></div><div class="step"><b>Монтаж</b><span>Порядок кадров, длительность, звук, субтитры.</span></div><div class="step"><b>Проверка</b><span>Понятно без объяснений? Что можно вырезать?</span></div><div class="step"><b>Унести</b><span>Экспорт MP4. Публикация опциональна.</span></div></div><div class="callout"><b>Для ученика с опытом AI-video:</b><p>сразу идти в consistency персонажа, camera control, image-to-video, склейку нескольких генераций и звук.</p></div></div></section>
-<section class="section"><div class="wrap"><div class="kicker">Полевой статус</div><h2>Навык важнее бренда сервиса</h2><p class="section-intro">Не объявляем один «лучший видеогенератор». На занятии фиксируем, что реально открылось на школьной сети и что удалось экспортировать.</p><div class="grid two"><div class="card"><h3>Текстовая модель</h3><p>Сценарий, shot list, варианты hook, текст диктора, критика.</p></div><div class="card"><h3>Видео/изображение сервис</h3><p>Используется, когда реально доступен. Ученик может прийти со своим рабочим сервисом на смартфоне или ПК.</p></div></div></div></section><section class="section"><div class="wrap"><div class="callout"><b>Не обязан заканчивать всё сегодня.</b><p>Сохрани рабочий файл, ссылку или исходники. На следующем занятии продолжай с последней работающей версии, а не начинай заново.</p></div><div class="sourcebox"><b>Статус:</b> школьный браузерный сценарий, обновлено 29.09.2026. Внешние сервисы меняются — перед важным использованием проверяем доступ заново.</div><footer class="footer">Курс «ИИ: говори на его языке» · ветка «Видео / блогинг / контент» · v1.0</footer></div></section></main><div class="toast" id="toast">Скопировано</div><script src="../assets/track.js"></script></body></html>
+<main>
+<section class="hero">
+  <div class="wrap">
+    <div class="crumbs"><a href="../../block-01/">Занятие 1</a><span>→</span><span>Блогинг / короткие видео</span></div>
+    <div class="eyebrow">🎬 практика короткого видео</div>
+    <h1>Блогинг / короткие видео</h1>
+    <p class="lead">Путь от простого повторения тренда до собственного формата. На каждом занятии — три новых навыка и один законченный ролик.</p>
+
+    <div class="today" id="today">
+      <div class="today-head">
+        <div>
+          <div class="today-step">Сегодня · шаг 1 из 10</div>
+          <h2>Первый тренд без зажима</h2>
+          <p class="today-intro">Не нужно говорить в камеру. Выбери короткий танцевальный или двигательный тренд, разложи его на части и сними свою первую законченную версию.</p>
+        </div>
+      </div>
+
+      <div class="today-skills">
+        <article class="today-skill">
+          <div class="num">1</div>
+          <h3>Держать себя в кадре</h3>
+          <p>Поставь телефон так, чтобы нужная часть тела не выпадала из кадра. Выбери точку взгляда и место, где начинается движение.</p>
+        </article>
+        <article class="today-skill">
+          <div class="num">2</div>
+          <h3>Двигаться в ритм</h3>
+          <p>Разбей тренд на 3–5 опорных движений. Сначала собери последовательность без спешки, затем попади в музыкальные акценты.</p>
+        </article>
+        <article class="today-skill">
+          <div class="num">3</div>
+          <h3>Снять зажим</h3>
+          <p>Сделай три дубля: обычный, более свободный и нарочно энергичный. Сравни их и выбери версию, где движение выглядит естественно.</p>
+        </article>
+      </div>
+
+      <div class="product">
+        <div class="product-label">Продукт занятия</div>
+        <strong>Вертикальный ролик 10–15 секунд</strong>
+        <p>Один выбранный тренд, минимум три дубля, одна финальная версия. Ролик должен быть закончен и сохранён в MP4. Публикация сегодня не обязательна.</p>
+      </div>
+
+      <div class="rule-strip">
+        <b>Правило:</b>
+        <span>не исправляй всё сразу. Между дублями меняй только одну вещь: кадр, ритм или свободу движения.</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="section">
+  <div class="wrap">
+    <div class="kicker">ИИ сегодня</div>
+    <h2>Разбери тренд, а не отдай его ИИ</h2>
+    <p class="section-intro">ИИ помогает увидеть структуру движения и подготовить следующий дубль. Исполняешь, сравниваешь и выбираешь ты.</p>
+    <div class="prompt">
+      <div class="label">Запрос для разбора</div>
+      <pre>Я повторяю короткий танцевальный или двигательный тренд.
+
+Не придумывай движения за меня. Я опишу последовательность движений или дам свои наблюдения.
+
+1. Разбей тренд на 3–5 опорных движений.
+2. Для каждого укажи: исходную позу, само движение, конечную позу и момент музыкального акцента.
+3. Дай короткий чек-лист кадра: что должно полностью попадать в кадр и где лучше поставить телефон.
+4. После моего первого дубля я напишу, что получилось плохо. Предложи только ОДНО изменение для следующего дубля.
+
+Не переписывай всю постановку после каждой ошибки.</pre>
+      <div class="copy-row">
+        <button class="copy-btn" type="button" data-copy="Я повторяю короткий танцевальный или двигательный тренд.&#10;&#10;Не придумывай движения за меня. Я опишу последовательность движений или дам свои наблюдения.&#10;&#10;1. Разбей тренд на 3–5 опорных движений.&#10;2. Для каждого укажи: исходную позу, само движение, конечную позу и момент музыкального акцента.&#10;3. Дай короткий чек-лист кадра: что должно полностью попадать в кадр и где лучше поставить телефон.&#10;4. После моего первого дубля я напишу, что получилось плохо. Предложи только ОДНО изменение для следующего дубля.&#10;&#10;Не переписывай всю постановку после каждой ошибки.">Скопировать запрос</button>
+        <span class="copy-hint">После первого дубля продолжай тот же диалог.</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="section">
+  <div class="wrap">
+    <div class="kicker">Путь</div>
+    <h2>Три навыка за раз</h2>
+    <p class="section-intro">Следующий шаг добавляет новые навыки, но предыдущие продолжают работать. Вся траектория спрятана здесь, чтобы на занятии не перегружать экран.</p>
+
+    <details class="journey">
+      <summary>Открыть путь из 10 занятий</summary>
+      <div class="journey-inner">
+        <p class="journey-note">Раскрепощение не изучается отдельной лекцией. Оно накапливается через повтор: камера → движение → выразительность → образ → импровизация → собственная версия.</p>
+
+        <div class="lesson-list">
+          <div class="lesson current">
+            <div class="lesson-n">Шаг 1</div>
+            <div class="lesson-title">Я в кадре</div>
+            <div class="lesson-skills">Кадр · ритм · три дубля с разной свободой движения</div>
+            <div class="lesson-product"><b>Продукт:</b> повтор простого тренда, 10–15 секунд</div>
+          </div>
+          <div class="lesson">
+            <div class="lesson-n">Шаг 2</div>
+            <div class="lesson-title">Чистое движение</div>
+            <div class="lesson-skills">Точность · амплитуда · повторяемость последовательности</div>
+            <div class="lesson-product"><b>Продукт:</b> более чистая версия тренда без лишних движений</div>
+          </div>
+          <div class="lesson">
+            <div class="lesson-n">Шаг 3</div>
+            <div class="lesson-title">Выразительность</div>
+            <div class="lesson-skills">Мимика · взгляд · энергия движения</div>
+            <div class="lesson-product"><b>Продукт:</b> две разные подачи одного тренда и выбранная финальная</div>
+          </div>
+          <div class="lesson">
+            <div class="lesson-n">Шаг 4</div>
+            <div class="lesson-title">Камера работает на тебя</div>
+            <div class="lesson-skills">Ракурс · расстояние · свет</div>
+            <div class="lesson-product"><b>Продукт:</b> ролик с осознанно выбранным кадром</div>
+          </div>
+          <div class="lesson">
+            <div class="lesson-n">Шаг 5</div>
+            <div class="lesson-title">Переход</div>
+            <div class="lesson-skills">Совпадение позы · движение через склейку · попадание в музыкальный акцент</div>
+            <div class="lesson-product"><b>Продукт:</b> ролик из двух сцен с чистым переходом</div>
+          </div>
+          <div class="lesson">
+            <div class="lesson-n">Шаг 6</div>
+            <div class="lesson-title">Образ</div>
+            <div class="lesson-skills">Одежда или реквизит · фон · единое настроение кадра</div>
+            <div class="lesson-product"><b>Продукт:</b> тренд в собственном визуальном образе</div>
+          </div>
+          <div class="lesson">
+            <div class="lesson-n">Шаг 7</div>
+            <div class="lesson-title">Не копировать, а менять</div>
+            <div class="lesson-skills">Узнаваемое ядро тренда · импровизация · одно осмысленное изменение</div>
+            <div class="lesson-product"><b>Продукт:</b> собственная вариация узнаваемого тренда</div>
+          </div>
+          <div class="lesson">
+            <div class="lesson-n">Шаг 8</div>
+            <div class="lesson-title">Своя рубрика</div>
+            <div class="lesson-skills">Повторяемая идея · узнаваемая подача · запас следующих выпусков</div>
+            <div class="lesson-product"><b>Продукт:</b> первый выпуск рубрики + две идеи продолжения</div>
+          </div>
+          <div class="lesson">
+            <div class="lesson-n">Шаг 9</div>
+            <div class="lesson-title">Готово к зрителю</div>
+            <div class="lesson-skills">Первый кадр · короткая подпись · проверка безопасности и согласий</div>
+            <div class="lesson-product"><b>Продукт:</b> полностью упакованный ролик, готовый к разрешённой публикации</div>
+          </div>
+          <div class="lesson">
+            <div class="lesson-n">Шаг 10</div>
+            <div class="lesson-title">Следующая версия</div>
+            <div class="lesson-skills">Обратная связь или доступные показатели · одна гипотеза · одно изменение</div>
+            <div class="lesson-product"><b>Продукт:</b> версия B и объяснение, что именно изменено и зачем</div>
+          </div>
+        </div>
+      </div>
+    </details>
+  </div>
+</section>
+
+<section class="section">
+  <div class="wrap">
+    <div class="kicker">Внутри ветки</div>
+    <h2>Инструменты подключаются по мере роста</h2>
+    <p class="section-intro">Не нужно осваивать всё сразу. На конкретном занятии берём только то, что помогает закончить сегодняшний продукт.</p>
+
+    <details class="journey tool-drawer">
+      <summary>Открыть технические возможности</summary>
+      <div class="journey-inner">
+        <div class="mini-grid">
+          <div class="mini-card"><b>Своя съёмка</b><span>Телефон, кадр, свет, несколько дублей, отбор.</span></div>
+          <div class="mini-card"><b>ИИ-видео и изображения</b><span>Подключаются, когда нужны фон, вставка, движение или визуальный элемент.</span></div>
+          <div class="mini-card"><b>Монтаж</b><span>Порядок фрагментов, ритм, склейки, звук и субтитры.</span></div>
+          <div class="mini-card"><b>Серия</b><span>Один принцип, узнаваемая подача, несколько выпусков без начала с нуля.</span></div>
+          <div class="mini-card"><b>Разбор результата</b><span>Сравнить версии, выбрать одно улучшение, снять следующую.</span></div>
+          <div class="mini-card"><b>Публикация</b><span>Отдельный шаг. Используем только разрешённый режим и актуальные правила выбранной площадки.</span></div>
+        </div>
+      </div>
+    </details>
+  </div>
+</section>
+
+<section class="section">
+  <div class="wrap">
+    <div class="callout safety">
+      <b>Публичный аккаунт не нужен для прохождения первых шагов.</b>
+      <p>Тренд можно снять, смонтировать и разобрать без публикации. Личный или школьный аккаунт, съёмка других людей и размещение идентифицируемого материала требуют отдельного разрешённого режима.</p>
+    </div>
+
+    <div class="callout">
+      <b>Не начинай заново.</b>
+      <p>Сохраняй исходники и финальную версию каждого занятия. Следующий ролик должен опираться на уже освоенное, а не обнулять работу.</p>
+    </div>
+
+    <div class="sourcebox"><b>Статус:</b> школьная учебная ветка. Пересобрано 05.10.2026. Внешние платформы и их правила меняются; перед публичной публикацией проверяем актуальные условия отдельно.</div>
+    <footer class="footer">Курс «ИИ: говори на его языке» · ветка «Блогинг / короткие видео» · v2.0</footer>
+  </div>
+</section>
+</main>
+
+<div class="toast" id="toast">Скопировано</div>
+<script src="../assets/track.js"></script>
+</body>
+</html>
