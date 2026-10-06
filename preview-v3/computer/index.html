@@ -38,7 +38,7 @@
 
 <script>
 (() => {
- const kb={WIN:[31,68,"Win"],SHIFT:[21,60,"Shift"],S:[34,58,"S"],E:[35,51,"E"],CTRL:[19,68,"Ctrl"],C:[39,63,"C"],V:[43,63,"V"],ALT:[37,68,"Alt"],TAB:[20,49,"Tab"]};
+ const kb={WIN:[31,68,"Win"],SHIFT:[21,60,"Shift"],S:[34,58,"S"],E:[35,51,"E"],CTRL:[19,68,"Ctrl"],C:[39,63,"C"],V:[43,63,"V"],ALT:[37,68,"Alt"],TAB:[20,49,"Tab"],H:[54,58,"H"]};
  const data={
   browser:{items:[
    {id:"new-tab",t:"Новая вкладка",s:[{x:"Нажми Ctrl + T.",k:["CTRL"]},{x:"Введи адрес сверху → Enter."}]},
@@ -74,7 +74,7 @@
   keys:{items:[
    {id:"copy",t:"Копировать / вставить",s:[{x:"Копировать: Ctrl + C.",k:["CTRL","C"]},{x:"Вставить: Ctrl + V.",k:["CTRL","V"]}]},
    {id:"screenshot",t:"Скрин → в ИИ",s:[{x:"Нажми Win + Shift + S.",k:["WIN","SHIFT","S"]},{x:"Выдели нужное место."},{x:"Вернись в чат."},{x:"Нажми Ctrl + V.",k:["CTRL","V"]},{x:"Напиши: «Что здесь нажать?»"}]},
-   {id:"window",t:"Другое окно",s:[{x:"Нажми Alt + Tab.",k:["ALT","TAB"]}]}
+   {id:"window",t:"Другое окно",s:[{x:"Нажми Alt + Tab.",k:["ALT","TAB"]}]},{id:"voice-input",t:"Говорить вместо печати",s:[{x:"Нажми Win + H.",k:["WIN","H"]},{x:"Разреши микрофон, если Edge спросит."},{x:"Говори. Потом проверь текст."}]}
   ]}
  };
  const subs=document.getElementById("subchoices"),ans=document.getElementById("answer"),title=document.getElementById("answerTitle"),txt=document.getElementById("stepText"),shot=document.getElementById("keyboardShot"),markers=document.getElementById("markers"),next=document.getElementById("nextStep"),progress=document.getElementById("progress"),answerAction=document.getElementById("answerAction");
