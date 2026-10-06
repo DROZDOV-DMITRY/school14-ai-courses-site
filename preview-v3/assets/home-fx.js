@@ -62,7 +62,7 @@
     if(t-lastMove>2400){
       lastMove=t; autoX+=dir*(12+Math.random()*16);
       if(Math.abs(autoX)>34) dir*=-1;
-      friend.style.marginLeft=`calc(auto + ${autoX}px)`;
+      friend.style.translate=`${autoX}px 0`;
     }
     requestAnimationFrame(wander);
   }
