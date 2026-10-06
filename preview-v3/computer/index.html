@@ -17,7 +17,7 @@
 </div>
 <div class="subchoices" id="subchoices" aria-live="polite"></div>
 <article class="answer" id="answer" aria-live="polite">
-<h3 id="answerTitle"></h3><p id="stepText" style="font-size:1.18rem;font-weight:850"></p>
+<h3 id="answerTitle"></h3><p id="stepText" style="font-size:1.18rem;font-weight:850"></p><div class="answer-action" id="answerAction"></div>
 <div class="keyboard-shot" id="keyboardShot" hidden><img src="https://rudiskont.ru/upload/iblock/d41/aeef8vn0aueukibmlx1v0ocu5v98lb5n.jpg" alt="Клавиатура DEXP" loading="lazy"><div id="markers"></div></div>
 <div class="actions"><button class="action" id="nextStep" type="button">Дальше →</button><button class="action secondary" id="backToTopics" type="button">К выбору</button></div>
 <p class="micro-note" id="progress"></p>
@@ -47,14 +47,20 @@
   ]},
   files:{items:[
    {id:"save-html",t:"Сохранить index.html",s:[
-    {x:"Создай на Рабочем столе папку для проекта."},
-    {x:"Открой Блокнот."},
+    {x:"На Рабочем столе наведи мышь на пустое место."},
+    {x:"Нажми правую кнопку мыши."},
+    {x:"Нажми «Создать» → «Папку»."},
+    {x:"Напиши имя папки и нажми Enter."},
+    {x:"Нажми клавишу Win.",k:["WIN"]},
+    {x:"Напечатай: Блокнот."},
+    {x:"Нажми Enter — откроется Блокнот."},
     {x:"Вставь код: Ctrl + V.",k:["CTRL","V"]},
-    {x:"Файл → Сохранить как."},
-    {x:"Имя файла: index.html"},
-    {x:"Тип файла: Все файлы."},
-    {x:"Сохрани файл в папку проекта."},
-    {x:"Открой index.html двойным кликом."}
+    {x:"Сверху нажми «Файл» → «Сохранить как»."},
+    {x:"Открой свою папку на Рабочем столе."},
+    {x:"В поле имени напиши: index.html"},
+    {x:"В «Тип файла» выбери «Все файлы»."},
+    {x:"Нажми «Сохранить»."},
+    {x:"Открой папку и дважды нажми index.html."}
    ]},
    {id:"folder",t:"Создать папку",s:[{x:"Нажми Win + E.",k:["WIN","E"]},{x:"Открой «Рабочий стол»."},{x:"Правая кнопка → Создать → Папку."}]},
    {id:"downloads",t:"Найти скачанное",s:[{x:"Нажми Win + E.",k:["WIN","E"]},{x:"Слева открой «Загрузки»."}]},
@@ -63,7 +69,7 @@
   login:{items:[
    {id:"forgot",t:"Не помню пароль",s:[{x:"Нажми «Не помню пароль»."},{x:"Следуй восстановлению аккаунта."}]},
    {id:"code",t:"Не пришёл код",s:[{x:"Обнови «Входящие»."},{x:"Проверь «Спам»."}]},
-   {id:"mail",t:"Нет почты",s:[{x:"Открой «Завести почту» ниже."}]}
+   {id:"mail",t:"Нет почты",s:[{x:"Нажми «Завести почту»."}],action:{href:"../tools/yandex-mail/",label:"Завести почту →"}}
   ]},
   keys:{items:[
    {id:"copy",t:"Копировать / вставить",s:[{x:"Копировать: Ctrl + C.",k:["CTRL","C"]},{x:"Вставить: Ctrl + V.",k:["CTRL","V"]}]},
@@ -71,10 +77,10 @@
    {id:"window",t:"Другое окно",s:[{x:"Нажми Alt + Tab.",k:["ALT","TAB"]}]}
   ]}
  };
- const subs=document.getElementById("subchoices"),ans=document.getElementById("answer"),title=document.getElementById("answerTitle"),txt=document.getElementById("stepText"),shot=document.getElementById("keyboardShot"),markers=document.getElementById("markers"),next=document.getElementById("nextStep"),progress=document.getElementById("progress");
+ const subs=document.getElementById("subchoices"),ans=document.getElementById("answer"),title=document.getElementById("answerTitle"),txt=document.getElementById("stepText"),shot=document.getElementById("keyboardShot"),markers=document.getElementById("markers"),next=document.getElementById("nextStep"),progress=document.getElementById("progress"),answerAction=document.getElementById("answerAction");
  let current=null,step=0,currentCat=null;
  function mark(keys=[]){markers.innerHTML="";shot.hidden=!keys.length;keys.forEach(n=>{const p=kb[n];if(!p)return;const m=document.createElement("span");m.className="key-marker";m.style.left=p[0]+"%";m.style.top=p[1]+"%";m.dataset.label=p[2];markers.appendChild(m)})}
- function render(){const s=current.s[step];txt.textContent=s.x;mark(s.k||[]);progress.textContent=(step+1)+" / "+current.s.length;next.textContent=step===current.s.length-1?"Готово ✓":"Дальше →"}
+ function render(){const s=current.s[step];txt.textContent=s.x;mark(s.k||[]);progress.textContent=(step+1)+" / "+current.s.length;next.textContent=step===current.s.length-1?"Готово ✓":"Дальше →";answerAction.innerHTML=(current.action&&step===current.s.length-1)?`<a class="action" href="${current.action.href}">${current.action.label}</a>`:""}
  function openItem(cat,item){currentCat=cat;current=item;step=0;title.textContent=current.t;ans.classList.add("show");render();ans.scrollIntoView({behavior:"smooth",block:"center"})}
  function openCat(cat){const d=data[cat];subs.innerHTML=d.items.map((it,i)=>'<button class="subchoice" type="button" data-i="'+i+'">'+it.t+'</button>').join("");subs.classList.add("show");ans.classList.remove("show");subs.querySelectorAll("[data-i]").forEach(x=>x.addEventListener("click",()=>openItem(cat,d.items[+x.dataset.i])));}
  document.querySelectorAll("[data-cat]").forEach(b=>b.addEventListener("click",()=>{openCat(b.dataset.cat);subs.scrollIntoView({behavior:"smooth",block:"center"})}));
