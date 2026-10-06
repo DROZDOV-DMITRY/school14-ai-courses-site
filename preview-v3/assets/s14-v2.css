@@ -233,7 +233,7 @@ details.more .more-links{display:grid;gap:8px;margin-top:12px}.more-links a{font
 .reveal-more button{min-height:50px;padding:12px 22px;border:0;border-radius:15px;background:#17254a;color:#fff;font-weight:950;cursor:pointer}
 .hotkey[hidden]{display:none}
 
-.winter-friend{position:relative;width:min(300px,28vw);aspect-ratio:1;margin:auto;will-change:transform;transform:translate3d(0,0,0);cursor:pointer;filter:drop-shadow(0 20px 26px rgba(80,92,150,.18))}
+.winter-friend{position:relative;width:min(300px,28vw);aspect-ratio:1;margin:auto;will-change:transform,translate;transform:translate3d(0,0,0);transition:translate 2.1s ease-in-out,transform .18s ease;cursor:pointer;filter:drop-shadow(0 20px 26px rgba(80,92,150,.18))}
 .winter-friend svg{width:100%;height:100%;display:block;overflow:visible}
 .winter-friend .wf-eye{transform-box:fill-box;transform-origin:center}
 .winter-friend.react-left{transform:translate3d(-10px,-4px,0) rotate(-5deg)}
