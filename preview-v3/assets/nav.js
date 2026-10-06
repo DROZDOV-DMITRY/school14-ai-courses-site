@@ -1,11 +1,15 @@
 (() => {
-  const ROOT="/school14-ai-courses-site/preview-v3/";
-  const here=location.pathname.endsWith("/preview-v3/") || location.pathname.endsWith("/preview-v3/index.html");
+  const PREVIEW_PREFIX="/school14-ai-courses-site/preview-v3/";
+  const LIVE_PREFIX="/school14-ai-courses-site/";
+  const inPreview=location.pathname.startsWith(PREVIEW_PREFIX);
+  const ROOT=inPreview?PREVIEW_PREFIX:LIVE_PREFIX;
+  const INTERNAL_PREFIX=ROOT;
+  const cleanPath=location.pathname.replace(/index\.html$/,"");
 
   document.querySelectorAll('a[href]').forEach(a=>{
     try{
       const u=new URL(a.getAttribute('href'), location.href);
-      const internal=u.origin===location.origin && u.pathname.startsWith("/school14-ai-courses-site/");
+      const internal=u.origin===location.origin && u.pathname.startsWith(INTERNAL_PREFIX);
       if(internal){
         a.removeAttribute("target");
         if(a.getAttribute("rel")==="noopener") a.removeAttribute("rel");
@@ -16,7 +20,7 @@
     }catch(_){}
   });
 
-  if(here) return;
+  if(cleanPath===ROOT) return;
   document.body.classList.add("with-global-nav");
   const holder=document.createElement("div");
   holder.className="student-global-nav";
@@ -25,7 +29,7 @@
   if(top) top.appendChild(holder); else document.body.prepend(holder);
   holder.querySelector(".nav-back").addEventListener("click",()=>{
     const ref=document.referrer||"";
-    if(ref.includes("/school14-ai-courses-site/preview-v3/")) history.back();
+    if(ref.includes(INTERNAL_PREFIX)) history.back();
     else location.href=ROOT;
   });
 })();
