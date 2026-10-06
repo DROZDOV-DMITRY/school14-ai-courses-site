@@ -226,7 +226,7 @@ details.more .more-links{display:grid;gap:8px;margin-top:12px}.more-links a{font
 .nav-back{background:#17254a;color:#fff;border-color:#17254a}
 .with-global-nav .topnav{display:none}
 @media(max-width:620px){
-  .topbar .inner{min-height:70px;gap:8px}.brand{font-size:.88rem}
+  .topbar .inner{min-height:70px;gap:8px}.with-global-nav .brand{font-size:0}.with-global-nav .brand b{font-size:.88rem}
   .student-global-nav{gap:6px}.nav-big{min-height:44px;padding:9px 11px;font-size:.86rem;border-radius:13px}
 }
 .reveal-more{display:flex;justify-content:center;margin-top:18px}
