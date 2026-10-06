@@ -258,3 +258,57 @@ details.more .more-links{display:grid;gap:8px;margin-top:12px}.more-links a{font
   .winter-friend,.winter-friend *{animation:none!important;transition:none!important}
   .wf-snow{display:none!important}
 }
+
+/* approved page palettes · 2026-10-06 */
+.theme-home{--page-accent:#EFA93A;--page-accent2:#F58FB6;--page-deep:#D75E94;--page-pale:#FFF4CF}
+.theme-games{--page-accent:#F2702A;--page-accent2:#C8102E;--page-deep:#6E0B1E;--page-pale:#FFF0E2}
+.theme-web{--page-accent:#D75E94;--page-accent2:#EFA93A;--page-deep:#9F3F6B;--page-pale:#FFF0F6}
+.theme-blog{--page-accent:#C8102E;--page-accent2:#F58FB6;--page-deep:#6E0B1E;--page-pale:#FFF0F4}
+.theme-computer{--page-accent:#17593B;--page-accent2:#EFA93A;--page-deep:#0B2A1E;--page-pale:#FFF5D6}
+.theme-tools{--page-accent:#17593B;--page-accent2:#EFA93A;--page-deep:#0B2A1E;--page-pale:#F0F8F2}
+.theme-3d{--page-accent:#17593B;--page-accent2:#F2702A;--page-deep:#0B2A1E;--page-pale:#FFF0E2}
+
+body[class*="theme-"] .brand b{color:var(--page-accent)}
+body[class*="theme-"] .student-hero{
+  background:linear-gradient(135deg,#fff 0%,var(--page-pale) 58%,color-mix(in srgb,var(--page-accent2) 28%,#fff) 100%)
+}
+body[class*="theme-"] .action:not(.secondary),
+body[class*="theme-"] .copy-action,
+body[class*="theme-"] .tool-filter-v2.active,
+body[class*="theme-"] .nav-back{background:var(--page-deep);border-color:var(--page-deep)}
+body[class*="theme-"] .watch-link,
+body[class*="theme-"] .tool-card-v2 .go,
+body[class*="theme-"] .big-card .go{color:var(--page-deep)}
+body[class*="theme-"] .simple-step:before{background:var(--page-pale);color:var(--page-deep)}
+body[class*="theme-"] .choice-chips span,
+body[class*="theme-"] .choice-chips a{border-color:color-mix(in srgb,var(--page-accent) 30%,#ddd)}
+body[class*="theme-"] .status-badge{background:var(--page-pale);color:var(--page-deep)}
+body[class*="theme-"] .section.soft{background:color-mix(in srgb,var(--page-pale) 52%,#fff)}
+body[class*="theme-"] .topbar{border-bottom-color:color-mix(in srgb,var(--page-accent) 20%,#ddd)}
+.theme-home .home-hero{
+  background:
+    linear-gradient(105deg,rgba(255,244,207,.94),rgba(255,211,226,.82) 60%,rgba(245,143,182,.48)),
+    url("https://images.pexels.com/photos/28802709/pexels-photo-28802709.jpeg?auto=compress&cs=tinysrgb&w=1600") center/cover
+}
+.theme-home .tile.games{background:linear-gradient(145deg,#FFF0E2,#FFD6BC)}
+.theme-home .tile.web{background:linear-gradient(145deg,#FFF0F6,#FFD3E2)}
+.theme-home .tile.video{background:linear-gradient(145deg,#FFF0F4,#F8C5D5)}
+.theme-home .tile.computer{background:linear-gradient(145deg,#FFF5D6,#E8F5EB)}
+.theme-home .tile.print3d{background:linear-gradient(145deg,#E8F5EB,#FFE2C7)}
+
+.game-presets{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:12px}
+.game-preset{min-height:150px;padding:20px;text-align:left;border-radius:22px;border:1px solid rgba(110,11,30,.12);background:#fff;box-shadow:var(--shadow);cursor:pointer}
+.game-preset h3{font-size:1.55rem;margin:0 0 7px}.game-preset p{margin:0;color:var(--muted)}
+.game-preset:hover,.game-preset:focus-visible{transform:translateY(-2px);border-color:#F2702A;outline:none}
+.guide-grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:12px}
+.guide-card{padding:20px;border-radius:20px;background:#fff;border:1px solid var(--line);box-shadow:var(--shadow)}
+.guide-card h3{margin:0 0 6px;font-size:1.35rem}.guide-card p{margin:0;color:var(--muted)}
+.inline-link{font-weight:950;color:var(--page-deep,#3553b9);text-decoration:underline;text-underline-offset:3px}
+.answer-action{margin-top:14px}
+.skill-ladder{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:10px}
+.skill-item{padding:16px;border-radius:17px;background:#fff;border:1px solid var(--line);font-weight:900}
+.agent-box{padding:22px;border-radius:24px;background:linear-gradient(135deg,#fff,var(--page-pale));border:1px solid color-mix(in srgb,var(--page-accent) 25%,#ddd);box-shadow:var(--shadow)}
+.agent-box h3{font-size:1.6rem;margin:0 0 8px}.agent-box p{margin:0;color:var(--muted)}
+.tool-card-v2 .mode{display:block;margin-top:8px;font-size:.8rem;font-weight:950;color:var(--page-deep,#3553b9)}
+@media(max-width:900px){.game-presets,.guide-grid,.skill-ladder{grid-template-columns:repeat(2,minmax(0,1fr))}}
+@media(max-width:620px){.game-presets,.guide-grid,.skill-ladder{grid-template-columns:1fr}}
