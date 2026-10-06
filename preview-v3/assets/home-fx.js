@@ -5,7 +5,7 @@
   if(!friend || !fine || reduced) return;
 
   const eyes=[...friend.querySelectorAll(".wf-eye")];
-  let lastTrail=0, lastMove=0, autoX=0, raf=0, px=0, py=0;
+  let lastTrail=0, lastMove=0, autoX=0, autoY=0, raf=0, px=0, py=0;
 
   function snowBurst(x,y,n=7){
     for(let i=0;i<n;i++){
@@ -62,7 +62,7 @@
     if(t-lastMove>2400){
       lastMove=t; autoX+=dir*(12+Math.random()*16);
       if(Math.abs(autoX)>34) dir*=-1;
-      friend.style.translate=`${autoX}px 0`;
+      autoY=Math.max(-18,Math.min(18,autoY+(Math.random()-.5)*18));\n      friend.style.translate=`${autoX}px ${autoY}px`;
     }
     requestAnimationFrame(wander);
   }
