@@ -1,31 +1,70 @@
 (() => {
-  const fine = matchMedia("(pointer:fine)").matches;
-  const reduced = matchMedia("(prefers-reduced-motion: reduce)").matches;
-  const mascot = document.getElementById("homeMascot");
-  if (!fine || reduced) return;
+  const fine=matchMedia("(pointer:fine)").matches;
+  const reduced=matchMedia("(prefers-reduced-motion: reduce)").matches;
+  const friend=document.getElementById("winterFriend");
+  if(!friend || !fine || reduced) return;
 
-  let lastDot=0, mx=0, my=0, raf=0;
-  function moveEyes(){
-    raf=0;
-    if(!mascot) return;
-    const r=mascot.getBoundingClientRect();
-    const cx=r.left+r.width/2, cy=r.top+r.height*.36;
-    const dx=Math.max(-5,Math.min(5,(mx-cx)/45));
-    const dy=Math.max(-4,Math.min(4,(my-cy)/45));
-    mascot.style.setProperty("--eye-x",dx+"px");
-    mascot.style.setProperty("--eye-y",dy+"px");
+  const eyes=[...friend.querySelectorAll(".wf-eye")];
+  let lastTrail=0, lastMove=0, autoX=0, raf=0, px=0, py=0;
+
+  function snowBurst(x,y,n=7){
+    for(let i=0;i<n;i++){
+      const s=document.createElement("i");
+      s.className="wf-snow";
+      const a=(Math.PI*2*i/n)+(Math.random()*.35);
+      const d=28+Math.random()*44;
+      s.style.left=x+"px"; s.style.top=y+"px";
+      s.style.setProperty("--dx",Math.cos(a)*d+"px");
+      s.style.setProperty("--dy",Math.sin(a)*d+"px");
+      document.body.appendChild(s);
+      setTimeout(()=>s.remove(),850);
+    }
   }
-  addEventListener("pointermove", e => {
-    mx=e.clientX; my=e.clientY;
-    if(!raf) raf=requestAnimationFrame(moveEyes);
+  function clearReactions(){
+    friend.classList.remove("react-left","react-right","react-up","react-near");
+  }
+  function frame(){
+    raf=0;
+    const r=friend.getBoundingClientRect();
+    const cx=r.left+r.width/2, cy=r.top+r.height*.45;
+    const dx=px-cx, dy=py-cy, dist=Math.hypot(dx,dy);
+    eyes.forEach((eye,idx)=>{
+      const ex=Math.max(-5,Math.min(5,dx/40));
+      const ey=Math.max(-4,Math.min(4,dy/45));
+      eye.style.transform=`translate(${ex}px,${ey}px)`;
+    });
+    clearReactions();
+    if(dist<95) friend.classList.add("react-near");          // 1: приблизился
+    else if(dy<-95 && Math.abs(dx)<150) friend.classList.add("react-up"); // 2: мышь сверху
+    else if(dx<-80) friend.classList.add("react-left");      // 3: мышь слева
+    else if(dx>80) friend.classList.add("react-right");      // 4: мышь справа
+  }
+  addEventListener("pointermove",e=>{
+    px=e.clientX; py=e.clientY;
+    if(!raf) raf=requestAnimationFrame(frame);
     const now=performance.now();
-    if(now-lastDot<34) return;
-    lastDot=now;
-    const dot=document.createElement("span");
-    dot.className="trail-dot";
-    dot.style.left=e.clientX+"px";
-    dot.style.top=e.clientY+"px";
-    document.body.appendChild(dot);
-    setTimeout(()=>dot.remove(),560);
-  }, {passive:true});
+    if(now-lastTrail>55){
+      lastTrail=now;
+      const dot=document.createElement("span");
+      dot.className="trail-dot";dot.style.left=e.clientX+"px";dot.style.top=e.clientY+"px";
+      document.body.appendChild(dot);setTimeout(()=>dot.remove(),560);
+    }
+  },{passive:true});
+
+  friend.addEventListener("click",e=>{                       // 5: клик
+    friend.classList.remove("react-click"); void friend.offsetWidth;
+    friend.classList.add("react-click"); snowBurst(e.clientX,e.clientY,10);
+    setTimeout(()=>friend.classList.remove("react-click"),700);
+  });
+
+  let dir=1;
+  function wander(t){
+    if(t-lastMove>2400){
+      lastMove=t; autoX+=dir*(12+Math.random()*16);
+      if(Math.abs(autoX)>34) dir*=-1;
+      friend.style.marginLeft=`calc(auto + ${autoX}px)`;
+    }
+    requestAnimationFrame(wander);
+  }
+  requestAnimationFrame(wander);
 })();
