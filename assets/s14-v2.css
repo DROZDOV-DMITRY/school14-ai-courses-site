@@ -436,3 +436,13 @@ body[class*="theme-"] .topbar{border-bottom-color:color-mix(in srgb,var(--page-a
 @media(max-width:420px){.v4-character{min-height:330px}.v4-route{min-height:118px}.v4-route h2{font-size:1.32rem}.v4-route p{font-size:.82rem}}
 @media(max-width:330px){.v4-route-grid{grid-template-columns:1fr}.v4-wide{grid-column:auto}}
 @media(prefers-reduced-motion:reduce){.v4-code-scan{animation:none;opacity:.45}}
+
+
+/* S14 grouped tool actions · 2026-10-06 */
+.tool-actions-v2{display:flex;gap:8px;flex-wrap:wrap;margin-top:14px}
+.tool-action-v2{display:inline-flex;align-items:center;justify-content:center;min-height:38px;padding:8px 11px;border-radius:12px;border:1px solid rgba(23,32,51,.11);text-decoration:none;font-size:.82rem;font-weight:950;color:#172033;background:#fff4cf;transition:transform .15s ease,box-shadow .15s ease}
+.tool-action-v2:nth-child(4n+2){background:#ffe2ed}.tool-action-v2:nth-child(4n+3){background:#dff3e7}.tool-action-v2:nth-child(4n){background:#e3e7ff}
+.tool-action-v2:hover,.tool-action-v2:focus-visible{transform:translateY(-1px);box-shadow:0 7px 16px rgba(46,58,94,.12);outline:none}
+.tool-card-deprioritized{opacity:.82}
+.tool-card-deprioritized:hover{opacity:1}
+@media(max-width:620px){.tool-actions-v2{gap:7px}.tool-action-v2{flex:1 1 auto}}
