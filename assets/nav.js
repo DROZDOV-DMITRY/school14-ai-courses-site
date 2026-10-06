@@ -20,6 +20,40 @@
     }catch(_){}
   });
 
+  function installQuickChat(){
+    if(document.getElementById("s14QuickChat")) return;
+
+    const style=document.createElement("style");
+    style.textContent=
+      "#s14QuickChat{position:fixed;right:18px;bottom:18px;z-index:9999;border:0;border-radius:999px;padding:13px 17px;background:#111827;color:#fff;font:800 15px/1.1 Segoe UI,Arial,sans-serif;box-shadow:0 10px 32px rgba(0,0,0,.28);cursor:pointer}" +
+      "#s14QuickChat:hover{transform:translateY(-1px)}" +
+      "#s14QuickChat:focus-visible{outline:3px solid #7dd3fc;outline-offset:3px}" +
+      "@media(max-width:640px){#s14QuickChat{right:12px;bottom:12px;padding:12px 15px;font-size:14px}}";
+    document.head.appendChild(style);
+
+    const btn=document.createElement("button");
+    btn.id="s14QuickChat";
+    btn.type="button";
+    btn.textContent="💬 ИИ-чат";
+    btn.title="Открыть быстрый ИИ-чат";
+    btn.setAttribute("aria-label","Открыть быстрый ИИ-чат");
+
+    btn.addEventListener("click",()=>{
+      const url="https://duck.ai/";
+      const features="popup=yes,width=520,height=760,resizable=yes,scrollbars=yes";
+      const w=window.open(url,"s14-ai-chat",features);
+      if(w){
+        try{w.focus()}catch(_){}
+      }else{
+        window.open(url,"_blank","noopener");
+      }
+    });
+
+    document.body.appendChild(btn);
+  }
+
+  installQuickChat();
+
   if(cleanPath===ROOT) return;
   document.body.classList.add("with-global-nav");
   const holder=document.createElement("div");
