@@ -331,6 +331,7 @@ body[class*="theme-"] .topbar{border-bottom-color:color-mix(in srgb,var(--page-a
 .ai-pick.deepai{background:linear-gradient(135deg,#eaf8ff,#d9f2ff)}
 .ai-pick.duck{background:linear-gradient(135deg,#fff1df,#ffe0b8)}
 .ai-pick.zai{background:linear-gradient(135deg,#eef2ff,#dfe5ff)}
+.ai-pick.deepseek{background:linear-gradient(135deg,#e9f5ff,#d4e8ff)}
 .ai-pick.more{background:linear-gradient(135deg,#eef8f0,#dff0e4)}
 
 .tool-card-v2{position:relative;padding-top:58px}
@@ -363,7 +364,7 @@ body[class*="theme-"] .topbar{border-bottom-color:color-mix(in srgb,var(--page-a
 @media(max-width:620px){.prompt-grid,.schedule-text{grid-template-columns:1fr}.ai-pick{flex:1 1 calc(50% - 10px);justify-content:center}}
 
 /* original detailed interactive winter gnome */
-.gnome-character{position:relative;width:min(235px,23vw);aspect-ratio:96/147;margin:auto;filter:drop-shadow(0 20px 26px rgba(80,54,65,.18));cursor:pointer;transform-origin:50% 100%;will-change:transform}
+.gnome-character{position:relative;width:min(190px,21vw);aspect-ratio:96/147;margin:auto;filter:drop-shadow(0 20px 26px rgba(80,54,65,.18));cursor:pointer;transform-origin:50% 100%;will-change:transform}
 .gnome-character img{position:absolute;inset:0;width:100%;height:100%;object-fit:contain;pointer-events:none;user-select:none}
 .gnome-base{z-index:1}
 .gnome-part{z-index:2}
@@ -389,6 +390,6 @@ body[class*="theme-"] .topbar{border-bottom-color:color-mix(in srgb,var(--page-a
 @keyframes gnome-spark{0%,100%{opacity:0;transform:scale(.4) rotate(0)}45%{opacity:1;transform:scale(1.2) rotate(28deg)}}
 @keyframes ear-left{0%,100%{transform:rotate(0)}50%{transform:rotate(-12deg) translateX(-2px)}}
 @keyframes ear-right{0%,100%{transform:rotate(0)}50%{transform:rotate(12deg) translateX(2px)}}
-@media(max-width:900px){.gnome-character{width:180px}}
-@media(max-width:620px){.gnome-character{width:112px;pointer-events:none}}
+@media(max-width:900px){.gnome-character{width:155px}}
+@media(max-width:620px){.gnome-character{width:104px;pointer-events:none}}
 @media(prefers-reduced-motion:reduce){.gnome-character,.gnome-character *{animation:none!important}}
