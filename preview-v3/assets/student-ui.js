@@ -6,8 +6,8 @@
       const text=copy.dataset.copy||"";
       try{
         await navigator.clipboard.writeText(text);
-        const old=copy.textContent; copy.textContent="Скопировано ✓"; copy.classList.add("done");
-        setTimeout(()=>{copy.textContent=old;copy.classList.remove("done")},1500);
+        const oldHTML=copy.innerHTML; copy.textContent="Скопировано ✓"; copy.classList.add("done");
+        setTimeout(()=>{copy.innerHTML=oldHTML;copy.classList.remove("done")},1500);
       }catch(_){copy.textContent="Не скопировалось";}
       return;
     }
