@@ -5,11 +5,12 @@
 <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
 <meta name="theme-color" content="#fffdf8">
 <title>Курс ИИ · Школа №14</title>
-<meta name="description" content="Практический курс ИИ: игры, сайты, блогинг, компьютерная грамотность и 3D-печать.">
+<meta name="description" content="Игры, сайты, блогинг, компьютерная грамотность и 3D-печать.">
 <link rel="stylesheet" href="assets/s14-v2.css">
 <script src="/school14-ai-courses-site/assets/s14-metrika-config.js"></script>
 <script defer src="/school14-ai-courses-site/assets/s14-metrika.js"></script>
 <script defer src="/school14-ai-courses-site/assets/s14-site.js"></script>
+<script defer src="assets/home-fx.js"></script>
 </head>
 <body>
 <header class="topbar">
@@ -18,60 +19,74 @@
     <nav class="topnav" aria-label="Быстрые ссылки">
       <a href="#schedule">Расписание</a>
       <a href="/school14-ai-courses-site/block-01/#tools">Инструменты</a>
-      <a href="https://max.ru/u/f9LHodD0cOIPo6kMsyqken8jVFD1_YWdgh0iZZy6woohI4gWOB110cJMMVQ" target="_blank" rel="noopener">Связаться</a>
+      <a href="https://max.ru/u/f9LHodD0cOIPo6kMsyqken8jVFD1_YWdgh0iZZy6woohI4gWOB110cJMMVQ" target="_blank" rel="noopener">MAX</a>
     </nav>
   </div>
 </header>
 
 <main>
-<section class="hero">
-  <div class="wrap">
-    <div class="eyebrow">Выбирай направление</div>
-    <h1>Что будем делать?</h1>
-    <p>Сначала делаем вещь, которую можно открыть, показать, напечатать или опубликовать. Нужные навыки осваиваем по дороге.</p>
+<section class="hero home-hero">
+  <div class="wrap hero-layout">
+    <div class="hero-copy">
+      <h1>Что сделаем сегодня?</h1>
+      <p>Выбери — и начинаем.</p>
+    </div>
+
+    <div class="mascot" id="homeMascot" aria-hidden="true">
+      <div class="mascot-antenna"><span></span></div>
+      <div class="mascot-head">
+        <div class="mascot-eye left"><i></i></div>
+        <div class="mascot-eye right"><i></i></div>
+        <div class="mascot-mouth"></div>
+      </div>
+      <div class="mascot-body">
+        <span class="mascot-star">✦</span>
+      </div>
+      <div class="mascot-arm arm-left"></div>
+      <div class="mascot-arm arm-right"></div>
+      <div class="mascot-shadow"></div>
+    </div>
   </div>
 </section>
 
-<section class="tiles">
+<section class="tiles home-tiles">
   <div class="wrap grid grid3">
     <a class="tile games" href="tracks/games/">
       <span class="emoji">🎮</span>
       <h2>Игры</h2>
-      <p>Придумать и сделать свою игру.</p>
-      <span class="go">Открыть →</span>
+      <p>Сделать свою</p>
+      <span class="go">Начать →</span>
     </a>
     <a class="tile web" href="tracks/web/">
       <span class="emoji">🌐</span>
       <h2>Сайты</h2>
-      <p>Придумать, собрать и опубликовать сайт.</p>
-      <span class="go">Открыть →</span>
+      <p>Сделать и выложить</p>
+      <span class="go">Начать →</span>
     </a>
     <a class="tile video" href="tracks/video/">
       <span class="emoji">🎬</span>
       <h2>Блогинг</h2>
-      <p>Кадр, фото, видео, монтаж и оформление.</p>
-      <span class="go">Открыть →</span>
+      <p>Снять и собрать ролик</p>
+      <span class="go">Начать →</span>
     </a>
     <a class="tile computer" href="computer/">
       <span class="emoji">💻</span>
       <h2>Компьютер</h2>
-      <p>Если не получается — быстро найдём следующий шаг.</p>
-      <span class="go">Открыть →</span>
+      <p>Что-то не получается?</p>
+      <span class="go">Помощь →</span>
     </a>
     <a class="tile print3d" href="tracks/3d/">
       <span class="emoji">🧊</span>
       <h2>3D-печать</h2>
-      <p>В разработке.</p>
-      <span class="go">Открыть →</span>
+      <p>Скоро</p>
+      <span class="go">Посмотреть →</span>
     </a>
   </div>
 </section>
 
-<section class="section dark" id="schedule">
+<section class="section soft schedule-section" id="schedule">
   <div class="wrap">
-    <div class="kicker">Когда встречаемся</div>
     <h2>Расписание</h2>
-    <p class="section-intro">Нажми на изображение, если нужно открыть его крупно.</p>
     <div class="schedule">
       <a href="/school14-ai-courses-site/block-01/images/schedule-2026-2027.svg?v=9abca390" target="_blank" rel="noopener">
         <img src="/school14-ai-courses-site/block-01/images/schedule-2026-2027.svg?v=9abca390" alt="Расписание занятий курса ИИ">
@@ -80,15 +95,10 @@
   </div>
 </section>
 
-<section class="section soft">
-  <div class="wrap">
-    <div class="kicker">Быстро</div>
-    <h2>Нужное рядом</h2>
-    <div class="utility">
-      <a href="#schedule"><span>📅 Расписание</span><span>↓</span></a>
-      <a href="/school14-ai-courses-site/block-01/#tools"><span>🧰 Инструменты</span><span>→</span></a>
-      <a href="https://max.ru/u/f9LHodD0cOIPo6kMsyqken8jVFD1_YWdgh0iZZy6woohI4gWOB110cJMMVQ" target="_blank" rel="noopener"><span>💬 Написать в MAX</span><span>↗</span></a>
-    </div>
+<section class="section light quick-section">
+  <div class="wrap utility utility-two">
+    <a href="/school14-ai-courses-site/block-01/#tools"><span>🧰 Инструменты</span><span>→</span></a>
+    <a href="https://max.ru/u/f9LHodD0cOIPo6kMsyqken8jVFD1_YWdgh0iZZy6woohI4gWOB110cJMMVQ" target="_blank" rel="noopener"><span>💬 Написать в MAX</span><span>↗</span></a>
   </div>
 </section>
 </main>
