@@ -219,3 +219,42 @@ details.more .more-links{display:grid;gap:8px;margin-top:12px}.more-links a{font
  .student-hero{padding:34px 0 24px}
  .student-hero h1{font-size:clamp(2.55rem,13vw,4.2rem)}
 }
+
+/* navigation + winter mascot v2 */
+.student-global-nav{display:flex;gap:10px;align-items:center;margin-left:auto}
+.nav-big{min-height:48px;padding:11px 16px;border-radius:15px;border:1px solid var(--line);background:#fff;color:var(--ink);font-weight:950;text-decoration:none;cursor:pointer;box-shadow:0 8px 22px rgba(46,58,94,.08)}
+.nav-back{background:#17254a;color:#fff;border-color:#17254a}
+.with-global-nav .topnav{display:none}
+@media(max-width:620px){
+  .topbar .inner{min-height:70px;gap:8px}.brand{font-size:.88rem}
+  .student-global-nav{gap:6px}.nav-big{min-height:44px;padding:9px 11px;font-size:.86rem;border-radius:13px}
+}
+.reveal-more{display:flex;justify-content:center;margin-top:18px}
+.reveal-more button{min-height:50px;padding:12px 22px;border:0;border-radius:15px;background:#17254a;color:#fff;font-weight:950;cursor:pointer}
+.hotkey[hidden]{display:none}
+
+.winter-friend{position:relative;width:min(300px,28vw);aspect-ratio:1;margin:auto;will-change:transform;transform:translate3d(0,0,0);cursor:pointer;filter:drop-shadow(0 20px 26px rgba(80,92,150,.18))}
+.winter-friend svg{width:100%;height:100%;display:block;overflow:visible}
+.winter-friend .wf-eye{transform-box:fill-box;transform-origin:center}
+.winter-friend.react-left{transform:translate3d(-10px,-4px,0) rotate(-5deg)}
+.winter-friend.react-right{transform:translate3d(10px,-4px,0) rotate(5deg)}
+.winter-friend.react-up{transform:translate3d(0,-16px,0) scale(1.03)}
+.winter-friend.react-near{transform:translate3d(0,-8px,0) scale(1.06)}
+.winter-friend.react-click{animation:wf-spin .62s cubic-bezier(.3,.7,.2,1)}
+.winter-friend .wf-tail{transform-box:fill-box;transform-origin:20% 70%;animation:wf-tail 2.8s ease-in-out infinite}
+.winter-friend .wf-scarf{transform-box:fill-box;transform-origin:15% 50%;animation:wf-scarf 2.1s ease-in-out infinite}
+.winter-friend .wf-ear-l,.winter-friend .wf-ear-r{transform-box:fill-box;transform-origin:bottom center}
+.react-up .wf-ear-l{transform:rotate(-8deg)}.react-up .wf-ear-r{transform:rotate(8deg)}
+.react-left .wf-arm-l{transform:rotate(-18deg)}.react-right .wf-arm-r{transform:rotate(18deg)}
+.wf-snow{position:fixed;width:8px;height:8px;border-radius:50%;background:#fff;box-shadow:0 0 0 2px rgba(123,179,255,.22),0 0 14px rgba(123,179,255,.35);pointer-events:none;z-index:9999;animation:wf-snow .8s ease-out forwards}
+@keyframes wf-tail{0%,100%{transform:rotate(-4deg)}50%{transform:rotate(8deg)}}
+@keyframes wf-scarf{0%,100%{transform:rotate(-2deg)}50%{transform:rotate(7deg)}}
+@keyframes wf-spin{0%{transform:rotate(0) scale(1)}50%{transform:rotate(180deg) scale(1.08)}100%{transform:rotate(360deg) scale(1)}}
+@keyframes wf-snow{0%{opacity:1;transform:translate(-50%,-50%) scale(1)}100%{opacity:0;transform:translate(var(--dx),var(--dy)) scale(.2)}}
+@media(max-width:900px){.winter-friend{width:190px}}
+@media(max-width:620px){.winter-friend{width:112px}}
+@media(pointer:coarse){.winter-friend{pointer-events:none}}
+@media(prefers-reduced-motion:reduce){
+  .winter-friend,.winter-friend *{animation:none!important;transition:none!important}
+  .wf-snow{display:none!important}
+}
