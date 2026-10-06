@@ -11,6 +11,7 @@
 <script defer src="/school14-ai-courses-site/assets/s14-metrika.js"></script>
 <script defer src="/school14-ai-courses-site/assets/s14-site.js"></script>
 <script defer src="assets/home-fx.js"></script>
+<script defer src="assets/nav.js"></script>
 </head>
 <body>
 <header class="topbar">
@@ -32,19 +33,70 @@
       <p>Выбери — и делай.</p>
     </div>
 
-    <div class="mascot" id="homeMascot" aria-hidden="true">
-      <div class="mascot-antenna"><span></span></div>
-      <div class="mascot-head">
-        <div class="mascot-eye left"><i></i></div>
-        <div class="mascot-eye right"><i></i></div>
-        <div class="mascot-mouth"></div>
-      </div>
-      <div class="mascot-body">
-        <span class="mascot-star">✦</span>
-      </div>
-      <div class="mascot-arm arm-left"></div>
-      <div class="mascot-arm arm-right"></div>
-      <div class="mascot-shadow"></div>
+    <div class="winter-friend" id="winterFriend" aria-hidden="true" title="">
+      <svg viewBox="0 0 320 320" role="img" aria-hidden="true">
+        <defs>
+          <linearGradient id="fur" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#ffffff"/><stop offset=".55" stop-color="#eaf3ff"/><stop offset="1" stop-color="#c9dcff"/></linearGradient>
+          <linearGradient id="ice" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#bff6ff"/><stop offset=".52" stop-color="#76bff2"/><stop offset="1" stop-color="#7c73e6"/></linearGradient>
+          <linearGradient id="scarf" x1="0" y1="0" x2="1" y2="0"><stop offset="0" stop-color="#ef6aa8"/><stop offset="1" stop-color="#7b6de8"/></linearGradient>
+          <radialGradient id="cheek"><stop offset="0" stop-color="#ffb7ce" stop-opacity=".85"/><stop offset="1" stop-color="#ffb7ce" stop-opacity="0"/></radialGradient>
+          <filter id="soft"><feGaussianBlur stdDeviation="2"/></filter>
+        </defs>
+        <ellipse cx="160" cy="286" rx="76" ry="18" fill="#8394c7" opacity=".16" filter="url(#soft)"/>
+        <g class="wf-tail">
+          <path d="M225 212 C286 201 297 247 265 268 C244 282 214 272 218 251 C220 238 244 237 252 247 C252 228 237 226 220 234 Z" fill="url(#fur)" stroke="#aabfe8" stroke-width="3"/>
+          <path d="M258 230 C285 233 286 251 270 262 C260 268 248 267 242 261 C260 259 268 248 258 230 Z" fill="#d9f6ff"/>
+          <path d="M241 248 l10 -8 8 11 10 -7 4 15 -12 9 -17 -3 Z" fill="#bdefff" opacity=".75"/>
+        </g>
+        <g class="wf-body">
+          <path d="M100 181 C106 145 128 128 160 128 C192 128 214 145 220 181 L229 246 C232 268 212 281 160 281 C108 281 88 268 91 246 Z" fill="url(#fur)" stroke="#aabfe8" stroke-width="3"/>
+          <path d="M122 211 C137 224 183 224 198 211 L204 251 C190 263 130 263 116 251 Z" fill="#dff1ff"/>
+          <path d="M141 239 h38 l7 27 c-15 7-37 7-52 0 Z" fill="url(#ice)" opacity=".82"/>
+          <path d="M147 255 l13 -13 13 13 -13 13 Z" fill="#fff" opacity=".88"/>
+        </g>
+        <g class="wf-arm-l" style="transform-origin:118px 198px">
+          <path d="M111 193 C89 201 78 222 82 242 C86 252 98 250 102 239 C101 226 109 216 122 211 Z" fill="url(#fur)" stroke="#aabfe8" stroke-width="3"/>
+          <circle cx="89" cy="246" r="11" fill="#eef7ff" stroke="#aabfe8" stroke-width="3"/>
+        </g>
+        <g class="wf-arm-r" style="transform-origin:202px 198px">
+          <path d="M209 193 C231 201 242 222 238 242 C234 252 222 250 218 239 C219 226 211 216 198 211 Z" fill="url(#fur)" stroke="#aabfe8" stroke-width="3"/>
+          <circle cx="231" cy="246" r="11" fill="#eef7ff" stroke="#aabfe8" stroke-width="3"/>
+        </g>
+        <g class="wf-head">
+          <path class="wf-ear-l" d="M103 110 C97 70 112 43 137 79 Z" fill="url(#fur)" stroke="#aabfe8" stroke-width="3"/>
+          <path d="M112 94 C111 70 120 59 131 80 Z" fill="#d9b8e8" opacity=".7"/>
+          <path class="wf-ear-r" d="M217 110 C223 70 208 43 183 79 Z" fill="url(#fur)" stroke="#aabfe8" stroke-width="3"/>
+          <path d="M208 94 C209 70 200 59 189 80 Z" fill="#d9b8e8" opacity=".7"/>
+          <path d="M90 128 C90 82 119 59 160 59 C201 59 230 82 230 128 C230 165 205 187 160 187 C115 187 90 165 90 128 Z" fill="url(#fur)" stroke="#aabfe8" stroke-width="3"/>
+          <path d="M112 74 C125 57 142 48 160 48 C178 48 196 57 208 74 C188 67 177 77 160 77 C143 77 132 67 112 74 Z" fill="#eef7ff"/>
+          <ellipse cx="121" cy="147" rx="25" ry="17" fill="url(#cheek)"/>
+          <ellipse cx="199" cy="147" rx="25" ry="17" fill="url(#cheek)"/>
+          <g class="wf-eye wf-eye-l">
+            <ellipse cx="132" cy="125" rx="13" ry="16" fill="#223157"/>
+            <circle cx="137" cy="120" r="4.5" fill="#fff"/>
+            <circle cx="127" cy="131" r="2.4" fill="#73d9f1"/>
+          </g>
+          <g class="wf-eye wf-eye-r">
+            <ellipse cx="188" cy="125" rx="13" ry="16" fill="#223157"/>
+            <circle cx="193" cy="120" r="4.5" fill="#fff"/>
+            <circle cx="183" cy="131" r="2.4" fill="#73d9f1"/>
+          </g>
+          <path d="M154 145 Q160 150 166 145 Q164 155 160 157 Q156 155 154 145 Z" fill="#52658f"/>
+          <path d="M145 163 Q160 172 175 163" fill="none" stroke="#52658f" stroke-width="4" stroke-linecap="round"/>
+          <path d="M154 90 l6 -16 6 16 16 6 -16 6 -6 16 -6 -16 -16 -6 Z" fill="#fff" stroke="#9eddf8" stroke-width="2"/>
+        </g>
+        <g class="wf-scarf">
+          <path d="M113 175 C132 188 188 188 207 175 L213 194 C188 207 132 207 107 194 Z" fill="url(#scarf)"/>
+          <path d="M198 190 C223 204 238 219 245 248 L225 250 C220 227 209 213 190 201 Z" fill="#8c70e6"/>
+          <path d="M226 247 l19 1 -8 22 -8 -9 -9 5 Z" fill="#ef6aa8"/>
+          <path d="M126 181 l8 8 8 -8 8 8 8 -8 8 8 8 -8 8 8 8 -8" fill="none" stroke="#fff" stroke-width="3" opacity=".8"/>
+        </g>
+        <g fill="#9ee8ff" opacity=".85">
+          <circle cx="74" cy="92" r="4"/><circle cx="245" cy="82" r="5"/><circle cx="260" cy="155" r="3.5"/><circle cx="59" cy="171" r="3"/>
+          <path d="M70 132 l4 9 9 4 -9 4 -4 9 -4 -9 -9 -4 9 -4 Z"/>
+          <path d="M247 195 l4 9 9 4 -9 4 -4 9 -4 -9 -9 -4 9 -4 Z"/>
+        </g>
+      </svg>
     </div>
   </div>
 </section>
