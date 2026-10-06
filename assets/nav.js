@@ -51,16 +51,6 @@
       document.body.appendChild(btn);
     }
 
-    const topnav=document.querySelector(".topnav");
-    if(topnav && !document.getElementById("s14QuickChatTop")){
-      const top=document.createElement("a");
-      top.id="s14QuickChatTop";
-      top.href="#";
-      top.textContent="💬 ИИ-чат";
-      top.title="Открыть быстрый ИИ-чат";
-      top.addEventListener("click",(e)=>{e.preventDefault();openQuickChat();});
-      topnav.appendChild(top);
-    }
   }
 
   installQuickChat();
