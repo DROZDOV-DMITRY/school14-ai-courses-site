@@ -20,12 +20,12 @@ window.S14AliceHelper = (() => {
     window.open(url, "s14AliceHelper", `popup=yes,width=${Math.round(w)},height=${Math.round(h)},left=${Math.round(left)},top=${Math.round(top)},resizable=yes,scrollbars=yes`);
   }
 
-  async function open(){
+  async function open(mode="computer"){
     if (SHARED_CHAT_URL) {
       popup(SHARED_CHAT_URL);
       return;
     }
-    try { await navigator.clipboard.writeText(BOOTSTRAP); } catch (_) {}
+    if(mode==="computer"){ try { await navigator.clipboard.writeText(BOOTSTRAP); } catch (_) {} }
     popup(FALLBACK_URL);
   }
 
@@ -36,5 +36,5 @@ document.addEventListener("click", (e) => {
   const btn = e.target.closest("[data-alice-helper]");
   if (!btn) return;
   e.preventDefault();
-  window.S14AliceHelper.open();
+  window.S14AliceHelper.open(btn.dataset.aliceMode || "computer");
 });
