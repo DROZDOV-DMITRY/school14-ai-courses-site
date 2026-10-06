@@ -1,9 +1,10 @@
 (() => {
   const g=document.getElementById("gnomeCharacter");
   const base=document.getElementById("gnomeBase");
-  if(!g || !base || !window.S14_GNOME_DATA) return;
-  base.src=window.S14_GNOME_DATA;
-  g.querySelectorAll(".gnome-part").forEach(x=>x.src=window.S14_GNOME_DATA);
+  if(!g || !base) return;
+  const gnomeSrc="/school14-ai-courses-site/assets/gnome-home.webp";
+  base.src=gnomeSrc;
+  g.querySelectorAll(".gnome-part").forEach(x=>x.src=gnomeSrc);
 
   const reduced=matchMedia("(prefers-reduced-motion: reduce)").matches;
   const fine=matchMedia("(pointer:fine)").matches;
