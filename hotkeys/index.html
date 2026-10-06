@@ -1,32 +1,44 @@
-<!doctype html>
-<html lang="ru">
-<head>
-<meta charset="utf-8">
-<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
-<meta name="color-scheme" content="dark">
-<meta name="theme-color" content="#080b18">
-<title>Горячие клавиши · Курс ИИ</title>
-<style>
-:root{--bg:#070914;--card:#10162a;--text:#f5f7ff;--muted:#adb7d1;--line:rgba(158,179,255,.18);--cyan:#69e7ff;--violet:#a78bfa;--max:980px}
-*{box-sizing:border-box}body{margin:0;background:radial-gradient(circle at 15% 0,rgba(80,130,255,.18),transparent 32rem),var(--bg);color:var(--text);font-family:"Segoe UI Variable","Segoe UI",Arial,sans-serif;line-height:1.55}.wrap{width:min(calc(100% - 24px),var(--max));margin:auto}.top{padding:34px 0 16px}.back{color:var(--cyan);font-weight:900;text-decoration:none}.hero{padding:28px 0 22px}.hero h1{font-size:clamp(2.4rem,7vw,5.4rem);line-height:.95;letter-spacing:-.045em;margin:.15em 0}.lead{color:var(--muted);font-size:1.08rem;max-width:760px}.grid{display:grid;grid-template-columns:repeat(2,1fr);gap:12px;padding:12px 0 42px}.card{border:1px solid var(--line);border-radius:20px;background:rgba(255,255,255,.035);padding:20px}.keys{display:flex;gap:6px;flex-wrap:wrap;margin-bottom:14px}.key{display:inline-grid;place-items:center;min-width:44px;padding:8px 10px;border:1px solid rgba(255,255,255,.2);border-bottom-width:3px;border-radius:10px;background:#151d34;font:900 .95rem/1 "Segoe UI",Arial}.plus{align-self:center;color:var(--muted);font-weight:900}.card h2{font-size:1.15rem;margin:0 0 6px}.card p{margin:0;color:#c7d0e4}.note{margin:4px 0 46px;padding:16px 18px;border:1px solid rgba(105,231,255,.2);border-radius:16px;background:rgba(105,231,255,.05);color:#dceaf2}.note b{color:#fff}@media(max-width:700px){.grid{grid-template-columns:1fr}}
-</style>
-<script src="/school14-ai-courses-site/assets/s14-metrika-config.js"></script>
-<script defer src="/school14-ai-courses-site/assets/s14-metrika.js"></script>
-<script defer src="/school14-ai-courses-site/assets/s14-site.js"></script>
-</head>
-<body>
-<div class="wrap">
-<div class="top"><a class="back" href="../block-01/">← К занятию</a></div>
-<section class="hero"><div style="color:var(--cyan);font-weight:950;letter-spacing:.1em;text-transform:uppercase;font-size:.78rem">Windows · браузер · чат</div><h1>Горячие клавиши</h1><p class="lead">Шесть сочетаний, которые экономят время почти на каждом занятии. Их достаточно, чтобы быстро копировать запросы, переключаться между окнами и работать с многострочным текстом.</p></section>
-<section class="grid">
-<article class="card"><div class="keys"><span class="key">Ctrl</span><span class="plus">+</span><span class="key">A</span></div><h2>Выделить всё</h2><p>Выделяет весь текст в текущем поле или документе. Полезно перед копированием полного запроса, ответа или диалога.</p></article>
-<article class="card"><div class="keys"><span class="key">Ctrl</span><span class="plus">+</span><span class="key">C</span></div><h2>Копировать</h2><p>Копирует выделенный текст или объект в буфер обмена. После этого его можно вставить в другой сервис или форму.</p></article>
-<article class="card"><div class="keys"><span class="key">Ctrl</span><span class="plus">+</span><span class="key">V</span></div><h2>Вставить</h2><p>Вставляет содержимое буфера обмена. Используй для переноса запросов, ссылок и результатов между вкладками.</p></article>
-<article class="card"><div class="keys"><span class="key">Shift</span><span class="plus">+</span><span class="key">Enter</span></div><h2>Новая строка без отправки</h2><p>В большинстве AI-чатов переносит курсор на новую строку, не отправляя сообщение. Удобно для длинных структурированных запросов.</p></article>
-<article class="card"><div class="keys"><span class="key">Alt</span><span class="plus">+</span><span class="key">Tab</span></div><h2>Переключиться между окнами</h2><p>Переходит между открытыми программами и окнами Windows: например, Edge → Проводник → обратно в Edge.</p></article>
-<article class="card"><div class="keys"><span class="key">Ctrl</span><span class="plus">+</span><span class="key">Tab</span></div><h2>Следующая вкладка браузера</h2><p>Переключает вкладки внутри текущего окна браузера. В «КУРС ИИ» удобно переходить: сайт → DeepSeek → GitHub → MAX.</p></article>
-</section>
-<div class="note"><b>Не путай:</b> Alt+Tab — между окнами Windows. Ctrl+Tab — между вкладками внутри браузера.</div>
+<!doctype html><html lang="ru"><head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover"><meta name="theme-color" content="#fffdf8">
+<title>Горячие клавиши · Курс ИИ</title><link rel="stylesheet" href="../assets/s14-v2.css"><script defer src="/school14-ai-courses-site/preview-v3/assets/nav.js"></script>
+</head><body class="theme-computer">
+<header class="topbar"><div class="wrap inner"><a class="brand" href="../computer/"><b>КУРС ИИ</b> · Клавиши</a></div></header>
+<main>
+<section class="student-hero"><div class="wrap"><h1>Горячие клавиши</h1><p>Сначала 6 → Потом сложнее</p></div></section>
+<section class="section light"><div class="wrap">
+<div class="hotkey-grid" id="hotkeys">
+<div class="hotkey" data-level="1"><div class="combo">Ctrl + C</div><p>Копировать</p></div>
+<div class="hotkey" data-level="1"><div class="combo">Ctrl + V</div><p>Вставить</p></div>
+<div class="hotkey" data-level="1"><div class="combo">Ctrl + A</div><p>Выделить всё</p></div>
+<div class="hotkey" data-level="1"><div class="combo">Alt + Tab</div><p>Другое окно</p></div>
+<div class="hotkey" data-level="1"><div class="combo">Ctrl + Tab</div><p>Другая вкладка</p></div>
+<div class="hotkey" data-level="1"><div class="combo">Win + Shift + S</div><p>Скриншот</p></div>
+
+<div class="hotkey" data-level="2" hidden><div class="combo">Ctrl + Z</div><p>Отменить</p></div>
+<div class="hotkey" data-level="2" hidden><div class="combo">Ctrl + Y</div><p>Вернуть</p></div>
+<div class="hotkey" data-level="2" hidden><div class="combo">Ctrl + S</div><p>Сохранить</p></div>
+<div class="hotkey" data-level="2" hidden><div class="combo">Ctrl + F</div><p>Найти на странице</p></div>
+<div class="hotkey" data-level="2" hidden><div class="combo">Ctrl + T</div><p>Новая вкладка</p></div>
+<div class="hotkey" data-level="2" hidden><div class="combo">Ctrl + W</div><p>Закрыть вкладку</p></div>
+
+<div class="hotkey" data-level="3" hidden><div class="combo">Win + E</div><p>Проводник</p></div>
+<div class="hotkey" data-level="3" hidden><div class="combo">Win + D</div><p>Рабочий стол</p></div>
+<div class="hotkey" data-level="3" hidden><div class="combo">F2</div><p>Переименовать файл</p></div>
+<div class="hotkey" data-level="3" hidden><div class="combo">Alt + F4</div><p>Закрыть окно</p></div>
+<div class="hotkey" data-level="3" hidden><div class="combo">Ctrl + Shift + Esc</div><p>Диспетчер задач</p></div>
+<div class="hotkey" data-level="3" hidden><div class="combo">Win + L</div><p>Заблокировать ПК</p></div>
+
+<div class="hotkey" data-level="4" hidden><div class="combo">Ctrl + Shift + N</div><p>Новая папка</p></div>
+<div class="hotkey" data-level="4" hidden><div class="combo">Ctrl + L</div><p>Адресная строка</p></div>
+<div class="hotkey" data-level="4" hidden><div class="combo">Ctrl + Shift + T</div><p>Вернуть вкладку</p></div>
+<div class="hotkey" data-level="4" hidden><div class="combo">Win + V</div><p>История буфера</p></div>
+<div class="hotkey" data-level="4" hidden><div class="combo">Shift + Enter</div><p>Новая строка в чате</p></div>
+<div class="hotkey" data-level="4" hidden><div class="combo">Ctrl + Shift + S</div><p>Сохранить как</p></div>
 </div>
-</body>
-</html>
+<div class="reveal-more"><button type="button" id="moreKeys">Ещё 6 ↓</button></div>
+</div></section>
+</main>
+<script>
+(()=>{let level=1;const btn=document.getElementById("moreKeys");btn.addEventListener("click",()=>{level++;document.querySelectorAll('[data-level="'+level+'"]').forEach(x=>x.hidden=false);if(level>=4)btn.hidden=true;else btn.textContent="Ещё 6 ↓";});})();
+</script>
+</body></html>

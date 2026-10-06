@@ -1,279 +1,41 @@
-<!doctype html>
-<html lang="ru">
-<head>
-  <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
-  <meta name="theme-color" content="#0a1016">
-  <title>Занятие 1 · Тело без зажима · Блогинг / короткие видео</title>
-  <link rel="stylesheet" href="../../assets/track.css">
-  <script src="/school14-ai-courses-site/assets/s14-metrika-config.js"></script>
-  <script defer src="/school14-ai-courses-site/assets/s14-metrika.js"></script>
-  <script defer src="/school14-ai-courses-site/assets/s14-site.js"></script>
-  <style>
-    body.lesson-page{
-      --accent:#d08a55;
-      --accent2:#425f73;
-      --accent3:#d9d1c1;
-      --line:rgba(217,209,193,.18);
-      background:
-        radial-gradient(circle at 10% 0,rgba(208,138,85,.16),transparent 30rem),
-        radial-gradient(circle at 92% 10%,rgba(66,95,115,.22),transparent 34rem),
-        linear-gradient(180deg,#091016,#0c1115 56%,#0a0d10);
-    }
-    .lesson-page .topbar{background:rgba(9,16,22,.91)}
-    .lesson-page .brand b,.lesson-page .eyebrow,.lesson-page .kicker{color:var(--accent)}
-    .lesson-page .hero h1{
-      max-width:900px;
-      background:linear-gradient(110deg,#fff 4%,#eee7da 46%,#d99a68 78%,#fff);
-      -webkit-background-clip:text;background-clip:text;color:transparent;
-    }
-    .lesson-meta{display:flex;gap:8px;flex-wrap:wrap;margin-top:22px}
-    .lesson-chip{padding:7px 10px;border:1px solid var(--line);border-radius:999px;color:#d8d3ca;background:rgba(255,255,255,.035);font-size:.78rem;font-weight:850}
-    .mission{
-      margin-top:28px;padding:22px;border-radius:24px;
-      border:1px solid rgba(208,138,85,.26);
-      background:linear-gradient(135deg,rgba(208,138,85,.10),rgba(66,95,115,.10));
-    }
-    .mission .label{font-size:.72rem;text-transform:uppercase;letter-spacing:.09em;font-weight:950;color:var(--accent)}
-    .mission strong{display:block;font-size:1.28rem;margin-top:6px}
-    .mission p{color:#c9c6c0;margin:7px 0 0;max-width:850px}
-    .skill-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;margin-top:20px}
-    .actor-skill{
-      padding:20px;border-radius:22px;border:1px solid var(--line);
-      background:linear-gradient(150deg,rgba(18,25,31,.92),rgba(10,14,18,.94));
-    }
-    .actor-skill .n{width:36px;height:36px;border-radius:12px;display:grid;place-items:center;background:var(--accent);color:#17100b;font-weight:950;margin-bottom:22px}
-    .actor-skill:nth-child(2) .n{background:var(--accent2);color:#fff}
-    .actor-skill:nth-child(3) .n{background:var(--accent3);color:#171717}
-    .actor-skill h3{margin:0 0 8px;font-size:1.12rem}
-    .actor-skill p{margin:0;color:var(--muted)}
-    .exercise{margin-top:14px;padding:13px 14px;border-radius:14px;background:rgba(255,255,255,.035);border-left:3px solid var(--accent)}
-    .exercise b{display:block;margin-bottom:5px}.exercise span{color:#c6c2bc;font-size:.9rem}
-    .sequence{display:grid;gap:10px;margin-top:18px;counter-reset:seq}
-    .sequence-item{counter-increment:seq;padding:16px 16px 16px 60px;border:1px solid var(--line);border-radius:17px;background:rgba(255,255,255,.025);position:relative}
-    .sequence-item:before{content:counter(seq);position:absolute;left:16px;top:15px;width:31px;height:31px;border-radius:10px;display:grid;place-items:center;background:rgba(208,138,85,.14);color:var(--accent);font-weight:950}
-    .sequence-item b{display:block}.sequence-item span{color:var(--muted);font-size:.9rem}
-    .compare{
-      display:grid;grid-template-columns:1fr auto 1fr;gap:14px;align-items:center;margin-top:18px;
-      padding:18px;border-radius:20px;border:1px solid var(--line);background:rgba(255,255,255,.025)
-    }
-    .compare-box{padding:15px;border-radius:16px;background:rgba(255,255,255,.03)}
-    .compare-box.bad{border:1px solid rgba(208,138,85,.20)}
-    .compare-box.good{border:1px solid rgba(66,95,115,.35)}
-    .compare-box b{display:block;margin-bottom:5px}.compare-box span{color:var(--muted)}
-    .arrow{color:var(--accent);font-weight:950;font-size:1.4rem}
-    .review-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin-top:16px}
-    .review-card{padding:16px;border-radius:17px;border:1px solid var(--line);background:rgba(255,255,255,.025)}
-    .review-card b{display:block;margin-bottom:6px}.review-card span{color:var(--muted);font-size:.9rem}
-    .finish{
-      margin-top:20px;padding:20px;border:1px solid rgba(208,138,85,.28);border-radius:20px;
-      background:linear-gradient(120deg,rgba(208,138,85,.12),rgba(66,95,115,.08))
-    }
-    .finish h3{margin:0 0 8px}.finish p{margin:0;color:#c8c5bf}
-    .lesson-page .copy-btn{background:linear-gradient(135deg,#d99a68,#526f82);color:#111}
-    .back-row{margin-top:22px;display:flex;gap:10px;flex-wrap:wrap}
-    @media(max-width:900px){.skill-grid,.review-grid{grid-template-columns:1fr}.compare{grid-template-columns:1fr}.arrow{transform:rotate(90deg);justify-self:center}}
-  </style>
-</head>
-<body class="lesson-page">
-<header class="topbar">
-  <div class="topbar-inner">
-    <a class="brand" href="../"><b>Блогинг</b> · занятия</a>
-    <button class="menu-toggle" id="menuToggle" type="button" aria-expanded="false" aria-controls="siteNav" aria-label="Открыть меню"><span></span><span></span><span></span></button>
-    <nav class="nav" id="siteNav">
-      <a href="../">Меню ветки</a>
-      <a href="../mastery/">Мастерство</a>
-      <a href="../../../block-01/#missions">Все направления</a>
-      <a href="../../../block-01/#submit">Сдать работу</a>
-    </nav>
-  </div>
-</header>
-
+<!doctype html><html lang="ru"><head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover"><meta name="theme-color" content="#fffdf8">
+<title>Тело без зажима · Блогинг</title><link rel="stylesheet" href="../../../assets/s14-v2.css"><script defer src="../../../assets/student-ui.js"></script><script defer src="../../../assets/alice-helper.js"></script>
+<script defer src="/school14-ai-courses-site/preview-v3/assets/nav.js"></script></head><body class="theme-blog">
+<header class="topbar"><div class="wrap inner"><a class="brand" href="../"><b>Блогинг</b> · Занятие 1</a><nav class="topnav"><a href="../">Назад</a><a href="../mastery/">В кадре</a></nav></div></header>
 <main>
-<section class="hero">
-  <div class="wrap">
-    <div class="crumbs"><a href="../">Блогинг / короткие видео</a><span>→</span><span>Занятие 1</span></div>
-    <div class="eyebrow">Актёрская подготовка · занятие 1</div>
-    <h1>Тело без зажима</h1>
-    <p class="lead">Сегодня не учимся «выглядеть уверенно». Учимся трём вещам, которыми можно реально управлять: убрать лишнее напряжение, сделать движение ясным и заменить позирование конкретным действием.</p>
+<section class="student-hero"><div class="wrap"><h1>Тело без зажима</h1><p>Сними 3 дубля</p></div></section>
 
-    <div class="lesson-meta">
-      <span class="lesson-chip">3 навыка</span>
-      <span class="lesson-chip">3+ дубля</span>
-      <span class="lesson-chip">вертикальный ролик 10–15 секунд</span>
-      <span class="lesson-chip">публикация не обязательна</span>
-    </div>
+<section class="section light"><div class="wrap">
+<h2 class="action-title">Перед съёмкой</h2>
+<div class="lesson-cards">
+<article class="lesson-card"><h3>1 · Расслабь</h3><p>Плечи, кисти, челюсть.</p></article>
+<article class="lesson-card"><h3>2 · Замри</h3><p>Найди 3 главные позы.</p></article>
+<article class="lesson-card"><h3>3 · Действуй</h3><p>Не «красиво». Точно.</p></article>
+</div>
+</div></section>
 
-    <div class="mission">
-      <div class="label">Результат занятия</div>
-      <strong>Снять простой тренд так, чтобы движение было свободным, ясным и повторяемым.</strong>
-      <p>В конце должны остаться исходные дубли и одна выбранная финальная версия. Это учебный ролик: его можно сохранить без публикации.</p>
-    </div>
-  </div>
-</section>
+<section class="section soft"><div class="wrap">
+<h2 class="action-title">Сними</h2>
+<div class="simple-list">
+<div class="simple-step">Выбери движение на 10–15 секунд.</div>
+<div class="simple-step">Сними первый дубль. Он может быть плохим.</div>
+<div class="simple-step">Выбери одно изменение.</div>
+<div class="simple-step">Сними ещё два дубля.</div>
+<div class="simple-step">Оставь лучший.</div>
+</div>
+</div></section>
 
-<section class="section">
-  <div class="wrap">
-    <div class="kicker">Три навыка</div>
-    <h2>Сначала — инструмент исполнителя</h2>
-    <p class="section-intro">Не пытайся исправить всё сразу. Каждый навык сначала пробуем отдельно, затем соединяем в одном ролике.</p>
-
-    <div class="skill-grid">
-      <article class="actor-skill">
-        <div class="n">1</div>
-        <h3>Убрать лишнее напряжение</h3>
-        <p>Энергия и зажим — не одно и то же. Напряжённые плечи, челюсть, кисти и колени мешают движению быть быстрым и точным.</p>
-        <div class="exercise">
-          <b>Упражнение · 30 секунд</b>
-          <span>Встряхни кисти и плечи. Сделай длинный выдох. Проверь челюсть, плечи, пальцы и колени. Встань устойчиво, но не «по стойке смирно».</span>
-        </div>
-      </article>
-
-      <article class="actor-skill">
-        <div class="n">2</div>
-        <h3>Сделать форму ясной</h3>
-        <p>Быстрое движение читается лучше, если его ключевые положения точны. Сначала найди форму, потом соединяй её движением.</p>
-        <div class="exercise">
-          <b>Упражнение · 3 стоп-кадра</b>
-          <span>Выбери три главные позы тренда. Замри в каждой на секунду и проверь: где руки, куда направлен корпус, куда смотрит голова.</span>
-        </div>
-      </article>
-
-      <article class="actor-skill">
-        <div class="n">3</div>
-        <h3>Действовать вместо позирования</h3>
-        <p>Команда «выгляди уверенно» бесполезна. Конкретное физическое действие даёт телу понятную задачу и освобождает внимание от самоконтроля.</p>
-        <div class="exercise">
-          <b>Замени мысль</b>
-          <span>Не «как я выгляжу?», а «рука приходит сюда», «на этот удар поворачиваюсь», «здесь движение заканчивается».</span>
-        </div>
-      </article>
-    </div>
-
-    <div class="compare">
-      <div class="compare-box bad">
-        <b>Не работает</b>
-        <span>«Будь смелее». «Не зажимайся». «Сделай красиво».</span>
-      </div>
-      <div class="arrow">→</div>
-      <div class="compare-box good">
-        <b>Работает</b>
-        <span>«Опусти плечи». «Закончи руку в этой точке». «Поворот — на второй удар».</span>
-      </div>
-    </div>
-  </div>
-</section>
-
-<section class="section">
-  <div class="wrap">
-    <div class="kicker">Смотрим → делаем</div>
-    <h2>Три короткие видеоопоры</h2>
-    <p class="section-intro">Не смотрим лекцию целиком. Берём точный фрагмент, сразу выполняем упражнение и только потом снимаем дубль.</p>
-
-    <div class="review-grid">
-      <div class="review-card">
-        <b>1 · Разминка тела</b>
-        <span>Открой урок «Актёрское мастерство для начинающих детей» и смотри с <b>11:32</b>. Затем 30 секунд разомни тело и проверь плечи, кисти, челюсть и колени.</span>
-        <div style="margin-top:10px"><a href="https://rutube.ru/video/c7f4dfb6a601bac4c5de07fd13257112/" target="_blank" rel="noopener">Открыть видео ↗</a></div>
-      </div>
-      <div class="review-card">
-        <b>2 · «Оправдай позу»</b>
-        <span>В том же уроке смотри с <b>24:20</b>. После просмотра выбери три ключевые позы своего тренда и замри в каждой на секунду.</span>
-        <div style="margin-top:10px"><a href="https://rutube.ru/video/c7f4dfb6a601bac4c5de07fd13257112/" target="_blank" rel="noopener">Открыть видео ↗</a></div>
-      </div>
-      <div class="review-card">
-        <b>3 · Действие и задача</b>
-        <span>Посмотри короткий урок 4:43. Затем замени мысль «как я выгляжу?» на конкретную задачу: куда приходит рука, где заканчивается поворот, на какой удар происходит действие.</span>
-        <div style="margin-top:10px"><a href="https://rutube.ru/video/73b3d396f26bf613aaf2e472c0b803c4/" target="_blank" rel="noopener">Открыть видео ↗</a></div>
-      </div>
-    </div>
-
-    <div class="finish">
-      <h3>Педагогический приём: разрешённый плохой дубль</h3>
-      <p>Первый раз можно снять ролик специально без требования качества. Его задача — просто начать и закончить. Не переснимаем сразу. Смотрим, выбираем <b>одно</b> изменение и только потом делаем следующий дубль.</p>
-    </div>
-
-    <div class="back-row">
-      <a class="btn secondary" href="../mastery/">Открыть весь раздел «Мастерство» →</a>
-    </div>
-  </div>
-</section>
-
-<section class="section">
-  <div class="wrap">
-    <div class="kicker">Практика</div>
-    <h2>Сними ролик за один цикл</h2>
-    <div class="sequence">
-      <div class="sequence-item"><b>Выбери короткий тренд</b><span>Подойдёт простая последовательность, которую можно повторить за 10–15 секунд. Сложность сейчас не нужна.</span></div>
-      <div class="sequence-item"><b>Пройди разминку</b><span>Сними лишнее напряжение и один раз спокойно выполни движения без записи.</span></div>
-      <div class="sequence-item"><b>Зафиксируй три формы</b><span>Найди начало, центральную позу и финал. Убедись, что каждая форма читается отдельно.</span></div>
-      <div class="sequence-item"><b>Сними первый дубль</b><span>Не оценивай себя во время записи. Доведи движение до конца, даже если заметил небольшую ошибку.</span></div>
-      <div class="sequence-item"><b>Выбери одно изменение</b><span>Например: опустить плечи, яснее закончить руку или точнее попасть в музыкальный акцент.</span></div>
-      <div class="sequence-item"><b>Сними ещё два дубля</b><span>Меняй только выбранный параметр. Не перестраивай весь ролик после каждой ошибки.</span></div>
-      <div class="sequence-item"><b>Выбери финальную версию</b><span>Ищи не «идеальную внешность», а более свободное, ясное и управляемое действие.</span></div>
-    </div>
-  </div>
-</section>
-
-<section class="section">
-  <div class="wrap">
-    <div class="kicker">Разбор</div>
-    <h2>Смотри на действие, а не на себя</h2>
-    <p class="section-intro">Один и тот же дубль посмотри три раза. Каждый просмотр отвечает только на один вопрос.</p>
-
-    <div class="review-grid">
-      <div class="review-card"><b>1 · Тело</b><span>Есть ли лишнее напряжение? Чётко ли заканчиваются движения?</span></div>
-      <div class="review-card"><b>2 · Форма</b><span>Понятны ли ключевые позы? Не теряются ли руки и корпус?</span></div>
-      <div class="review-card"><b>3 · Целиком</b><span>Какой один момент сильнее всего мешает ролику?</span></div>
-    </div>
-
-    <div class="finish">
-      <h3>Правило следующего дубля</h3>
-      <p>Назови одно изменение и проверь его в записи. Так появляется причинная связь: <b>что изменил → что изменилось в кадре</b>.</p>
-    </div>
-  </div>
-</section>
-
-<section class="section">
-  <div class="wrap">
-    <div class="kicker">ИИ как тренер</div>
-    <h2>Попроси помочь увидеть одно изменение</h2>
-    <p class="section-intro">ИИ не должен придумывать за тебя весь ролик. Его задача — помочь разложить наблюдение и не перегрузить следующий дубль.</p>
-
-    <div class="prompt">
-      <div class="label">Запрос после первого дубля</div>
-      <pre>Я снимаю короткий тренд и тренирую три вещи:
-1) лишнее напряжение;
-2) ясные ключевые позы;
-3) конкретное физическое действие вместо позирования.
-
-После первого дубля я опишу, что вижу.
-
-Задай мне не больше трёх коротких вопросов, чтобы понять проблему.
-Затем предложи только ОДНО изменение для следующего дубля.
-Не переписывай всю постановку и не оценивай мою внешность.</pre>
-      <div class="copy-row">
-        <button class="copy-btn" type="button" data-copy="Я снимаю короткий тренд и тренирую три вещи:&#10;1) лишнее напряжение;&#10;2) ясные ключевые позы;&#10;3) конкретное физическое действие вместо позирования.&#10;&#10;После первого дубля я опишу, что вижу.&#10;&#10;Задай мне не больше трёх коротких вопросов, чтобы понять проблему.&#10;Затем предложи только ОДНО изменение для следующего дубля.&#10;Не переписывай всю постановку и не оценивай мою внешность.">Скопировать запрос</button>
-        <span class="copy-hint">Работай в одном диалоге от дубля к дублю.</span>
-      </div>
-    </div>
-
-    <div class="callout">
-      <b>Занятие завершено, если:</b>
-      <p>есть минимум три дубля, сохранена финальная версия MP4 и ученик может назвать одно конкретное изменение, благодаря которому последний дубль стал лучше первого.</p>
-    </div>
-
-    <div class="back-row">
-      <a class="btn" href="../">← Вернуться в меню блогинга</a>
-      <a class="btn secondary" href="../../../block-01/#submit">Сдать работу</a>
-    </div>
-
-    <footer class="footer">Курс «ИИ: говори на его языке» · Блогинг / короткие видео · занятие 1</footer>
-  </div>
-</section>
+<section class="section light"><div class="wrap">
+<h2 class="action-title">Если не видишь ошибку</h2>
+<div class="actions"><button class="copy-action" data-copy="Я снял короткий ролик. Помоги улучшить следующий дубль. Спроси максимум 3 коротких вопроса. Потом предложи только ОДНО изменение. Не оценивай мою внешность.">Скопировать запрос для ИИ</button><a class="action secondary" href="../../../computer/?help=screenshot">Как сделать скрин</a></div><div class="ai-row">
+<button class="ai-pick alice" type="button" data-alice-helper data-alice-mode="plain">✦ Алиса</button>
+<a class="ai-pick deepai" href="https://deepai.org/chat"><img src="https://www.google.com/s2/favicons?domain=deepai.org&sz=64" alt="">DeepAI</a>
+<a class="ai-pick duck" href="https://duck.ai/"><img src="https://www.google.com/s2/favicons?domain=duck.ai&sz=64" alt="">Duck.ai</a>
+<a class="ai-pick zai" href="https://chat.z.ai/"><img src="https://www.google.com/s2/favicons?domain=chat.z.ai&sz=64" alt="">Z.ai</a>
+<a class="ai-pick deepseek" href="https://chat.deepseek.com/"><img src="https://www.google.com/s2/favicons?domain=deepseek.com&sz=64" alt="">DeepSeek</a>
+<a class="ai-pick more" href="../../../tools/?filter=chat">Ещё →</a>
+</div><p class="micro-note">Меняй одну вещь за дубль</p>
+</div></section>
 </main>
-
-<div class="toast" id="toast">Скопировано</div>
-<script src="../../assets/track.js"></script>
-</body>
-</html>
+</body></html>

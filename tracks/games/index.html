@@ -1,17 +1,52 @@
-<!doctype html><html lang="ru"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover"><meta name="theme-color" content="#080b18"><title>Игры · ИИ: говори на его языке</title><link rel="stylesheet" href="../assets/track.css"><script src="/school14-ai-courses-site/assets/s14-metrika-config.js"></script>
-<script defer src="/school14-ai-courses-site/assets/s14-metrika.js"></script>
-<script defer src="/school14-ai-courses-site/assets/s14-site.js"></script>
-</head><body style="--accent:#9b8cff"><header class="topbar"><div class="topbar-inner"><a class="brand" href="../../block-01/"><b>ИИ</b> · направления</a><button class="menu-toggle" id="menuToggle" type="button" aria-expanded="false" aria-controls="siteNav" aria-label="Открыть меню"><span></span><span></span><span></span></button><nav class="nav" id="siteNav"><a href="../../block-01/#missions">Все направления</a><a href="../../skills/input/">Голос и клавиатура</a><a href="../../block-01/#skeleton">Скелет запроса</a><a href="../../block-01/#submit">Сдать работу</a></nav></div></header><main><section class="hero"><div class="wrap"><div class="crumbs"><a href="../../block-01/">Занятие 1</a><span>→</span><span>Игры</span></div><div class="eyebrow">🎮 направление</div><h1>Игры</h1><p class="lead">Начни не с движка и установки, а с маленькой браузерной игры, которую можно открыть двойным кликом и забрать одним файлом.</p><div class="skills"><a class="skill" href="../../skills/input/">🎙 Голосовой ввод</a><a class="skill" href="../../skills/input/#typing">⌨ Печать</a><a class="skill" href="../../block-01/#skeleton">🧠 Архитектура запроса</a><a class="skill" href="../../block-01/#verify">✅ Проверка</a><a class="skill" href="../../block-01/#submit">💾 Сдать диалог</a></div></div></section><section class="section"><div class="wrap"><div class="kicker">Сделать сейчас</div><h2>Игра, которую можно унести одним файлом</h2><p class="section-intro">Первый движок — обычный браузер. Это снимает установку, аккаунты и зависимость от школьного компьютера.</p><div class="grid"><div class="card good"><h3>Кликер</h3><p>Счёт, улучшения, таймер. Самый быстрый первый результат.</p></div><div class="card"><h3>Реакция / уклонение</h3><p>Объект движется, игрок уворачивается, растёт сложность.</p></div><div class="card"><h3>Викторина</h3><p>Вопросы, очки, серия правильных ответов.</p></div><div class="card"><h3>Лабиринт</h3><p>Клавиатура, стены, цель, уровни.</p></div><div class="card"><h3>Аркада на Canvas</h3><p>Персонаж, препятствия, столкновения, скорость.</p></div><div class="card"><h3>Своя механика</h3><p>Одно правило → минимальный прототип.</p></div></div><div class="prompt"><div class="label">Стартовый запрос</div><pre>Сделай со мной маленькую браузерную игру, которую я смогу унести одним файлом.
+<!doctype html><html lang="ru"><head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta name="theme-color" content="#FFF0E2"><title>Игры · Курс ИИ</title>
+<link rel="stylesheet" href="../../assets/s14-v2.css">
+<script defer src="../../assets/student-ui.js"></script><script defer src="../../assets/alice-helper.js"></script>
+<script defer src="/school14-ai-courses-site/preview-v3/assets/nav.js"></script>
+</head><body class="theme-games">
+<header class="topbar"><div class="wrap inner"><a class="brand" href="../../"><b>КУРС ИИ</b> · Игры</a></div></header>
+<main>
+<section class="student-hero"><div class="wrap"><h1>Сделай игру</h1><p>Выбери готовый старт</p></div></section>
 
-Условия:
-- один файл index.html;
-- HTML, CSS и JavaScript внутри него;
-- без внешних библиотек, серверов и установки;
-- должна запускаться двойным кликом;
-- управление клавиатурой или мышью;
-- сначала предложи 3 очень простых типа игры и дождись моего выбора;
-- после выбора сделай версию 1 и объясни, какие 3 места в коде я могу менять сам.
+<section class="section light"><div class="wrap">
+<h2 class="action-title">Выбери игру</h2>
+<div class="game-presets">
+<button class="game-preset" data-copy="Сделай простую игру-кликер одним файлом index.html. На экране большая кнопка. За каждый клик +1 очко. Раунд длится 20 секунд. Цель — набрать 30 очков. Покажи счёт, таймер, победу или поражение и кнопку «Играть ещё». HTML, CSS и JavaScript должны быть внутри одного файла. Без библиотек и установки. Верни полный готовый код одним блоком."><h3>👆 Кликер</h3><p>Нажимай → набирай очки</p></button>
+<button class="game-preset" data-copy="Сделай простую игру-лабиринт одним файлом index.html. Игрок — цветной квадрат. Управление стрелками. Нужно дойти до выхода и не проходить сквозь стены. Добавь таймер и кнопку «Сначала». HTML, CSS и JavaScript должны быть внутри одного файла. Без библиотек и установки. Верни полный готовый код одним блоком."><h3>🧩 Лабиринт</h3><p>Стрелки → найди выход</p></button>
+<button class="game-preset" data-copy="Сделай простую игру «Уклоняйся» одним файлом index.html. Игрок двигается влево и вправо стрелками. Сверху падают препятствия. Нужно продержаться 30 секунд. Покажи таймер, столкновение и кнопку «Ещё раз». HTML, CSS и JavaScript должны быть внутри одного файла. Без библиотек и установки. Верни полный готовый код одним блоком."><h3>⚡ Уклонение</h3><p>Двигайся → не попадайся</p></button>
+<button class="game-preset" data-copy="Сделай простую викторину одним файлом index.html. 5 вопросов по теме «животные». У каждого вопроса 3 кнопки ответа. Сразу показывай, правильно или нет. В конце покажи результат и кнопку «Пройти ещё раз». HTML, CSS и JavaScript должны быть внутри одного файла. Без библиотек и установки. Верни полный готовый код одним блоком."><h3>❓ Викторина</h3><p>5 вопросов → результат</p></button>
+<button class="game-preset" data-copy="Сделай простую игру «Поймай звёзды» одним файлом index.html. Игрок двигается стрелками по экрану и собирает появляющиеся звёзды. За звезду +1. Игра длится 30 секунд. Покажи счёт, таймер и кнопку «Играть ещё». HTML, CSS и JavaScript должны быть внутри одного файла. Без библиотек и установки. Верни полный готовый код одним блоком."><h3>⭐ Поймай звёзды</h3><p>Двигайся → собирай</p></button>
+<button class="game-preset" data-copy="Помоги придумать очень простую игру, которую можно сделать одним файлом index.html. Сначала предложи только 3 идеи. Для каждой напиши: кто игрок, что он делает, как победить. Код пока не пиши."><h3>✨ Своя идея</h3><p>Сначала придумать</p></button>
+</div>
+<p class="micro-note">Нажми игру — запрос скопируется.</p>
+<div class="ai-row">
+<button class="ai-pick alice" type="button" data-alice-helper data-alice-mode="plain">✦ Алиса</button>
+<a class="ai-pick deepai" href="https://deepai.org/chat"><img src="https://www.google.com/s2/favicons?domain=deepai.org&sz=64" alt="">DeepAI</a>
+<a class="ai-pick duck" href="https://duck.ai/"><img src="https://www.google.com/s2/favicons?domain=duck.ai&sz=64" alt="">Duck.ai</a>
+<a class="ai-pick zai" href="https://chat.z.ai/"><img src="https://www.google.com/s2/favicons?domain=chat.z.ai&sz=64" alt="">Z.ai</a>
+<a class="ai-pick deepseek" href="https://chat.deepseek.com/"><img src="https://www.google.com/s2/favicons?domain=deepseek.com&sz=64" alt="">DeepSeek</a>
+<a class="ai-pick more" href="../../tools/?filter=chat">Ещё →</a>
+</div>
+</div></section>
 
-После запуска я скажу, что хочу изменить. Не переписывай всё без необходимости.</pre><div class="copy-row"><button class="copy-btn" type="button" data-copy="Сделай со мной маленькую браузерную игру, которую я смогу унести одним файлом.&#10;&#10;Условия:&#10;- один файл index.html;&#10;- HTML, CSS и JavaScript внутри него;&#10;- без внешних библиотек, серверов и установки;&#10;- должна запускаться двойным кликом;&#10;- управление клавиатурой или мышью;&#10;- сначала предложи 3 очень простых типа игры и дождись моего выбора;&#10;- после выбора сделай версию 1 и объясни, какие 3 места в коде я могу менять сам.&#10;&#10;После запуска я скажу, что хочу изменить. Не переписывай всё без необходимости.">Скопировать запрос</button><span class="copy-hint">После первого ответа не начинай новый чат — улучшай этот.</span></div></div></div></section>
-<section class="section"><div class="wrap"><div class="kicker">Инструменты</div><h2>GigaChat / DeepSeek как партнёры по коду</h2><div class="grid two"><div class="card good"><h3>GigaChat</h3><p>Постановка идеи, генерация и ремонт HTML/JS. Если код не запускается — присылай точную ошибку или скрин.</p></div><div class="card good"><h3>DeepSeek</h3><p>Код + анализ изображений на входе. Официальный V4.1 Flash выдаёт текст, а не сгенерированные картинки.</p></div></div><div class="sourcebox">DeepSeek V4.1 Flash: <a href="https://api-docs.deepseek.com/api/list-models/" target="_blank" rel="noopener">modalities</a> и <a href="https://api-docs.deepseek.com/guides/vision/" target="_blank" rel="noopener">Vision</a>.</div><div class="callout"><b>Правило ремонта:</b><p>не проси «переделай игру полностью». Исправляй один дефект в текущей версии.</p></div></div></section>
-<section class="section"><div class="wrap"><div class="kicker">Маршрут роста</div><h2>От игрушки к разработке</h2><div class="path"><div class="level"><div class="n">01</div><b>Версия 1</b><span>Одна механика, один файл.</span></div><div class="level"><div class="n">02</div><b>Игровые правила</b><span>Жизни, счёт, победа, проигрыш.</span></div><div class="level"><div class="n">03</div><b>Контент</b><span>Графика, звук, уровни, сохранение.</span></div><div class="level"><div class="n">04</div><b>Свой проект</b><span>Тест игроками → feedback → версия 2.</span></div></div></div></section><section class="section"><div class="wrap"><div class="callout"><b>Не обязан заканчивать всё сегодня.</b><p>Сохрани рабочий файл, ссылку или исходники. На следующем занятии продолжай с последней работающей версии, а не начинай заново.</p></div><div class="sourcebox"><b>Статус:</b> школьный браузерный сценарий, обновлено 29.09.2026. Внешние сервисы меняются — перед важным использованием проверяем доступ заново.</div><footer class="footer">Курс «ИИ: говори на его языке» · ветка «Игры» · v1.0</footer></div></section></main><div class="toast" id="toast">Скопировано</div><script src="../assets/track.js"></script></body></html>
+<section class="section soft"><div class="wrap">
+<h2 class="action-title">Получил код?</h2>
+<div class="guide-grid">
+<div class="guide-card"><h3>📋 Скопируй</h3><p>Код целиком.</p></div>
+<div class="guide-card"><h3>💾 Сохрани</h3><p>Файл index.html.</p></div>
+<div class="guide-card"><h3>▶️ Запусти</h3><p>Двойной клик.</p></div>
+</div>
+<div class="actions"><a class="action" href="../../computer/?help=save-html">Как сохранить index.html →</a></div>
+</div></section>
+
+<section class="section light"><div class="wrap">
+<h2 class="action-title">Игра для Windows</h2>
+<div class="big-card" style="max-width:720px"><span class="status-badge">в разработке</span><h3>Python → Pygame → EXE</h3><p>Следующий шаг после браузерной игры.</p></div>
+</div></section>
+
+<section class="section soft"><div class="wrap">
+<h2 class="action-title">Приложение</h2>
+<div class="big-card" style="max-width:720px"><span class="status-badge">позже</span><h3>Следующий уровень</h3><p>Откроем после первых маршрутов.</p></div>
+</div></section>
+</main></body></html>
