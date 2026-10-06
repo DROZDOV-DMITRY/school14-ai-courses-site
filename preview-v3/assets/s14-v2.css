@@ -312,3 +312,52 @@ body[class*="theme-"] .topbar{border-bottom-color:color-mix(in srgb,var(--page-a
 .tool-card-v2 .mode{display:block;margin-top:8px;font-size:.8rem;font-weight:950;color:var(--page-deep,#3553b9)}
 @media(max-width:900px){.game-presets,.guide-grid,.skill-ladder{grid-template-columns:repeat(2,minmax(0,1fr))}}
 @media(max-width:620px){.game-presets,.guide-grid,.skill-ladder{grid-template-columns:1fr}}
+
+/* colorful student cards + AI choice + text schedule */
+.card, .stage, .big-card, .guide-card, .game-preset, .lesson-card, .hotkey, .choice-btn, .subchoice, .skill-item, .tool-card-v2{
+  border-color:color-mix(in srgb,var(--page-accent,#EFA93A) 18%,#d9deea);
+}
+.card:nth-child(6n+1),.stage:nth-child(6n+1),.big-card:nth-child(6n+1),.guide-card:nth-child(6n+1),.game-preset:nth-child(6n+1),.lesson-card:nth-child(6n+1),.hotkey:nth-child(6n+1),.choice-btn:nth-child(6n+1),.subchoice:nth-child(6n+1),.skill-item:nth-child(6n+1),.tool-card-v2:nth-child(6n+1){background:linear-gradient(145deg,#fff7df,#ffe8ad)}
+.card:nth-child(6n+2),.stage:nth-child(6n+2),.big-card:nth-child(6n+2),.guide-card:nth-child(6n+2),.game-preset:nth-child(6n+2),.lesson-card:nth-child(6n+2),.hotkey:nth-child(6n+2),.choice-btn:nth-child(6n+2),.subchoice:nth-child(6n+2),.skill-item:nth-child(6n+2),.tool-card-v2:nth-child(6n+2){background:linear-gradient(145deg,#fff0f6,#ffd7e7)}
+.card:nth-child(6n+3),.stage:nth-child(6n+3),.big-card:nth-child(6n+3),.guide-card:nth-child(6n+3),.game-preset:nth-child(6n+3),.lesson-card:nth-child(6n+3),.hotkey:nth-child(6n+3),.choice-btn:nth-child(6n+3),.subchoice:nth-child(6n+3),.skill-item:nth-child(6n+3),.tool-card-v2:nth-child(6n+3){background:linear-gradient(145deg,#eef9f2,#cfeedd)}
+.card:nth-child(6n+4),.stage:nth-child(6n+4),.big-card:nth-child(6n+4),.guide-card:nth-child(6n+4),.game-preset:nth-child(6n+4),.lesson-card:nth-child(6n+4),.hotkey:nth-child(6n+4),.choice-btn:nth-child(6n+4),.subchoice:nth-child(6n+4),.skill-item:nth-child(6n+4),.tool-card-v2:nth-child(6n+4){background:linear-gradient(145deg,#fff1e9,#ffd0b4)}
+.card:nth-child(6n+5),.stage:nth-child(6n+5),.big-card:nth-child(6n+5),.guide-card:nth-child(6n+5),.game-preset:nth-child(6n+5),.lesson-card:nth-child(6n+5),.hotkey:nth-child(6n+5),.choice-btn:nth-child(6n+5),.subchoice:nth-child(6n+5),.skill-item:nth-child(6n+5),.tool-card-v2:nth-child(6n+5){background:linear-gradient(145deg,#f2f0ff,#ded9ff)}
+.card:nth-child(6n),.stage:nth-child(6n),.big-card:nth-child(6n),.guide-card:nth-child(6n),.game-preset:nth-child(6n),.lesson-card:nth-child(6n),.hotkey:nth-child(6n),.choice-btn:nth-child(6n),.subchoice:nth-child(6n),.skill-item:nth-child(6n),.tool-card-v2:nth-child(6n){background:linear-gradient(145deg,#edf9ff,#d3efff)}
+
+.ai-row{display:flex;gap:10px;flex-wrap:wrap;margin-top:18px}
+.ai-pick{min-height:52px;padding:12px 16px;border-radius:16px;border:1px solid var(--line);background:#fff;text-decoration:none;font-weight:950;display:inline-flex;align-items:center;gap:9px;cursor:pointer;box-shadow:var(--shadow)}
+.ai-pick img{width:24px;height:24px;border-radius:6px;object-fit:contain}
+.ai-pick.alice{background:linear-gradient(135deg,#efe9ff,#ffdff0)}
+.ai-pick.deepai{background:linear-gradient(135deg,#eaf8ff,#d9f2ff)}
+.ai-pick.duck{background:linear-gradient(135deg,#fff1df,#ffe0b8)}
+.ai-pick.zai{background:linear-gradient(135deg,#eef2ff,#dfe5ff)}
+.ai-pick.more{background:linear-gradient(135deg,#eef8f0,#dff0e4)}
+
+.tool-card-v2{position:relative;padding-top:58px}
+.tool-logo{position:absolute;left:20px;top:18px;width:30px;height:30px;border-radius:8px;object-fit:contain;background:#fff;padding:3px;box-shadow:0 4px 12px rgba(0,0,0,.08)}
+
+.prompt-card{appearance:none;width:100%;text-align:left;padding:19px;border:1px solid var(--line);border-radius:20px;background:#fff;box-shadow:var(--shadow);cursor:pointer}
+.prompt-card h3{font-size:1.35rem;margin:0 0 5px}.prompt-card p{margin:0;color:var(--muted)}
+.prompt-grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:12px}
+.prompt-card:nth-child(6n+1){background:linear-gradient(145deg,#fff7df,#ffe8ad)}
+.prompt-card:nth-child(6n+2){background:linear-gradient(145deg,#fff0f6,#ffd7e7)}
+.prompt-card:nth-child(6n+3){background:linear-gradient(145deg,#eef9f2,#cfeedd)}
+.prompt-card:nth-child(6n+4){background:linear-gradient(145deg,#fff1e9,#ffd0b4)}
+.prompt-card:nth-child(6n+5){background:linear-gradient(145deg,#f2f0ff,#ded9ff)}
+.prompt-card:nth-child(6n){background:linear-gradient(145deg,#edf9ff,#d3efff)}
+
+.schedule-text{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:12px}
+.schedule-day{padding:20px;border-radius:22px;box-shadow:var(--shadow);border:1px solid var(--line)}
+.schedule-day:nth-child(6n+1){background:linear-gradient(145deg,#fff7df,#ffe8ad)}
+.schedule-day:nth-child(6n+2){background:linear-gradient(145deg,#fff0f6,#ffd7e7)}
+.schedule-day:nth-child(6n+3){background:linear-gradient(145deg,#eef9f2,#cfeedd)}
+.schedule-day:nth-child(6n+4){background:linear-gradient(145deg,#fff1e9,#ffd0b4)}
+.schedule-day:nth-child(6n+5){background:linear-gradient(145deg,#f2f0ff,#ded9ff)}
+.schedule-day:nth-child(6n){background:linear-gradient(145deg,#edf9ff,#d3efff)}
+.schedule-day h3{font-size:1.4rem;margin:0 0 10px}
+.schedule-slot{display:grid;grid-template-columns:minmax(110px,.9fr) 1.1fr;gap:10px;padding:10px 0;border-top:1px solid rgba(23,32,51,.1)}
+.schedule-slot:first-of-type{border-top:0}.schedule-time{font-weight:950}.schedule-who{font-weight:850}.schedule-who small{display:block;color:var(--muted);font-weight:750}
+.schedule-note{margin-top:14px;font-weight:800;color:#5a6478}
+
+@media(max-width:900px){.prompt-grid,.schedule-text{grid-template-columns:repeat(2,minmax(0,1fr))}}
+@media(max-width:620px){.prompt-grid,.schedule-text{grid-template-columns:1fr}.ai-pick{flex:1 1 calc(50% - 10px);justify-content:center}}
