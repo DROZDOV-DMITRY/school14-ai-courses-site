@@ -90,7 +90,7 @@ textarea:focus{border-color:#88b7ff;box-shadow:0 0 0 3px #e3efff}
 <p class="lead">Короткие тезисы, чтобы не читать методичку во время занятия: что проверить до старта, куда вести разговор, что наблюдать и где не мешать ученику думать самому.</p>
 <div class="actions">
 <a class="btn primary" href="https://drozdov-dmitry.github.io/school14-ai-courses-site/block-01/" target="_blank" rel="noopener">Открыть страницу ученика ↗</a>
-<a class="btn" href="https://drozdov-dmitry.github.io/school14-ai-courses-site/block-01/#submit-work" target="_blank" rel="noopener">Форма сдачи ↗</a>
+<span class="btn" role="note">Сдача C1-L001: локальный JSON</span>
 </div>
 <div class="flow">
 <b>Контур, который держим глазами</b>
@@ -110,9 +110,9 @@ textarea:focus{border-color:#88b7ff;box-shadow:0 0 0 3px #e3efff}
 <label class="check"><input type="checkbox" data-k="landing"><span><strong>Открыть live-лендинг на школьном ПК</strong><small>Проверить первый экран, расписание, MAX-блок, практику, инструменты и форму сдачи.</small></span></label>
 <label class="check"><input type="checkbox" data-k="max"><span><strong>Закрепить ссылку на занятие в пяти чатах MAX</strong><small>Сегодня критичны группы 1, 4 и 5. С компьютера проверить вход в MAX через инкогнито.</small></span></label>
 <label class="check"><input type="checkbox" data-k="ai"><span><strong>Сделать по одной живой пробе в GigaChat и Z.ai</strong><small>Новый чат → русский запрос → второй ход → копирование всей ветки. В GigaChat отдельно проверить изображение.</small></span></label>
-<label class="check"><input type="checkbox" data-k="form"><span><strong>Ещё раз отправить тест через форму</strong><small>Имя/ФИО, класс, группа, сервис, длинный диалог. Убедиться, что строка дошла в Google Sheets.</small></span></label>
+<label class="check"><input type="checkbox" data-k="form"><span><strong>Проверить локальное сохранение результата</strong><small>Использовать только синтетические или обезличенные данные. Убедиться, что локальная форма создала JSON-файл; текущий прототип ничего не отправляет в интернет.</small></span></label>
 <label class="check"><input type="checkbox" data-k="projector"><span><strong>Проверить проектор и масштаб браузера</strong><small>Лендинг должен читаться с последней парты; отдельное окно ученика и эта шпаргалка — в разных вкладках.</small></span></label>
-<label class="check"><input type="checkbox" data-k="fallback"><span><strong>Определить fallback на случай сбоя</strong><small>Если один ИИ не работает — второй. Если MAX мешает — открыть URL занятия напрямую. Если форма падает — сохранить полный диалог до восстановления.</small></span></label>
+<label class="check"><input type="checkbox" data-k="fallback"><span><strong>Определить fallback на случай сбоя</strong><small>Если ИИ-сервис недоступен — не тратить занятие на регистрацию: перейти к заранее подготовленному офлайн-примеру с той же учебной целью. Если локальная форма не сохраняет — сохранить обезличенный диалог по резервному пути из пакета, не удаляя исходник.</small></span></label>
 </div>
 
 <div class="head" style="margin-top:28px"><div class="kicker">Сегодня · понедельник</div><h2>Три первых запуска</h2></div>
@@ -131,7 +131,7 @@ textarea:focus{border-color:#88b7ff;box-shadow:0 0 0 3px #e3efff}
 <div class="step"><div><h3>Первый самостоятельный ход</h3><p>Пусть ученик сам сформулирует задачу и увидит первый ответ. Не улучшать за него сразу. Это даёт диагностический материал.</p><div class="say">«Сделай первую версию сам. Потом посмотрим, чего ИИ не понял.»</div></div></div>
 <div class="step"><div><h3>Знание появляется из результата</h3><p>Теперь раскрывать: задача → контекст → исходные данные → ограничения → критерии → диалог → проверка → применение. Привязывать каждый элемент к тому, что только что произошло у ученика.</p><div class="say">«Что ИИ не знал? Что из-за этого получилось не так?»</div></div></div>
 <div class="step"><div><h3>Итерация: версия 1 — не финал</h3><p>Попросить изменить конкретную вещь, сравнить результат и объяснить, почему вторая версия лучше или хуже.</p><div class="say">«Назови один недостаток ответа и исправь его следующим сообщением.»</div></div></div>
-<div class="step"><div><h3>Длинная игра + сдача</h3><p>Связать результат с реальным продолжением: использовать, импортировать, опубликовать, тренироваться, автоматизировать. Затем скопировать всю ветку в форму.</p><div class="say">«Если это не закончится сегодня — во что это может превратиться за месяц?»</div></div></div>
+<div class="step"><div><h3>Длинная игра + сдача</h3><p>Связать результат с реальным продолжением: использовать, импортировать, опубликовать, тренироваться, автоматизировать. Затем сохранить полный диалог локально в JSON и проверить файл.</p><div class="say">«Если это не закончится сегодня — во что это может превратиться за месяц?»</div></div></div>
 </div>
 <div class="note" style="margin-top:14px"><b>Важно для диагностики:</b> если ученик уже прочитал содержательные подсказки на лендинге, его первый запрос всё равно полезен как наблюдение, но это уже не «чистый baseline без помощи». Не смешивать эти два вывода.</div>
 </div></section>
@@ -185,7 +185,7 @@ textarea:focus{border-color:#88b7ff;box-shadow:0 0 0 3px #e3efff}
 </div></section>
 </main>
 
-<footer class="footer"><div class="wrap">Шпаргалка преподавателя · C1 · Блок 1 · v0.1 · отдельная служебная страница, не связана навигацией со страницей ученика.</div></footer>
+<footer class="footer"><div class="wrap">Шпаргалка преподавателя · C1 · Блок 1 · v0.2 · 2026-11-11 · контролируемый тест, не связана навигацией со страницей ученика.</div></footer>
 
 <script>
 (function(){
